@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abisinya School | Premium Project Dashboard</title>
+    <title>Abisinya School | Secure Multi-Tier System Workspace</title>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
     <style>
         /* ==========================================
-           TELEGRAM BLUE & LIGHT MODE CUSTOM THEME
+           CORE DESIGN VARIATION BALANCES
         ========================================== */
         :root {
             --bg-body: #f4f5f7;
@@ -20,15 +20,11 @@
             --box-label: #f0f2f5;
             --input-bg: #ffffff;
             --sidebar-bg: #ffffff;
-            --badge-text: #ffffff;
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
         }
 
-        /* ==========================================
-           PURE COMPACT TELEGRAM DARK MODE 
-        ========================================== */
         [data-theme="dark"] {
             --bg-body: #0e1621;
             --bg-card: #182533;
@@ -42,278 +38,430 @@
             --sidebar-bg: #182533;
         }
 
-        /* Reset & Core Styling */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg-body); color: var(--text-main); font-size: 14px; min-height: 100vh; overflow-x: hidden; transition: background-color 0.2s, color 0.2s; }
+        body { background-color: var(--bg-body); color: var(--text-main); font-size: 13px; min-height: 100vh; overflow-x: hidden; transition: background 0.2s; }
         
-        /* Layout Structure */
-        .app-container { display: flex; min-height: 100vh; position: relative; }
+        .app-shell { display: flex; min-height: 100vh; position: relative; }
 
         /* ==========================================
-           RESPONSIVE HAMBURGER SIDEBAR SYSTEM 
+           ADVANCED SIDEBAR & ACCORDION SYSTEM
         ========================================== */
-        .sidebar { 
-            width: 260px; 
-            background-color: var(--sidebar-bg); 
-            border-right: 1px solid var(--border-color); 
-            display: flex; 
-            flex-direction: column; 
-            position: fixed; 
-            top: 0; 
-            bottom: 0; 
-            left: 0; 
-            z-index: 1000; 
-            transition: transform 0.3s ease; 
-        }
+        .sidebar { width: 280px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1000; transition: transform 0.3s ease; }
         .sidebar-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
         .sidebar-brand { font-size: 18px; font-weight: bold; color: var(--tg-blue); display: flex; align-items: center; gap: 8px; }
-        .sidebar-menu { list-style: none; padding: 15px 10px; display: flex; flex-direction: column; gap: 8px; }
-        .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 8px; color: var(--text-main); font-weight: 500; text-decoration: none; cursor: pointer; transition: background 0.2s; }
+        .sidebar-scroll-area { flex: 1; overflow-y: auto; padding: 15px 10px; }
+        
+        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 8px; color: var(--text-main); font-weight: 500; text-decoration: none; cursor: pointer; transition: background 0.2s; }
         .menu-item:hover, .menu-item.active { background-color: var(--box-label); color: var(--tg-blue); }
+        .menu-item-left { display: flex; align-items: center; gap: 10px; }
+
+        /* Dropdown Nested Options Tree Layout */
+        .accordion-content { display: none; list-style: none; padding-left: 25px; margin-top: 4px; margin-bottom: 4px; flex-direction: column; gap: 3px; }
+        .accordion-content.open { display: flex; }
+        .nested-sub-item { padding: 8px 10px; font-size: 12px; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .nested-sub-item:hover { background-color: var(--box-label); color: var(--tg-blue); }
+
+        /* Multi-Tier Profile Controls Container */
+        .role-dock-panel { padding: 15px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 6px; }
+        .role-badge-status { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .role-pill-btn { border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); padding: 8px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .role-pill-btn.active-role { background-color: var(--tg-blue); color: white; border-color: var(--tg-blue); }
+
+        /* Main Shell Content Dock Spaces */
+        .main-workspace { flex: 1; margin-left: 280px; padding: 20px; transition: margin-left 0.3s; width: calc(100% - 280px); }
+        .top-navigation-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 25px; }
         
-        /* Role Indicator Panel */
-        .role-selector-panel { padding: 15px; border-top: 1px solid var(--border-color); margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
-        .role-btn { border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .role-btn.active-role { background-color: var(--tg-blue); color: white; border-color: var(--tg-blue); }
+        .hamburger-toggle-trigger { background: none; border: none; color: var(--text-main); cursor: pointer; display: none; padding: 5px; }
+        .action-theme-btn { background-color: var(--tg-blue); color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
-        /* Main Workspace Content Area */
-        .main-content { flex: 1; margin-left: 260px; padding: 20px; transition: margin-left 0.3s; width: calc(100% - 260px); }
-        
-        /* Top Navigation Header bar */
-        .top-navbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .left-nav-actions { display: flex; align-items: center; gap: 15px; }
-        
-        /* Hamburger Button Toggle CSS */
-        .hamburger-btn { background: none; border: none; color: var(--text-main); cursor: pointer; display: none; padding: 5px; }
-        .theme-toggle-btn { background-color: var(--tg-blue); color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; font-size: 13px; }
-        .theme-toggle-btn:hover { background-color: var(--tg-blue-hover); }
+        /* Screen Routing Architecture rules */
+        .portal-pane-view { display: none; animation: viewLoad 0.25s ease-in-out forwards; }
+        .portal-pane-view.active-pane { display: block; }
+        @keyframes viewLoad { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* General UI Grids and Panels */
-        .dashboard-view { display: none; animation: fadeIn 0.3s ease-in-out forwards; }
-        .dashboard-view.active-view { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* Shared Dashboard Layout Architecture */
+        .layout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); margin-bottom: 20px; position: relative; }
+        .content-card h2 { font-size: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
 
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .ui-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .ui-card h2 { font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+        /* Premium Course Badges Structural Columns */
+        .department-headline-title { font-size: 18px; font-weight: 700; color: var(--tg-blue); margin-bottom: 15px; border-left: 4px solid var(--tg-blue); padding-left: 8px; }
+        .premium-badge-card { background: var(--tg-blue); border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(36,129,204,0.15); border: 1px solid rgba(255,255,255,0.1); color: white; margin-bottom: 15px; }
+        .badge-card-header { font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+        .badge-data-field { margin-top: 8px; }
+        .badge-data-field .field-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 2px; display: block; }
+        .badge-data-field .field-response-box { background-color: var(--box-label); color: var(--text-main); font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 12px; min-height: 34px; display: flex; align-items: center; }
 
-        /* Premium Subject Badges System Inspired by Image */
-        .badge-grid-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
-        .premium-subject-badge { background: var(--tg-blue); border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(36,129,204,0.15); border: 1px solid rgba(255,255,255,0.1); position: relative; cursor: pointer; transition: transform 0.2s; }
-        .premium-subject-badge:hover { transform: translateY(-3px); }
-        .badge-title-header { font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-        .badge-field-row { margin-top: 8px; }
-        .badge-field-row .row-label { font-size: 9px; font-weight: 800; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-bottom: 2px; display: block; letter-spacing: 0.5px; }
-        .badge-field-row .row-box { background-color: var(--box-label); color: var(--text-main); font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 13px; min-height: 34px; display: flex; align-items: center; }
+        /* Time-Management Suite Elements */
+        .clock-digit-wrapper { font-size: 34px; font-weight: 800; color: var(--success); text-align: center; background: var(--box-label); padding: 15px; border-radius: 8px; border: 2px solid var(--success); font-variant-numeric: tabular-nums; }
+        .clock-digit-wrapper.alert-mode { color: var(--danger); border-color: var(--danger); background: rgba(239, 68, 68, 0.05); }
+        .utility-btn-group { display: flex; gap: 8px; margin-top: 10px; }
 
-        /* Dynamic Counter and Anti-Cheat Elements */
-        .time-counter { font-size: 32px; font-weight: bold; color: var(--success); margin: 12px 0; text-align: center; background: var(--box-label); padding: 15px; border-radius: 8px; border: 2px solid var(--success); transition: all 0.3s; font-variant-numeric: tabular-nums; }
-        .time-counter.paused { color: var(--danger); border-color: var(--danger); background: rgba(239, 68, 68, 0.08); animation: pulseAlert 1s infinite; }
-        @keyframes pulseAlert { 50% { opacity: 0.5; } }
-        .warning-banner { background-color: rgba(239, 68, 68, 0.1); color: var(--danger); padding: 8px 12px; border-radius: 6px; text-align: center; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; border: 1px solid rgba(239, 68, 68, 0.2); }
+        /* Intelligent AI Assistant Interfaces */
+        .ai-shell-container { display: flex; flex-direction: column; height: 380px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--box-label); overflow: hidden; }
+        .ai-message-scroll { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg-bubble { max-width: 80%; padding: 10px 14px; border-radius: 12px; line-height: 1.4; font-size: 12.5px; }
+        .msg-bubble.user { background-color: var(--tg-blue); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .msg-bubble.assistant { background-color: var(--bg-card); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid var(--border-color); }
+        .msg-bubble img { max-width: 100%; border-radius: 6px; margin-top: 8px; display: block; }
+        .ai-control-footer { display: flex; padding: 10px; background: var(--bg-card); border-top: 1px solid var(--border-color); gap: 6px; align-items: center; }
 
-        /* ==========================================
-           INTELLIGENT AI LIVE CHAT MODULE SYSTEM
-        ========================================== */
-        .ai-assistant-wrapper { display: flex; flex-direction: column; height: 400px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--box-label); overflow: hidden; }
-        .ai-chat-history { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .chat-bubble { max-width: 80%; padding: 10px 14px; border-radius: 12px; line-height: 1.4; word-wrap: break-word; font-size: 13px; }
-        .chat-bubble.user-bubble { background-color: var(--tg-blue); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .chat-bubble.ai-bubble { background-color: var(--bg-card); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid var(--border-color); }
-        .ai-input-dock { display: flex; padding: 10px; background: var(--bg-card); border-top: 1px solid var(--border-color); gap: 8px; }
+        /* Media Upload Dock Slots & Placements */
+        .file-attach-label { cursor: pointer; color: var(--text-muted); padding: 8px; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .file-attach-label:hover { background: var(--box-label); color: var(--tg-blue); }
+        .file-attach-label input { display: none; }
 
-        /* Form Layout Elements */
-        .form-element { margin-bottom: 12px; }
-        .form-element label { font-size: 12px; font-weight: 600; margin-bottom: 4px; display: block; color: var(--text-muted); }
-        .form-input { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); padding: 10px; border-radius: 8px; font-size: 14px; outline: none; }
-        .form-input:focus { border-color: var(--tg-blue); }
-        .action-button { background-color: var(--tg-blue); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
-        .action-button:hover { background-color: var(--tg-blue-hover); }
+        /* Google Meet-Style Interface Workspace Simulation CSS */
+        .meet-stage-canvas { width: 100%; height: 260px; background-color: #0b0f19; border-radius: 12px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; background-size: cover; background-position: center; transition: background 0.3s ease; }
+        .meet-profile-ring { width: 80px; height: 80px; background: var(--tg-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; box-shadow: 0 0 0 8px rgba(36,129,204,0.2); }
+        .meet-control-tray { display: flex; gap: 10px; background: rgba(0,0,0,0.75); padding: 8px 15px; border-radius: 30px; position: absolute; bottom: 15px; backdrop-filter: blur(5px); z-index: 10; }
+        .meet-tray-btn { background: rgba(255,255,255,0.15); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .meet-tray-btn:hover { background: rgba(255,255,255,0.3); }
+        .meet-tray-btn.disabled-state { background: var(--danger); }
+        .meet-backdrop-strip { display: flex; gap: 6px; padding: 10px; background: var(--box-label); border-radius: 8px; overflow-x: auto; margin-top: 10px; border: 1px dashed var(--border-color); }
+        .backdrop-thumb { width: 55px; height: 40px; border-radius: 4px; cursor: pointer; background-size: cover; background-position: center; border: 2px solid transparent; flex-shrink: 0; transition: border 0.2s; }
+        .backdrop-thumb:hover { border-color: var(--tg-blue); }
 
-        /* Classroom Logging System Container */
-        .system-logs-box { height: 140px; background: var(--box-label); border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 12px; border: 1px solid var(--border-color); }
-        .log-line { margin-bottom: 6px; font-family: monospace; display: flex; gap: 6px; }
+        /* TikTok Social Style Content Streams Layout */
+        .media-stream-container { display: flex; flex-direction: column; gap: 15px; }
+        .media-stream-post { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
+        .post-header { padding: 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-color); }
+        .post-avatar { width: 35px; height: 35px; background: var(--box-label); color: var(--tg-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+        .post-video-simulation { width: 100%; height: 240px; background: #111; position: relative; display: flex; align-items: center; justify-content: center; color: white; }
+        .post-actions-row { padding: 10px 12px; display: flex; gap: 15px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 12px; }
+        .post-action-node { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .post-action-node:hover { color: var(--tg-blue); }
 
-        /* Video Simulation Interface Area */
-        .video-box-simulation { width: 100%; height: 200px; background: #000000; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; position: relative; overflow: hidden; margin-bottom: 15px; }
-        .video-avatar-placeholder { width: 70px; height: 70px; background: var(--tg-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; animation: pulseWave 2s infinite; }
-        @keyframes pulseWave { 0% { box-shadow: 0 0 0 0 rgba(36,129,204,0.5); } 100% { box-shadow: 0 0 0 15px rgba(36,129,204,0); } }
+        /* Leaderboard Statistics Framework */
+        .leaderboard-table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 10px; }
+        .leaderboard-table th { padding: 10px; border-bottom: 2px solid var(--border-color); color: var(--text-muted); font-size: 11px; text-transform: uppercase; }
+        .leaderboard-table td { padding: 12px 10px; border-bottom: 1px solid var(--border-color); font-weight: 500; }
+        .leaderboard-table tr:hover { background-color: var(--box-label); }
+        .rank-circle { width: 22px; height: 22px; border-radius: 50%; background: var(--box-label); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
 
-        /* Overlay Drawer Background for Mobile Screens */
-        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 999; }
+        /* Form Controls & Button Classes */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block; color: var(--text-muted); text-transform: uppercase; }
+        .input-box { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); padding: 10px; border-radius: 8px; font-size: 13px; outline: none; transition: border 0.2s; }
+        .input-box:focus { border-color: var(--tg-blue); }
+        .panel-action-btn { background-color: var(--tg-blue); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; font-size: 13px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
+        .panel-action-btn:hover { background-color: var(--tg-blue-hover); }
 
-        /* ==========================================
-           COMPREHENSIVE RESPONSIVENESS MEDIA BREAKS
-        ========================================== */
+        /* System Security Terminal Box Console layout rules */
+        .security-console-terminal { background: #070b12; color: #39ff14; font-family: monospace; padding: 12px; border-radius: 8px; height: 160px; overflow-y: auto; font-size: 11px; line-height: 1.5; border: 1px solid #1f3d0c; }
+
+        /* Curtain Drawer Layer for Mobile UI overlays */
+        .sidebar-curtain-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 999; }
+
+        /* Responsive Screen Media Queries adjustments */
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.mobile-open { transform: translateX(0); }
-            .sidebar-overlay.mobile-open { display: block; }
-            .main-content { margin-left: 0; width: 100%; }
-            .hamburger-btn { display: block; }
+            .sidebar-curtain-overlay.mobile-open { display: block; }
+            .main-workspace { margin-left: 0; width: 100%; }
+            .hamburger-toggle-trigger { display: block; }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar-curtain-overlay" id="sidebarCurtainLayer"></div>
 
-    <div class="app-container">
+    <div class="app-shell">
         
-        <aside class="sidebar" id="appSidebar">
+        <aside class="sidebar" id="appNavigationSidebar">
             <div class="sidebar-header">
                 <div class="sidebar-brand">
                     <i data-lucide="graduation-cap"></i> Abisinya School
                 </div>
-                <button class="hamburger-btn" id="closeSidebarBtn"><i data-lucide="x"></i></button>
+                <button class="hamburger-toggle-trigger" id="actionHideSidebarBtn"><i data-lucide="x"></i></button>
             </div>
-            <ul class="sidebar-menu">
-                <li class="menu-item active" data-target="coursesView"><i data-lucide="book-open"></i> Academy Courses</li>
-                <li class="menu-item" data-target="trackerView"><i data-lucide="activity"></i> Study Live Monitor</li>
-                <li class="menu-item" data-target="aiRoomView"><i data-lucide="bot"></i> Abisinya AI Tutor</li>
-                <li class="menu-item" data-target="liveStreamView"><i data-lucide="video"></i> Virtual Class Interaction</li>
-                <li class="menu-item" data-target="adminControlView" id="adminMenuTab" style="display: none;"><i data-lucide="shield-alert"></i> Admin Portal Panel</li>
-            </ul>
+            
+            <div class="sidebar-scroll-area">
+                <ul class="menu-list">
+                    <li class="menu-item active" data-pane="paneHomeView"><div class="menu-item-left"><i data-lucide="home"></i> Home Gateway</div></li>
+                    
+                    <li>
+                        <div class="menu-item" id="accordionCoursesToggle">
+                            <div class="menu-item-left"><i data-lucide="book-open"></i> Academic Courses</div>
+                            <i data-lucide="chevron-down" style="width: 14px; height: 14px;"></i>
+                        </div>
+                        <ul class="accordion-content" id="accordionCoursesDropdownTree">
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Tech')">1. Technology & IT</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Business')">2. Business & Finance</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Creative')">3. Creative Skills</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Academic')">4. Education & Academic</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Language')">5. Language & Comm</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Personal')">6. Personal Development</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Health')">7. Health & Fitness</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Life')">8. Practical & Life Skills</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Advanced')">9. Advanced Science</li>
+                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Earning')">10. Online Earning Skills</li>
+                        </ul>
+                    </li>
 
-            <div class="role-selector-panel">
-                <span style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">User Clearance Profile</span>
-                <button class="role-btn active-role" id="setStudentRoleBtn"><i data-lucide="user"></i> Student View</button>
-                <button class="role-btn" id="setAdminRoleBtn"><i data-lucide="shield"></i> Teacher Admin View</button>
+                    <li class="menu-item" data-pane="paneTrackerView"><div class="menu-item-left"><i data-lucide="timer"></i> Study Live Monitor</div></li>
+                    <li class="menu-item" data-pane="paneAiTutorView"><div class="menu-item-left"><i data-lucide="bot"></i> Abisinya AI Tutor</div></li>
+                    <li class="menu-item" data-pane="paneVirtualClassView"><div class="menu-item-left"><i data-lucide="video"></i> Virtual Class Interaction</div></li>
+                    <li class="menu-item" data-pane="paneSocialFeedView"><div class="menu-item-left"><i data-lucide="clapperboard"></i> Content Media Feed</div></li>
+                    <li class="menu-item" data-pane="paneLeaderboardView"><div class="menu-item-left"><i data-lucide="trophy"></i> Top Leaderboard</div></li>
+                    
+                    <li class="menu-item" data-pane="paneAdminControlView" id="sidebarAdminMenuAnchor" style="display: none; background: rgba(239,68,68,0.1); color: var(--danger);"><div class="menu-item-left"><i data-lucide="lock"></i> Admin Master Control</div></li>
+                </ul>
+            </div>
+
+            <div class="role-dock-panel">
+                <div class="role-badge-status">Access Level Layer</div>
+                <button class="role-pill-btn active-role" id="btnRoleSetVisitor"><i data-lucide="eye"></i> Unregistered Visitor</button>
+                <button class="role-pill-btn" id="btnRoleSetStudent"><i data-lucide="user"></i> Registered Student</button>
+                <button class="role-pill-btn" id="btnRoleSetTeacher"><i data-lucide="award"></i> Faculty Teacher</button>
+                <button class="role-pill-btn" id="btnRoleSetAdmin" style="border-color: rgba(239,68,68,0.3);"><i data-lucide="shield"></i> Security Admin Gate</button>
             </div>
         </aside>
 
-        <main class="main-content">
+        <main class="main-workspace">
             
-            <div class="top-navbar">
-                <div class="left-nav-actions">
-                    <button class="hamburger-btn" id="hamburgerMenuToggle"><i data-lucide="menu" style="width: 24px; height: 24px;"></i></button>
-                    <h2 id="currentWorkspaceTitle" style="font-size: 20px; font-weight: bold; color: var(--tg-blue);">Academy Courses</h2>
+            <div class="top-navigation-bar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="hamburger-toggle-trigger" id="btnHamburgerSidebarOpen"><i data-lucide="menu" style="width: 22px; height: 22px;"></i></button>
+                    <h1 id="workspaceViewHeaderLabel" style="font-size: 18px; font-weight: bold; color: var(--tg-blue);">Home Gateway</h1>
                 </div>
-                <button class="theme-toggle-btn" id="globalThemeToggleBtn">
-                    <i data-lucide="moon" id="themeIconNode"></i> <span id="themeToggleTextLabel">Dark Mode</span>
+                <button class="action-theme-btn" id="btnPaletteThemeSwitcher">
+                    <i data-lucide="moon" id="themeIconNode"></i> <span id="themeLabelText">Dark Mode</span>
                 </button>
             </div>
 
-            <section class="dashboard-view active-view" id="coursesView">
-                <div style="margin-bottom: 20px;">
-                    <p style="color: var(--text-muted); font-size: 14px;">Select an active course department area below to access study logs, documents, and launch workspace tracks.</p>
+            <section class="portal-pane-view active-pane" id="paneHomeView">
+                <div class="content-card" style="background: linear-gradient(135deg, var(--tg-blue) 0%, var(--tg-blue-hover) 100%); color: white;">
+                    <h2 style="color: white; font-size: 20px;"><i data-lucide="sparkles"></i> Welcome to Abisinya School</h2>
+                    <p style="opacity: 0.9; line-height: 1.5; font-size: 13px; max-width: 700px; margin-top: 5px;">
+                        A professional multi-tier platform built to scale knowledge. Track academic hours with secure tracking parameters, consult the AI diagnostic tutor, or launch direct virtual video sessions.
+                    </p>
                 </div>
-                <div class="badge-grid-list" id="globalBadgesContainer">
-                    <div class="premium-subject-badge">
-                        <div class="badge-title-header">Forex Trading <i data-lucide="trending-up" style="color: rgba(255,255,255,0.8);"></i></div>
-                        <div class="badge-field-row">
-                            <span class="row-label">SUBJECT SPECIFICATION</span>
-                            <div class="row-box">📈 Technical Price & Risk Analysis</div>
+
+                <div class="content-card">
+                    <h2><i data-lucide="help-circle"></i> Personal Skill Profile Discovery Survey</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 12px;">Help us optimize your feed. What core discipline matches your active vocational project trajectory?</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('Programming & Web Architecture')">💻 Coding & Software</button>
+                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('Forex & Asset Management')">📈 Trade Risk Markets</button>
+                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('UI/UX Layouts & Media Design')">🎨 Graphic & Digital Art</button>
+                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('E-Commerce Operations')">🛒 Digital Business</button>
+                    </div>
+                </div>
+
+                <div id="courseCatalogDisplayWrapper">
+                    <div class="department-headline-title" id="catalogDepartmentHeadline">Active Department: Technology & IT</div>
+                    <div class="badge-grid-list" id="badgesDisplayGridRow">
                         </div>
-                        <div class="badge-field-row">
-                            <span class="row-label">TRACKING STATUS</span>
-                            <div class="row-box">🟢 Live Anti-Cheat Tracking Active</div>
+                </div>
+            </section>
+
+            <section class="portal-pane-view" id="paneTrackerView">
+                <div class="layout-grid">
+                    <div class="content-card">
+                        <h2><i data-lucide="clock"></i> Attendance Anti-Cheat System</h2>
+                        <div class="clock-digit-wrapper" id="displayAttendanceClock">00:00:00</div>
+                        <p style="color: var(--text-muted); font-size: 11px; text-align: center; margin-top: 8px;">⚠️ Focus Barrier Active: Leaving this tab logs an immediate tracking violation summary.</p>
+                    </div>
+                    <div class="content-card">
+                        <h2><i data-lucide="hourglass"></i> Custom Pomodoro Focus Countdown</h2>
+                        <div class="clock-digit-wrapper alert-mode" id="displayPomodoroClock" style="color: var(--warning); border-color: var(--warning);">25:00</div>
+                        <div class="utility-btn-group">
+                            <button class="role-pill-btn" id="btnPomodoroStart" style="flex: 1; background: var(--success); color: white;"><i data-lucide="play"></i> Start</button>
+                            <button class="role-pill-btn" id="btnPomodoroPause" style="flex: 1;"><i data-lucide="pause"></i> Pause</button>
                         </div>
                     </div>
-                    <div class="premium-subject-badge">
-                        <div class="badge-title-header">Graphic Design <i data-lucide="palette" style="color: rgba(255,255,255,0.8);"></i></div>
-                        <div class="badge-field-row">
-                            <span class="row-label">SUBJECT SPECIFICATION</span>
-                            <div class="row-box">🎨 UI Layouts & Corporate Branding</div>
+                    <div class="content-card">
+                        <h2><i data-lucide="alarm-clock"></i> School Alarm Scheduler</h2>
+                        <div class="form-group">
+                            <input type="time" id="inputAlarmTimeTarget" class="input-box">
                         </div>
-                        <div class="badge-field-row">
-                            <span class="row-label">TRACKING STATUS</span>
-                            <div class="row-box">🟢 Live Anti-Cheat Tracking Active</div>
-                        </div>
+                        <button class="panel-action-btn" id="btnRegisterAlarmRule"><i data-lucide="bell-ring"></i> Set Active Alarm Target</button>
                     </div>
-                    <div class="premium-subject-badge">
-                        <div class="badge-title-header">Music Production <i data-lucide="music" style="color: rgba(255,255,255,0.8);"></i></div>
-                        <div class="badge-field-row">
-                            <span class="row-label">SUBJECT SPECIFICATION</span>
-                            <div class="row-box">🎹 Digital Audio Layouts & Mastering</div>
+                </div>
+            </section>
+
+            <section class="portal-pane-view" id="paneAiTutorView">
+                <div class="content-card" style="max-width: 800px; margin: 0 auto;">
+                    <h2><i data-lucide="bot"></i> Abisinya Expert AI Diagnostic Tutor Suite</h2>
+                    <div class="ai-shell-container">
+                        <div class="ai-message-scroll" id="aiTutorMessageScrollHistoryBox">
+                            <div class="msg-bubble assistant">Hi there! How are you? What are we learning today? Ask me about chart tracking, code parameters, or design systems!</div>
                         </div>
-                        <div class="badge-field-row">
-                            <span class="row-label">TRACKING STATUS</span>
-                            <div class="row-box">🟢 Live Anti-Cheat Tracking Active</div>
+                        <div class="ai-control-footer">
+                            <label class="file-attach-label" title="Attach visual layout references to AI context">
+                                <i data-lucide="image" style="width: 20px; height: 20px;"></i>
+                                <input type="file" id="inputAiImageContextSelector" accept="image/*">
+                            </label>
+                            <input type="text" id="inputAiUserQueryField" class="input-box" style="flex: 1;" placeholder="Inquire regarding risk margins, market structural frames, or programming patterns...">
+                            <button class="action-theme-btn" id="btnSubmitAiQuery" style="border-radius: 8px; padding: 10px 15px;"><i data-lucide="send"></i></button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="dashboard-view" id="trackerView">
-                <div class="grid-layout">
-                    <div class="ui-card">
-                        <h2><i data-lucide="clock"></i> Active Attendance Log Timer</h2>
-                        <p style="color: var(--text-muted); margin-bottom: 10px;">The secure school metric system records every second you look directly at this window.</p>
-                        <div class="time-counter" id="liveAttendanceClock">00:00:00</div>
-                        <div class="warning-banner" id="antiCheatWarningDisplay">⚠️ CHEAT BEHAVIOR DETECTED! Student navigated away from course tab. Attendance timeline safely frozen.</div>
-                    </div>
-                    <div class="ui-card">
-                        <h2><i data-lucide="file-spreadsheet"></i> Real-time System Verification Feed</h2>
-                        <div class="system-logs-box" id="trackerLogsBox">
-                            <div class="log-line" style="color: var(--tg-blue);"><span class="log-stamp">[System]:</span> Anti-cheat handshake verification complete. Ready.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="dashboard-view" id="aiRoomView">
-                <div class="ui-card" style="max-width: 850px; margin: 0 auto;">
-                    <h2><i data-lucide="bot"></i> Abisinya Expert AI Assistant Engine Suite</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 15px;">Ask questions regarding Forex Market liquidity, branding guidelines, UI structures, or request quick summary assignments instantly.</p>
-                    <div class="ai-assistant-wrapper">
-                        <div class="ai-chat-history" id="aiChatEngineHistoryBox">
-                            <div class="chat-bubble ai-bubble">Salutations! I am your interactive AI Academic Companion. Ask me details regarding Forex Trading analysis rules, Graphics concepts, or anything else to facilitate your study tracks!</div>
-                        </div>
-                        <div class="ai-input-dock">
-                            <input type="text" id="aiUserQuestionField" class="form-input" placeholder="Inquire about Forex charts, target lines, layout configurations...">
-                            <button class="action-button" id="submitAiQueryBtn" style="width: auto; padding: 0 20px;"><i data-lucide="send"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="dashboard-view" id="liveStreamView">
-                <div class="grid-layout">
-                    <div class="ui-card">
-                        <h2><i data-lucide="video"></i> Teacher Live Streaming Frame</h2>
-                        <div class="video-box-simulation">
-                            <div class="video-avatar-placeholder">👨‍🏫</div>
-                            <div style="margin-top: 15px; font-weight: 600; font-size: 14px;">Instructor Stream Feed</div>
-                            <div style="font-size: 11px; opacity: 0.7; margin-top: 4px;">🟢 Realtime Network Signal Established</div>
-                        </div>
-                        <button class="action-button" style="background-color: var(--success);"><i data-lucide="mic"></i> Request Microphone Access</button>
-                    </div>
-                    <div class="ui-card">
-                        <h2><i data-lucide="messages-square"></i> Voice & Lesson Interaction Room</h2>
-                        <div class="ai-assistant-wrapper" style="height: 200px; margin-bottom: 10px;">
-                            <div class="ai-chat-history" id="classroomGroupChatBox" style="background: transparent;">
-                                <div class="log-line"><strong>Student_Alpha:</strong> Is the market structure setup valid on the 4H frame?</div>
-                                <div class="log-line"><strong>Teacher_Admin:</strong> Yes, ensure the liquidity clear is fully confirmed first.</div>
+            <section class="portal-pane-view" id="paneVirtualClassView">
+                <div class="layout-grid">
+                    <div class="content-card" style="grid-column: span 1;">
+                        <h2><i data-lucide="video"></i> Secure Live Stream Screen Classroom</h2>
+                        <div class="meet-stage-canvas" id="elementVirtualMeetStage">
+                            <div class="meet-profile-ring" id="elementMeetProfileNode">🎓</div>
+                            <div class="meet-control-tray">
+                                <button class="meet-tray-btn" id="btnMeetToggleMic" title="Toggle Mic"><i data-lucide="mic"></i></button>
+                                <button class="meet-tray-btn" id="btnMeetToggleCam" title="Toggle Cam"><i data-lucide="video"></i></button>
+                                <button class="meet-tray-btn" id="btnMeetToggleShare" title="Share Screen"><i data-lucide="monitor"></i></button>
+                                <button class="meet-tray-btn disabled-state" title="Leave Class" onclick="alert('Session connections closed safely.')"><i data-lucide="phone-off"></i></button>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="classGroupInputField" class="form-input" placeholder="Type a response message to the live lecture space...">
-                            <button class="action-button" id="sendGroupMsgBtn" style="width: auto; padding: 0 15px;"><i data-lucide="send"></i></button>
+                        <div class="role-badge-status" style="margin-top: 15px;">Choose Virtual Privacy Screen Backdrop:</div>
+                        <div class="meet-backdrop-strip">
+                            <div class="backdrop-thumb" style="background: #0b0f19; border-color: var(--tg-blue);" onclick="switchVirtualBackground('#0b0f19', false)"></div>
+                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80', true)"></div>
+                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80', true)"></div>
+                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?auto=format&fit=crop&w=600&q=80', true)"></div>
+                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', true)"></div>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <h2><i data-lucide="messages-square"></i> Live Room Audio Sync Room Chat</h2>
+                        <div class="ai-shell-container" style="height: 250px;">
+                            <div class="ai-message-scroll" id="liveRoomChatScrollBox" style="background:transparent;">
+                                <div class="log-line"><strong>Instructor_Admin:</strong> Class dashboard execution handshake confirmed. Drop your questions.</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6px; margin-top: 10px;">
+                            <input type="text" id="inputLiveRoomChatField" class="input-box" placeholder="Type lecture space prompt reply...">
+                            <button class="action-theme-btn" id="btnSendLiveRoomChatMsg" style="border-radius: 8px;"><i data-lucide="send"></i></button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="dashboard-view" id="adminControlView">
-                <div class="grid-layout">
-                    <div class="ui-card">
-                        <h2><i data-lucide="plus-circle"></i> Create New Department Badge Card Structure</h2>
-                        <div class="form-element">
-                            <label>Academy Department Category Name</label>
-                            <input type="text" id="adminFormDeptNameField" class="form-input" placeholder="e.g., Software Architecture, UI Engineering...">
+            <section class="portal-pane-view" id="paneSocialFeedView">
+                <div style="max-width: 550px; margin: 0 auto;">
+                    <div class="media-stream-container" id="socialStreamDynamicWrapper">
+                        <div class="media-stream-post">
+                            <div class="post-header">
+                                <div class="post-avatar">📈</div>
+                                <div>
+                                    <div style="font-weight:700;">Alex_Forex_Instructor</div>
+                                    <div style="font-size:10px; color:var(--text-muted);">Uploaded 2 hours ago</div>
+                                </div>
+                            </div>
+                            <div class="post-video-simulation" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=500&q=80'); background-size:cover; background-position:center;">
+                                <i data-lucide="play-circle" style="width:50px; height:50px; opacity:0.8; cursor:pointer;"></i>
+                            </div>
+                            <div style="padding:12px; font-weight:500; line-height:1.4;">
+                                Quick baseline layout for verifying liquidity points prior to standard session breaks. Save this track asset!
+                            </div>
+                            <div class="post-actions-row">
+                                <div class="post-action-node"><i data-lucide="heart" style="width:16px; height:16px;"></i> <span>142</span></div>
+                                <div class="post-action-node"><i data-lucide="message-circle" style="width:16px; height:16px;"></i> <span>29</span></div>
+                                <div class="post-action-node"><i data-lucide="share-2" style="width:16px; height:16px;"></i></div>
+                            </div>
                         </div>
-                        <div class="form-element">
-                            <label>Primary Specific Lesson Focus Subtext</label>
-                            <input type="text" id="adminFormSubjectField" class="form-input" placeholder="e.g., Fullstack Systems & Python API Controls...">
-                        </div>
-                        <button class="action-button" id="adminGenerateBadgeBtn" style="background-color: var(--success);"><i data-lucide="plus"></i> Inject Badge Structure into Portal</button>
                     </div>
-                    <div class="ui-card">
-                        <h2><i data-lucide="shield-check"></i> Advanced Master Controls</h2>
-                        <p style="color: var(--text-muted); margin-bottom: 15px;">Admin access authorizes control logs and lets you audit background activity records safely.</p>
-                        <button class="action-button" style="background-color: var(--warning); margin-bottom: 10px;"><i data-lucide="download-cloud"></i> Export Complete Audit Log</button>
-                        <button class="action-button" style="background-color: var(--danger);"><i data-lucide="alert-octagon"></i> Flush Stale Security Records</button>
+                    
+                    <div class="content-card" id="socialUploadWidgetContainer" style="margin-top: 20px; display: none;">
+                        <h2><i data-lucide="upload-cloud"></i> Faculty Learning Stream Publisher</h2>
+                        <div class="form-group">
+                            <label>Lesson Summary Caption Text</label>
+                            <input type="text" id="inputPostCaptionText" class="input-box" placeholder="Write a short explanatory note...">
+                        </div>
+                        <div class="form-group">
+                            <label>Attach Media Lesson (Video Track / Document Block Reference)</label>
+                            <input type="file" id="inputPostFileAttachment" class="input-box" accept="video/*,image/*">
+                        </div>
+                        <button class="panel-action-btn" id="btnPublishSocialPost" style="background-color: var(--success);"><i data-lucide="send"></i> Deploy to School Stream</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portal-pane-view" id="paneLeaderboardView">
+                <div class="content-card" style="max-width: 750px; margin: 0 auto;">
+                    <h2><i data-lucide="trophy"></i> Elite Active Attendance Verification Leaderboard</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">Rankings update dynamically based on verified system runtime focus, session logs, and skill points.</p>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>User Identification Profile</th>
+                                <th>Verified Track Focus</th>
+                                <th>Verified Time Logs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="rank-circle" style="background:#ffd700; color:#000;">1</div></td>
+                                <td>Emmanuel T. (Student)</td>
+                                <td><span style="color:var(--tg-blue);">Web Architecture</span></td>
+                                <td>48 Hrs 12 Mins</td>
+                            </tr>
+                            <tr>
+                                <td><div class="rank-circle" style="background:#c0c0c0; color:#000;">2</div></td>
+                                <td>Fatima B. (Student)</td>
+                                <td><span style="color:var(--tg-blue);">Forex Risk Analysis</span></td>
+                                <td>41 Hrs 05 Mins</td>
+                            </tr>
+                            <tr>
+                                <td><div class="rank-circle" style="background:#cd7f32; color:#000;">3</div></td>
+                                <td>Sami K. (Student)</td>
+                                <td><span style="color:var(--tg-blue);">Digital UI Layouts</span></td>
+                                <td>36 Hrs 42 Mins</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="portal-pane-view" id="paneAdminControlView">
+                <div class="layout-grid">
+                    <div class="content-card">
+                        <h2><i data-lucide="plus-circle"></i> Create New Department Badge Layout Matrix</h2>
+                        <div class="form-group">
+                            <label>Course Group Target Area Anchor</label>
+                            <select id="selectAdminTargetGroup" class="input-box">
+                                <option value="Tech">Technology & IT</option>
+                                <option value="Business">Business & Finance</option>
+                                <option value="Creative">Creative Skills</option>
+                                <option value="Academic">Education & Academic</option>
+                                <option value="Language">Language & Communication</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Academy Category Department Title Text</label>
+                            <input type="text" id="inputAdminDeptName" class="input-box" placeholder="e.g., Python AI Analytics">
+                        </div>
+                        <div class="form-group">
+                            <label>Primary Specific Lesson Focus Specifications Label</label>
+                            <input type="text" id="inputAdminSubjectFocus" class="input-box" placeholder="e.g., Machine Learning Modules">
+                        </div>
+                        <button class="panel-action-btn" id="btnAdminDeployBadgeCard" style="background-color: var(--success);"><i data-lucide="plus"></i> Inject Badge Structure into Portal</button>
+                    </div>
+
+                    <div class="content-card">
+                        <h2><i data-lucide="shield-check"></i> Multi-Tier System Hierarchy Administration Configuration</h2>
+                        <div class="form-group">
+                            <label>Active Admin Authority Target Profile</label>
+                            <select id="selectAdminTierLevelSelector" class="input-box" onchange="switchAdminHierarchyControlCapabilities()">
+                                <option value="Standard">Standard Admin (Tier 1)</option>
+                                <option value="SuperStandard">Super Standard Admin (Tier 2)</option>
+                                <option value="Super">Super Admin (Tier 3 Master Override)</option>
+                            </select>
+                        </div>
+                        <div style="background: var(--box-label); padding: 12px; border-radius: 8px; font-size: 11px; margin-bottom: 12px; border-left: 3px solid var(--warning);">
+                            <strong>Active Profile Capabilities:</strong> <span id="labelAdminCapabilitiesTextDescription">Can generate badges, cannot overwrite security records.</span>
+                        </div>
+                        <button class="panel-action-btn" id="btnAdminDestructiveDeleteAction" style="background-color: var(--danger);" disabled><i data-lucide="trash-2"></i> Master Destructive Delete & Override</button>
+                    </div>
+                </div>
+
+                <div class="content-card" style="margin-top: 20px;">
+                    <h2><i data-lucide="terminal"></i> Dynamic Real-time Audit Log Track Verification Feed</h2>
+                    <div class="security-console-terminal" id="elementSecurityTerminalLogBox">
+                        [01:21:45 SECURE ROOT HANDSHAKE ACTIVE] Initializing background authorization tracking structures...
                     </div>
                 </div>
             </section>
@@ -322,267 +470,595 @@
     </div>
 
     <script>
-        // Mount Lucide Vector Elements
+        // Mount Vector Graphic Icons
         lucide.createIcons();
 
+        // Global Structural Data Sets
+        let currentActiveUserRole = "Visitor";
+        let userAssignedAdminTier = "Standard";
+        let activeSelectedDepartmentCatalogGroup = "Tech";
+
+        const systemInitialCatalogBadgesStoreData = [
+            { id: 1, group: "Tech", name: "Programming Core", detail: "🐍 Python, Java, Systems C++ Engine Arrays" },
+            { id: 2, group: "Tech", name: "Web Architecture", detail: "🌐 Responsive CSS Modern DOM Elements" },
+            { id: 3, group: "Business", name: "Stock Asset Trading", detail: "📈 Price Liquidity Target Tracking Rules" },
+            { id: 4, group: "Creative", name: "Graphic System Design", detail: "🎨 Branding Assets & Interface Wireframes" }
+        ];
+
         // ==========================================
-        // DYNAMIC VIEW ROUTER & NAVIGATION ENGINE
+        // STATE ARCHITECTURE METRIC MEMORY RUN TIME (THEMING)
         // ==========================================
-        const menuItems = document.querySelectorAll('.menu-item');
-        const views = document.querySelectorAll('.dashboard-view');
-        const workspaceTitleLabel = document.getElementById('currentWorkspaceTitle');
+        function loadSystemPaletteThemeStateOnLaunch() {
+            const preservedThemeDataValue = localStorage.getItem("abisinya_theme_state");
+            const themeLabel = document.getElementById('themeToggleTextLabel');
+            const themeIcon = document.getElementById('themeIconNode');
 
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                menuItems.forEach(i => i.classList.remove('active'));
-                views.forEach(v => v.classList.remove('active-view'));
+            if (preservedThemeDataValue === "dark") {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeLabel.innerText = "Light Mode";
+                themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeLabel.innerText = "Dark Mode";
+                themeIcon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        }
 
-                item.classList.add('active');
-                const viewId = item.getAttribute('data-target');
-                document.getElementById(viewId).classList.add('active-view');
-                workspaceTitleLabel.innerText = item.innerText.trim();
+        document.getElementById('btnPaletteThemeSwitcher').addEventListener('click', () => {
+            const themeIsCurrentlyDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const themeLabel = document.getElementById('themeToggleTextLabel');
+            const themeIcon = document.getElementById('themeIconNode');
 
-                // Terminate Mobile Drawer upon selection trigger
-                closeMobileSidebarMenu();
+            if (themeIsCurrentlyDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem("abisinya_theme_state", "light");
+                themeLabel.innerText = "Dark Mode";
+                themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem("abisinya_theme_state", "dark");
+                themeLabel.innerText = "Light Mode";
+                themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+            logSecurityMovementActivityTrack("User color configuration layout flipped manually.");
+        });
+
+        // Initialize persistent memory on load
+        loadSystemPaletteThemeStateOnLaunch();
+
+        // ==========================================
+        // MOBILE HAMBURGER UI INTERFACES ENGINE
+        // ==========================================
+        const sidebarWrapperNode = document.getElementById('appNavigationSidebar');
+        const sidebarCurtainLayerNode = document.getElementById('sidebarCurtainLayer');
+        
+        function openSidebarDrawerMenu() {
+            sidebarWrapperNode.classList.add('mobile-open');
+            sidebarCurtainLayerNode.classList.add('mobile-open');
+        }
+        function closeSidebarDrawerMenu() {
+            sidebarWrapperNode.classList.remove('mobile-open');
+            sidebarCurtainLayerNode.classList.remove('mobile-open');
+        }
+
+        document.getElementById('btnHamburgerSidebarOpen').addEventListener('click', openSidebarDrawerMenu);
+        document.getElementById('actionHideSidebarBtn').addEventListener('click', closeSidebarDrawerMenu);
+        sidebarCurtainLayerNode.addEventListener('click', closeSidebarDrawerMenu);
+
+        // ==========================================
+        // SIDEBAR TREE ACCORDION DROPDOWN ENGINE
+        // ==========================================
+        const accordionCoursesToggleNode = document.getElementById('accordionCoursesToggle');
+        const accordionCoursesDropdownTreeNode = document.getElementById('accordionCoursesDropdownTree');
+
+        accordionCoursesToggleNode.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpenNow = accordionCoursesDropdownTreeNode.classList.contains('open');
+            if (isOpenNow) {
+                accordionCoursesDropdownTreeNode.classList.remove('open');
+            } else {
+                accordionCoursesDropdownTreeNode.classList.add('open');
+            }
+        });
+
+        // ==========================================
+        // VIEW NAVIGATION SCREEN ROUTING LOGIC ENGINE
+        // ==========================================
+        const menuNavigationItemNodes = document.querySelectorAll('.menu-item[data-pane]');
+        const viewPortalPanes = document.querySelectorAll('.portal-pane-view');
+        const workspaceViewHeaderLabelNode = document.getElementById('workspaceViewHeaderLabel');
+
+        menuNavigationItemNodes.forEach(paneTrigger => {
+            paneTrigger.addEventListener('click', () => {
+                menuNavigationItemNodes.forEach(n => n.classList.remove('active'));
+                viewPortalPanes.forEach(v => v.classList.remove('active-pane'));
+
+                paneTrigger.classList.add('active');
+                const targetPaneIdentifier = paneTrigger.getAttribute('data-pane');
+                document.getElementById(targetPaneIdentifier).classList.add('active-pane');
+                workspaceViewHeaderLabelNode.innerText = paneTrigger.innerText.trim();
+                
+                closeSidebarDrawerMenu();
+                logSecurityMovementActivityTrack(`Mapsd workspace pipeline views toward target segment: ${paneTrigger.innerText.trim()}`);
+            });
+        });
+
+        function triggerDepartmentFilter(departmentKeyString) {
+            activeSelectedDepartmentCatalogGroup = departmentKeyString;
+            
+            // Re-route user back to primary landing frame view panel programmatically
+            document.querySelector('[data-pane="paneHomeView"]').click();
+            
+            const titlesTranslationMap = {
+                Tech: "Technology & IT", Business: "Business & Finance", Creative: "Creative Skills",
+                Academic: "Education & Academic", Language: "Language & Communication", Personal: "Personal Development",
+                Health: "Health & Fitness", Life: "Practical & Life Skills", Advanced: "Science & Advanced Knowledge",
+                Earning: "Online Earning Skills"
+            };
+            
+            document.getElementById('catalogDepartmentHeadline').innerText = `Active Department: ${titlesTranslationMap[departmentKeyString]}`;
+            renderGlobalDepartmentCatalogBadges();
+        }
+
+        // ==========================================
+        // SECURITY PROFILE TRACK LAUNCH ENGINE (MULTIPLE ROLES)
+        // ==========================================
+        const rolePills = document.querySelectorAll('.role-pill-btn[id^="btnRoleSet"]');
+        const sidebarAdminMenuAnchorNode = document.getElementById('sidebarAdminMenuAnchor');
+        const socialUploadWidgetContainerNode = document.getElementById('socialUploadWidgetContainer');
+
+        rolePills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const triggerId = pill.id;
+                
+                if (triggerId === "btnRoleSetAdmin") {
+                    // Inject structural secure password gate verification routines
+                    const adminAccessKeyAttempt = prompt("🔒 Access Verification Gate: Please input your high-priority administrative structural unlock password key token:");
+                    if (adminAccessKeyAttempt !== "admin123") {
+                        alert("❌ Authorization Security Breach Detected: Invalid configuration token provided. Tracking activity sequence logs.");
+                        logSecurityMovementActivityTrack("CRITICAL WARNING: Unauthorized deployment attempt on Security Gate.", "#ef4444");
+                        return;
+                    }
+                    currentActiveUserRole = "Admin";
+                    sidebarAdminMenuAnchorNode.style.display = "flex";
+                    alert("🔑 Elevation Matrix Authorized: Master administrative system workspace view tab initialized.");
+                } else {
+                    sidebarAdminMenuAnchorNode.style.display = "none";
+                    if (triggerId === "btnRoleSetVisitor") currentActiveUserRole = "Visitor";
+                    if (triggerId === "btnRoleSetStudent") currentActiveUserRole = "Student";
+                    if (triggerId === "btnRoleSetTeacher") currentActiveUserRole = "Teacher";
+                }
+
+                // Control social content stream view access layer constraints based on security levels
+                if (currentActiveUserRole === "Teacher" || currentActiveUserRole === "Admin") {
+                    socialUploadWidgetContainerNode.style.display = "block";
+                } else {
+                    socialUploadWidgetContainerNode.style.display = "none";
+                }
+
+                rolePills.forEach(p => p.classList.remove('active-role'));
+                pill.classList.add('active-role');
+                
+                logSecurityMovementActivityTrack(`System user adjusted authentication tier clearance parameters to: [${currentActiveUserRole}]`);
+                renderGlobalDepartmentCatalogBadges();
             });
         });
 
         // ==========================================
-        // RESPONSIVE HAMBURGER NAVIGATION DRAWER CONTROLS
+        // ATTENDANCE MONITOR TIMERS & ANTI-CHEAT ENGINE
         // ==========================================
-        const sidebarNode = document.getElementById('appSidebar');
-        const sidebarOverlayNode = document.getElementById('sidebarOverlay');
-        const menuOpenTrigger = document.getElementById('hamburgerMenuToggle');
-        const menuCloseTrigger = document.getElementById('closeSidebarBtn');
+        let attendanceMetricSecondsCount = 0;
+        let attendanceClockTrackerIntervalNode = null;
+        const displayAttendanceClockNode = document.getElementById('displayAttendanceClock');
 
-        function openMobileSidebarMenu() {
-            sidebarNode.classList.add('mobile-open');
-            sidebarOverlayNode.classList.add('mobile-open');
-        }
-
-        function closeMobileSidebarMenu() {
-            sidebarNode.classList.remove('mobile-open');
-            sidebarOverlayNode.classList.remove('mobile-open');
-        }
-
-        menuOpenTrigger.addEventListener('click', openMobileSidebarMenu);
-        menuCloseTrigger.addEventListener('click', closeMobileSidebarMenu);
-        sidebarOverlayNode.addEventListener('click', closeMobileSidebarMenu);
-
-        // ==========================================
-        // CLEARANCE PROFILE LEVEL SWAP CONTROLS (ROLES)
-        // ==========================================
-        const studentRoleBtn = document.getElementById('setStudentRoleBtn');
-        const adminRoleBtn = document.getElementById('setAdminRoleBtn');
-        const adminMenuTabNode = document.getElementById('adminMenuTab');
-
-        studentRoleBtn.addEventListener('click', () => {
-            adminRoleBtn.classList.remove('active-role');
-            studentRoleBtn.classList.add('active-role');
-            adminMenuTabNode.style.display = 'none';
-            // Fallback cleanly to standard landing screen
-            document.querySelector('[data-target="coursesView"]').click();
-        });
-
-        adminRoleBtn.addEventListener('click', () => {
-            studentRoleBtn.classList.remove('active-role');
-            adminRoleBtn.classList.add('active-role');
-            adminMenuTabNode.style.display = 'flex';
-            alert("🔒 Access Elevation Granted: Instructor view initialized. Dynamic Administration view tab unlocked in sidebar links.");
-        });
-
-        // ==========================================
-        // PREMIUM CORE COLOR PALETTE MUTATOR (THEMING ENGINE)
-        // ==========================================
-        const themeToggleBtn = document.getElementById('globalThemeToggleBtn');
-        const themeIconNode = document.getElementById('themeIconNode');
-        const themeLabel = document.getElementById('themeToggleTextLabel');
-
-        themeToggleBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                themeLabel.innerText = "Dark Mode";
-                themeIconNode.setAttribute('data-lucide', 'moon');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeLabel.innerText = "Light Mode";
-                themeIconNode.setAttribute('data-lucide', 'sun');
+        function startAttendanceClockEngineSequence() {
+            if (!attendanceClockTrackerIntervalNode) {
+                attendanceClockTrackerIntervalNode = setInterval(() => {
+                    attendanceMetricSecondsCount++;
+                    displayAttendanceClockNode.innerText = formatSecondsToDigitalClockString(attendanceMetricSecondsCount);
+                }, 1000);
             }
-            lucide.createIcons();
-        });
-
-        // ==========================================
-        // DYNAMIC REALTIME COMPREHENSIVE ATTENDANCE CLOCK
-        // ==========================================
-        let liveSecondsTracked = 0;
-        let attendanceClockInterval = null;
-        const liveClockDisplayNode = document.getElementById('liveAttendanceClock');
-        const warningBannerNode = document.getElementById('antiCheatWarningDisplay');
-        const trackerLogsBoxNode = document.getElementById('trackerLogsBox');
-
-        function pushSystemMetricLog(message, colorHex) {
-            const timestamp = new Date().toLocaleTimeString();
-            const logLine = document.createElement('div');
-            logLine.className = 'log-line';
-            logLine.style.color = colorHex || 'var(--text-main)';
-            logLine.innerHTML = `<span class="log-stamp">[${timestamp}]:</span> <span>${message}</span>`;
-            trackerLogsBoxNode.appendChild(logLine);
-            trackerLogsBoxNode.scrollTop = trackerLogsBoxNode.scrollHeight;
         }
 
-        function formatTimeValue(metricSeconds) {
-            let hours = Math.floor(metricSeconds / 3600);
-            let minutes = Math.floor((metricSeconds % 3600) / 60);
-            let seconds = metricSeconds % 60;
+        function freezeAttendanceClockEngineSequence() {
+            clearInterval(attendanceClockTrackerIntervalNode);
+            attendanceClockTrackerIntervalNode = null;
+        }
+
+        function formatSecondsToDigitalClockString(totalSecondsParam) {
+            let hours = Math.floor(totalSecondsParam / 3600);
+            let minutes = Math.floor((totalSecondsParam % 3600) / 60);
+            let seconds = totalSecondsParam % 60;
             return (hours < 10 ? "0" : "") + hours + ":" + 
                    (minutes < 10 ? "0" : "") + minutes + ":" + 
                    (seconds < 10 ? "0" : "") + seconds;
         }
 
-        function launchAttendanceClock() {
-            if (!attendanceClockInterval) {
-                attendanceClockInterval = setInterval(() => {
-                    liveSecondsTracked++;
-                    liveClockDisplayNode.innerText = formatTimeValue(liveSecondsTracked);
-                }, 1000);
-            }
-        }
+        // Initialize background validation clock instantly
+        startAttendanceClockEngineSequence();
 
-        function haltAttendanceClock() {
-            clearInterval(attendanceClockInterval);
-            attendanceClockInterval = null;
-        }
-
-        // Initialize clock monitoring sequence instantly on render
-        launchAttendanceClock();
-
-        // Tab Navigation Event Listeners (The Anti-Cheat Logic)
+        // Register core screen event focus handlers (The Anti-Cheat Logic Framework)
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
-                haltAttendanceClock();
-                liveClockDisplayNode.classList.add('paused');
-                warningBannerNode.style.display = "block";
-                pushSystemMetricLog("⚠️ Anti-Cheat Triggered: Active user focus departed. Verification pipeline safely paused.", "var(--danger)");
+                freezeAttendanceClockEngineSequence();
+                displayAttendanceClockNode.classList.add('alert-mode');
+                logSecurityMovementActivityTrack("⚠️ SECURITY LOG ALERT: Active user tab focus shifted away from portal frame window. Tracking system safely frozen.", "var(--danger)");
             } else {
-                launchAttendanceClock();
-                liveClockDisplayNode.classList.remove('paused');
-                warningBannerNode.style.display = "none";
-                pushSystemMetricLog("🟢 Attendance Restored: User workspace verification active. Resuming calculation logs.", "var(--success)");
+                startAttendanceClockEngineSequence();
+                displayAttendanceClockNode.classList.remove('alert-mode');
+                logSecurityMovementActivityTrack("🟢 SECURITY HANDSHAKE: User returned focus to main workspace panel area logs. Resuming verification metrics.", "var(--success)");
             }
         });
 
         // ==========================================
-        // DYNAMIC BADGE CARD GENERATOR FACTORY 
+        // TIME-SUITE EXTENSION UTILITIES (POMODORO & ALARM)
         // ==========================================
-        const globalBadgesContainerNode = document.getElementById('globalBadgesContainer');
-        const adminGenerateBadgeBtnNode = document.getElementById('adminGenerateBadgeBtn');
-        const adminFormDeptNameFieldNode = document.getElementById('adminFormDeptNameField');
-        const adminFormSubjectFieldNode = document.getElementById('adminFormSubjectField');
+        let pomodoroRemainingSeconds = 1500; // 25 minutes default config
+        let pomodoroTimerIntervalInstance = null;
+        const displayPomodoroClockNode = document.getElementById('displayPomodoroClock');
 
-        adminGenerateBadgeBtnNode.addEventListener('click', () => {
-            const deptName = adminFormDeptNameFieldNode.value.trim();
-            const subjectLabelText = adminFormSubjectFieldNode.value.trim();
+        function refreshPomodoroDisplayDigits() {
+            let minutes = Math.floor(pomodoroRemainingSeconds / 60);
+            let seconds = pomodoroRemainingSeconds % 60;
+            displayPomodoroClockNode.innerText = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        }
 
-            if (deptName === "" || subjectLabelText === "") {
-                alert("❌ Input Verification Error: Please provide appropriate content inputs inside all form parameters before deploying cards.");
+        document.getElementById('btnPomodoroStart').addEventListener('click', () => {
+            if (!pomodoroTimerIntervalInstance) {
+                pomodoroTimerIntervalInstance = setInterval(() => {
+                    if (pomodoroRemainingSeconds > 0) {
+                        pomodoroRemainingSeconds--;
+                        refreshPomodoroDisplayDigits();
+                    } else {
+                        clearInterval(pomodoroTimerIntervalInstance);
+                        pomodoroTimerIntervalInstance = null;
+                        alert("⏰ Focus Period Complete! Time for a short workspace rest block interval layout.");
+                    }
+                }, 1000);
+                logSecurityMovementActivityTrack("Pomodoro countdown framework initialized.");
+            }
+        });
+
+        document.getElementById('btnPomodoroPause').addEventListener('click', () => {
+            clearInterval(pomodoroTimerIntervalInstance);
+            pomodoroTimerIntervalInstance = null;
+            logSecurityMovementActivityTrack("Pomodoro workflow track countdown paused manually.");
+        });
+
+        // Alarm configuration scheduling algorithms
+        let configurationScheduledAlarmTimeRawValue = null;
+        setInterval(() => {
+            if (configurationScheduledAlarmTimeRawValue) {
+                const rightNowDateInstance = new Date();
+                const cleanCurrentDigitalTimeHoursMinutes = (rightNowDateInstance.getHours() < 10 ? "0" : "") + rightNowDateInstance.getHours() + ":" + (rightNowDateInstance.getMinutes() < 10 ? "0" : "") + rightNowDateInstance.getMinutes();
+                if (cleanCurrentDigitalTimeHoursMinutes === configurationScheduledAlarmTimeRawValue) {
+                    alert("🚨 ABISINYA CLASS ALARM WARNING: Scheduled system class log block timeframe reached! Return immediately.");
+                    configurationScheduledAlarmTimeRawValue = null; 
+                    logSecurityMovementActivityTrack("System alarm configuration criteria fulfilled and fired successfully.");
+                }
+            }
+        }, 1000);
+
+        document.getElementById('btnRegisterAlarmRule').addEventListener('click', () => {
+            const rawTargetValue = document.getElementById('inputAlarmTimeTarget').value;
+            if (!rawTargetValue) {
+                alert("Please select a valid time configuration sequence.");
+                return;
+            }
+            configurationScheduledAlarmTimeRawValue = rawTargetValue;
+            alert(`🎉 Alarm rule registered safely for time execution milestone context point: [${rawTargetValue}]`);
+            logSecurityMovementActivityTrack(`User registered a core workspace schedule time check notification rule event trigger at: ${rawTargetValue}`);
+        });
+
+        // ==========================================
+        // DYNAMIC BADGES STRUCTURAL RENDER LOGIC
+        // ==========================================
+        const badgesDisplayGridRowNode = document.getElementById('badgesDisplayGridRow');
+
+        function renderGlobalDepartmentCatalogBadges() {
+            badgesDisplayGridRowNode.innerHTML = "";
+            
+            // Security Constraint Filtration algorithm rule logic
+            let dataScopeCollection = systemInitialCatalogBadgesStoreData.filter(badgeObjectItem => badgeObjectItem.group === activeSelectedDepartmentCatalogGroup);
+            
+            if (currentActiveUserRole === "Visitor") {
+                // Visitors receive a constrained layout paradigm sequence
+                badgesDisplayGridRowNode.innerHTML = `<div style='grid-column: 1/-1; padding: 15px; color: var(--text-muted); background: var(--box-label); border-radius: 8px;'>🔒 <strong>Registration Shield Active:</strong> Course module badge structures are locked for unauthenticated visitor profiles. Elevate clear profile role indicators below to access full systems.</div>`;
                 return;
             }
 
-            const badgeWrapper = document.createElement('div');
-            badgeWrapper.className = 'premium-subject-badge';
-            badgeWrapper.innerHTML = `
-                <div class="badge-title-header">${deptName} <i data-lucide="sparkles" style="color: rgba(255,255,255,0.8);"></i></div>
-                <div class="badge-field-row">
-                    <span class="row-label">SUBJECT SPECIFICATION</span>
-                    <div class="row-box">🛠️ ${subjectLabelText}</div>
-                </div>
-                <div class="badge-field-row">
-                    <span class="row-label">TRACKING STATUS</span>
-                    <div class="row-box">🟢 Live Anti-Cheat Tracking Active</div>
-                </div>
-            `;
+            if (dataScopeCollection.length === 0) {
+                badgesDisplayGridRowNode.innerHTML = `<div style='grid-column: 1/-1; padding: 15px; color: var(--text-muted); text-align:center;'>No dynamic badge assets deployed inside this category track index yet.</div>`;
+                return;
+            }
 
-            globalBadgesContainerNode.appendChild(badgeWrapper);
-            lucide.createIcons(); // Mount vector graphical objects dynamically
+            dataScopeCollection.forEach(badge => {
+                const elementCardContainerWrapperNode = document.createElement('div');
+                elementCardContainerWrapperNode.className = 'premium-subject-badge';
+                elementCardContainerWrapperNode.innerHTML = `
+                    <div class="badge-card-header">${badge.name} <i data-lucide="sparkles" style="width:16px; height:16px; opacity:0.8;"></i></div>
+                    <div class="badge-data-field">
+                        <span class="field-tag">SUBJECT SPECIFICATION CORE</span>
+                        <div class="field-response-box">${badge.detail}</div>
+                    </div>
+                    <div class="badge-data-field">
+                        <span class="field-tag">SECURITY ENFORCEMENT ENGINE</span>
+                        <div class="field-response-box">🟢 Live Verification Stream Active</div>
+                    </div>
+                `;
+                badgesDisplayGridRowNode.appendChild(elementCardContainerWrapperNode);
+            });
+            lucide.createIcons();
+        }
 
-            // Clear configuration inputs safely
-            adminFormDeptNameFieldNode.value = "";
-            adminFormSubjectFieldNode.value = "";
+        // Run catalog loading instantly on initial frame boot sequence
+        renderGlobalDepartmentCatalogBadges();
+
+        // ==========================================
+        // ADMIN PORTAL GENERATOR & INJECTION SYSTEM 
+        // ==========================================
+        const selectAdminTierLevelSelectorNode = document.getElementById('selectAdminTierLevelSelector');
+        const labelAdminCapabilitiesTextDescriptionNode = document.getElementById('labelAdminCapabilitiesTextDescription');
+        const btnAdminDestructiveDeleteActionNode = document.getElementById('btnAdminDestructiveDeleteAction');
+
+        function switchAdminHierarchyControlCapabilities() {
+            userAssignedAdminTier = selectAdminTierLevelSelectorNode.value;
             
-            alert(`🎉 Success: New premium workspace layout card created for "${deptName}"! Navigate to the Academy Courses menu link to view it.`);
+            if (userAssignedAdminTier === "Super") {
+                labelAdminCapabilitiesTextDescriptionNode.innerText = "MASTER privilege scope authorized. Full destructive deletion and ledger adjustments active.";
+                btnAdminDestructiveDeleteActionNode.disabled = false;
+            } else if (userAssignedAdminTier === "SuperStandard") {
+                labelAdminCapabilitiesTextDescriptionNode.innerText = "Tier 2 intermediate authorization access clearance level. Audit logs printable.";
+                btnAdminDestructiveDeleteActionNode.disabled = true;
+            } else {
+                labelAdminCapabilitiesTextDescriptionNode.innerText = "Standard badge model generation authorized. Destructive master triggers disabled.";
+                btnAdminDestructiveDeleteActionNode.disabled = true;
+            }
+            logSecurityMovementActivityTrack(`Admin security deployment profile parameters shifted clearance indexing values to: [${userAssignedAdminTier}]`);
+        }
+
+        document.getElementById('btnAdminDeployBadgeCard').addEventListener('click', () => {
+            const chosenTargetCatalogGroupKeyString = document.getElementById('selectAdminTargetGroup').value;
+            const inputNameStringText = document.getElementById('inputAdminDeptName').value.trim();
+            const inputDetailStringText = document.getElementById('inputAdminSubjectFocus').value.trim();
+
+            if (inputNameStringText === "" || inputDetailStringText === "") {
+                alert("Verification parameters incomplete. Ensure forms are filled before deployment.");
+                return;
+            }
+
+            const customGeneratedIdIndex = systemInitialCatalogBadgesStoreData.length + 1;
+            systemInitialCatalogBadgesStoreData.push({
+                id: customGeneratedIdIndex,
+                group: chosenTargetCatalogGroupKeyString,
+                name: inputNameStringText,
+                detail: inputDetailStringText
+            });
+
+            document.getElementById('inputAdminDeptName').value = "";
+            document.getElementById('inputAdminSubjectFocus').value = "";
+
+            alert("🎉 Verification Success: New functional course badge structure deployed into global core catalogs.");
+            logSecurityMovementActivityTrack(`Admin deployed new dynamic project asset layout: Category [${chosenTargetCatalogGroupKeyString}] - Title: "${inputNameStringText}"`);
+            renderGlobalDepartmentCatalogBadges();
+        });
+
+        btnAdminDestructiveDeleteActionNode.addEventListener('click', () => {
+            if (userAssignedAdminTier === "Super") {
+                if (confirm("CRITICAL INTERFACE CALL: Are you sure you want to flush all dynamic catalog system logs entirely?")) {
+                    systemInitialCatalogBadgesStoreData.length = 0;
+                    renderGlobalDepartmentCatalogBadges();
+                    logSecurityMovementActivityTrack("🛑 SYSTEM FLUSH: Complete application asset arrays cleared out via Master Override protocol.", "#ef4444");
+                    alert("System logs flushed.");
+                }
+            }
         });
 
         // ==========================================
-        // COMPACT SMART AI KNOWLEDGE SIMULATOR ENGINE
+        // EXPERT CORE REALTIME AI LOGS AND FILE HANDLERS
         // ==========================================
-        const submitAiQueryBtnNode = document.getElementById('submitAiQueryBtn');
-        const aiUserQuestionFieldNode = document.getElementById('aiUserQuestionField');
-        const aiChatEngineHistoryBoxNode = document.getElementById('aiChatEngineHistoryBox');
+        const aiTutorMessageScrollHistoryBoxNode = document.getElementById('aiTutorMessageScrollHistoryBox');
+        const inputAiUserQueryFieldNode = document.getElementById('inputAiUserQueryField');
+        const btnSubmitAiQueryNode = document.getElementById('btnSubmitAiQuery');
+        const inputAiImageContextSelectorNode = document.getElementById('inputAiImageContextSelector');
 
-        function processIntelligentAiReply(userPromptText) {
-            const cleanQuery = userPromptText.toLowerCase();
+        let transientStagedBase64ImageStringDataBuffer = null;
+
+        // Process file attachment loading placements
+        inputAiImageContextSelectorNode.addEventListener('change', (e) => {
+            const trackingFileReference = e.target.files[0];
+            if (!trackingFileReference) return;
+
+            const arrayReader = new FileReader();
+            arrayReader.onload = function(eventResult) {
+                transientStagedBase64ImageStringDataBuffer = eventResult.target.result;
+                alert("📸 Visual Asset context successfully uploaded and locked in AI workspace query channel buffers!");
+                logSecurityMovementActivityTrack("User appended a image reference file structure directly into conversational context scopes.");
+            };
+            arrayReader.readAsDataURL(trackingFileReference);
+        });
+
+        function fireUserConversationalQuerySubmissionToAiEngine() {
+            const rawUserQueryPromptStringTextValue = inputAiUserQueryFieldNode.value.trim();
+            if (rawUserQueryPromptStringTextValue === "" && !transientStagedBase64ImageStringDataBuffer) return;
+
+            const userTextDisplayBubbleNode = document.createElement('div');
+            userTextDisplayBubbleNode.className = 'msg-bubble user';
             
-            if (cleanQuery.includes("forex") || cleanQuery.includes("market") || cleanQuery.includes("trade")) {
-                return "📈 **Forex Academic Assistant Insights:** In Technical Analysis, the core market structure flows between Higher Highs ($HH$) and Higher Lows ($HL$) in an uptrend. Always ensure you spot the Liquidity sweeps below retail support points before defining entry parameters. Risk management dictates a maximum of 1-2% asset deployment per track.";
-            } else if (cleanQuery.includes("graphic") || cleanQuery.includes("design") || cleanQuery.includes("brand") || cleanQuery.includes("color")) {
-                return "🎨 **Design System Studio Insights:** Premium modern interface structures rely on atomic layout scale metrics. When designing your brand assets, use high-contrast text layers against dark fields (like our Telegram-inspired layout config) to preserve maximum visual balance across multi-device screens.";
-            } else if (cleanQuery.includes("hello") || cleanQuery.includes("hi ") || cleanQuery.includes("hey")) {
-                return "👋 Hello there! I'm your interactive Abisinya AI Expert Suite companion. Ask me details regarding Forex chart mechanics, asset values, design layouts, or classroom monitor status tracks!";
-            } else {
-                return "🧠 **Abisinya AI Engine Feed:** That's a great question! For a comprehensive full-stack setup, make sure to pair this responsive dashboard with a cloud database framework. Let's practice: try framing your question specifically about Forex price strategies, trade risk profiles, or UI design concepts!";
+            if (rawUserQueryPromptStringTextValue !== "") {
+                userTextDisplayBubbleNode.innerText = rawUserQueryPromptStringTextValue;
             }
-        }
 
-        function handleUserChatSubmission() {
-            const rawPrompt = aiUserQuestionFieldNode.value.trim();
-            if (rawPrompt === "") return;
+            if (transientStagedBase64ImageStringDataBuffer) {
+                const attachedImageElementNode = document.createElement('img');
+                attachedImageElementNode.src = transientStagedBase64ImageStringDataBuffer;
+                userTextDisplayBubbleNode.appendChild(attachedImageElementNode);
+            }
 
-            // Render user narrative dialog block row
-            const userBubble = document.createElement('div');
-            userBubble.className = 'chat-bubble user-bubble';
-            userBubble.innerText = rawPrompt;
-            aiChatEngineHistoryBoxNode.appendChild(userBubble);
+            aiTutorMessageScrollHistoryBoxNode.appendChild(userTextDisplayBubbleNode);
+            aiTutorMessageScrollHistoryBoxNode.scrollTop = aiTutorMessageScrollHistoryBoxNode.scrollHeight;
 
-            aiUserQuestionFieldNode.value = "";
-            aiChatEngineHistoryBoxNode.scrollTop = aiChatEngineHistoryBoxNode.scrollHeight;
+            inputAiUserQueryFieldNode.value = "";
+            const currentQueryCopy = rawUserQueryPromptStringTextValue.toLowerCase();
+            const persistentImageSnapshotReferenceCopy = transientStagedBase64ImageStringDataBuffer;
+            transientStagedBase64ImageStringDataBuffer = null; // Flush single execution buffer slot safely
 
-            // Mock an immediate, highly smart assistant knowledge feedback loop execution
             setTimeout(() => {
-                const simulatedResultText = processIntelligentAiReply(rawPrompt);
-                const aiBubble = document.createElement('div');
-                aiBubble.className = 'chat-bubble ai-bubble';
-                aiBubble.innerHTML = simulatedResultText;
-                aiChatEngineHistoryBoxNode.appendChild(aiBubble);
-                aiChatEngineHistoryBoxNode.scrollTop = aiChatEngineHistoryBoxNode.scrollHeight;
-            }, 600);
+                const aiBubbleResponseWrapperNode = document.createElement('div');
+                aiBubbleResponseWrapperNode.className = 'msg-bubble assistant';
+
+                let executionResultText = "🧠 **Abisinya AI System Engine Diagnostics:** I processed your request data. To connect this live, integrate a backend API framework. Let's study: frame your query around technical analysis indicators, trade risk matrices, or design layouts!";
+
+                if (persistentImageSnapshotReferenceCopy) {
+                    executionResultText = "📸 **Abisinya AI Visual Assessment Suite:** I scanned your uploaded visual asset placement. The layout is balanced. If this is a chart reference, monitor liquidity sweep confirmation zones closely.";
+                } else if (currentQueryCopy.includes("forex") || currentQueryCopy.includes("trade") || currentQueryCopy.includes("market")) {
+                    executionResultText = "📈 **Forex Academic Assistant Insights:** In Technical Analysis, structural flow changes rely on breaks of structure ($BOS$). Always identify liquidity sweep points below retail support zones before entry parameters. Never exceed a 1-2% trade risk margin.";
+                } else if (currentQueryCopy.includes("design") || currentQueryCopy.includes("graphic") || currentQueryCopy.includes("color")) {
+                    executionResultText = "🎨 **Design Studio Insights:** High-contrast text layers on dark fields (like our Telegram-inspired layout) optimize visual hierarchy across multi-device configurations. Try structuring layout blocks on an atomic grid.";
+                } else if (currentQueryCopy.includes("hello") || currentQueryCopy.includes("hi") || currentQueryCopy.includes("hey")) {
+                    executionResultText = "Hi there! How can I assist you with your learning goals today?";
+                }
+
+                aiBubbleResponseWrapperNode.innerHTML = executionResultText;
+                aiTutorMessageScrollHistoryBoxNode.appendChild(aiBubbleResponseWrapperNode);
+                aiTutorMessageScrollHistoryBoxNode.scrollTop = aiTutorMessageScrollHistoryBoxNode.scrollHeight;
+            }, 550);
         }
 
-        submitAiQueryBtnNode.addEventListener('click', handleUserChatSubmission);
-        aiUserQuestionFieldNode.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleUserChatSubmission(); });
+        btnSubmitAiQueryNode.addEventListener('click', fireUserConversationalQuerySubmissionToAiEngine);
+        inputAiUserQueryFieldNode.addEventListener('keypress', (e) => { if(e.key === 'Enter') fireUserConversationalQuerySubmissionToAiEngine(); });
 
         // ==========================================
-        // VIRTUAL REALTIME CLASS CHAT SIMULATION LOGIC
+        // GOOGLE MEET VIRTUAL CLASS CLASSROOM INTERFACE CONTROLS
         // ==========================================
-        const sendGroupMsgBtnNode = document.getElementById('sendGroupMsgBtn');
-        const classGroupInputFieldNode = document.getElementById('classGroupInputField');
-        const classroomGroupChatBoxNode = document.getElementById('classroomGroupChatBox');
+        let virtualMeetingAudioIsMuted = false;
+        let virtualMeetingCameraIsDeactivated = false;
+        let virtualMeetingScreenShareIsActive = false;
 
-        function injectGroupClassMessage() {
-            const msgContentText = classGroupInputFieldNode.value.trim();
-            if (msgContentText === "") return;
+        const btnMeetToggleMicNode = document.getElementById('btnMeetToggleMic');
+        const btnMeetToggleCamNode = document.getElementById('btnMeetToggleCam');
+        const btnMeetToggleShareNode = document.getElementById('btnMeetToggleShare');
+        const elementVirtualMeetStageNode = document.getElementById('elementVirtualMeetStage');
+        const elementMeetProfileNode = document.getElementById('elementMeetProfileNode');
 
-            const chatLine = document.createElement('div');
-            chatLine.className = 'log-line';
-            chatLine.innerHTML = `<strong>You:</strong> <span>${msgContentText}</span>`;
-            classroomGroupChatBoxNode.appendChild(chatLine);
+        btnMeetToggleMicNode.addEventListener('click', () => {
+            virtualMeetingAudioIsMuted = !virtualMeetingAudioIsMuted;
+            btnMeetToggleMicNode.classList.toggle('disabled-state', virtualMeetingAudioIsMuted);
+            btnMeetToggleMicNode.innerHTML = virtualMeetingAudioIsMuted ? '<i data-lucide="mic-off"></i>' : '<i data-lucide="mic"></i>';
+            lucide.createIcons();
+            logSecurityMovementActivityTrack(`Virtual Classroom Microphone state modified: Muted=[${virtualMeetingAudioIsMuted}]`);
+        });
+
+        btnMeetToggleCamNode.addEventListener('click', () => {
+            virtualMeetingCameraIsDeactivated = !virtualMeetingCameraIsDeactivated;
+            btnMeetToggleCamNode.classList.toggle('disabled-state', virtualMeetingCameraIsDeactivated);
+            btnMeetToggleCamNode.innerHTML = virtualMeetingCameraIsDeactivated ? '<i data-lucide="video-off"></i>' : '<i data-lucide="video"></i>';
+            elementMeetProfileNode.style.display = virtualMeetingCameraIsDeactivated ? "none" : "flex";
+            lucide.createIcons();
+            logSecurityMovementActivityTrack(`Virtual Classroom Camera feed state modified: Closed=[${virtualMeetingCameraIsDeactivated}]`);
+        });
+
+        btnMeetToggleShareNode.addEventListener('click', () => {
+            virtualMeetingScreenShareIsActive = !virtualMeetingScreenShareIsActive;
+            btnMeetToggleShareNode.classList.toggle('disabled-state', virtualMeetingScreenShareIsActive);
+            alert(virtualMeetingScreenShareIsActive ? "🖥️ Screen sharing simulation parameters locked on. Window broadcasting live." : "Screen share session stopped.");
+            logSecurityMovementActivityTrack(`Virtual Classroom Screen share pipeline toggled: Active=[${virtualMeetingScreenShareIsActive}]`);
+        });
+
+        function switchVirtualBackground(backgroundValueString, isImageUrlBoolean) {
+            if (isImageUrlBoolean) {
+                elementVirtualMeetStageNode.style.backgroundColor = "transparent";
+                elementVirtualMeetStageNode.style.backgroundImage = `url('${backgroundValueString}')`;
+            } else {
+                elementVirtualMeetStageNode.style.backgroundImage = "none";
+                elementVirtualMeetStageNode.style.backgroundColor = backgroundValueString;
+            }
+            logSecurityMovementActivityTrack("User adjusted interactive virtual classroom privacy background canvas pattern.");
+        }
+
+        // ==========================================
+        // SOCIAL CREATOR STREAM FEED & GLOBAL MESSAGING HUB
+        // ==========================================
+        const socialStreamDynamicWrapperNode = document.getElementById('socialStreamDynamicWrapper');
+        const inputLiveRoomChatFieldNode = document.getElementById('inputLiveRoomChatField');
+        const liveRoomChatScrollBoxNode = document.getElementById('liveRoomChatScrollBox');
+
+        document.getElementById('btnPublishSocialPost').addEventListener('click', () => {
+            const captionText = document.getElementById('inputPostCaptionText').value.trim();
+            if (captionText === "") {
+                alert("Please append an descriptive contextual note prior to deployment.");
+                return;
+            }
+
+            const postCardNode = document.createElement('div');
+            postCardNode.className = 'media-stream-post';
+            postCardNode.innerHTML = `
+                <div class="post-header">
+                    <div class="post-avatar">🎓</div>
+                    <div>
+                        <div style="font-weight:700;">Faculty_Contributor (${currentActiveUserRole})</div>
+                        <div style="font-size:10px; color:var(--text-muted);">Published just now</div>
+                    </div>
+                </div>
+                <div class="post-video-simulation" style="background:#243141; height:120px;">
+                    <div style="font-weight:600; font-size:12px; color:rgba(255,255,255,0.7);"><i data-lucide="file-text" style="margin:0 auto 6px; display:block; width:30px; height:30px;"></i> Document Track Module Attached</div>
+                </div>
+                <div style="padding:12px; font-weight:500; line-height:1.4;">${captionText}</div>
+                <div class="post-actions-row">
+                    <div class="post-action-node"><i data-lucide="heart" style="width:16px; height:16px;"></i> <span>0</span></div>
+                    <div class="post-action-node"><i data-lucide="message-circle" style="width:16px; height:16px;"></i> <span>0</span></div>
+                </div>
+            `;
             
-            classGroupInputFieldNode.value = "";
-            classroomGroupChatBoxNode.scrollTop = classroomGroupChatBoxNode.scrollHeight;
+            socialStreamDynamicWrapperNode.insertBefore(postCardNode, socialStreamDynamicWrapperNode.firstChild);
+            lucide.createIcons();
+
+            document.getElementById('inputPostCaptionText').value = "";
+            alert("🎉 Asset broadcasted live across the collective school stream space feed network!");
+            logSecurityMovementActivityTrack(`User deployed dynamic item to shared stream asset grid lists: "${captionText}"`);
+        });
+
+        function transmitLiveRoomChatMessage() {
+            const textContent = inputLiveRoomChatFieldNode.value.trim();
+            if (textContent === "") return;
+
+            const chatLineNode = document.createElement('div');
+            chatLineNode.className = 'log-line';
+            chatLineNode.innerHTML = `<strong>You:</strong> <span>${textContent}</span>`;
+            liveRoomChatScrollBoxNode.appendChild(chatLineNode);
+            
+            inputLiveRoomChatFieldNode.value = "";
+            liveRoomChatScrollBoxNode.scrollTop = liveRoomChatScrollBoxNode.scrollHeight;
+            
+            // Native soundless notification trigger simulation engine handshake setup
+            logSecurityMovementActivityTrack(`Message dispatched across unified room audio stream channels: "${textContent}"`);
         }
 
-        sendGroupMsgBtnNode.addEventListener('click', injectGroupClassMessage);
-        classGroupInputFieldNode.addEventListener('keypress', (e) => { if(e.key === 'Enter') injectGroupClassMessage(); });
+        document.getElementById('btnSendLiveRoomChatMsg').addEventListener('click', transmitLiveRoomChatMessage);
+        inputLiveRoomChatFieldNode.addEventListener('keypress', (e) => { if(e.key === 'Enter') transmitLiveRoomChatMessage(); });
+
+        function saveUserSurveyInterest(selectedInterestAreaString) {
+            alert(`🎯 Specialized track profile updated! Your learning feeds will prioritize: [${selectedInterestAreaString}]`);
+            logSecurityMovementActivityTrack(`User updated vocational preference matrix parameter selections toward: ${selectedInterestAreaString}`);
+        }
+
+        // ==========================================
+        // AUDIT FEED CONSOLE WRITER LOGIC
+        // ==========================================
+        const elementSecurityTerminalLogBoxNode = document.getElementById('elementSecurityTerminalLogBox');
+
+        function logSecurityMovementActivityTrack(messageStringText, formattingHexColor) {
+            const currentTimestampStringValue = new Date().toLocaleTimeString();
+            const logLineElementNode = document.createElement('div');
+            logLineElementNode.className = 'log-line';
+            logLineElementNode.style.color = formattingHexColor || '#39ff14';
+            logLineElementNode.innerHTML = `<span style="color: #888;">[${currentTimestampStringValue}]:</span> <span>${messageStringText}</span>`;
+            
+            elementSecurityTerminalLogBoxNode.appendChild(logLineElementNode);
+            elementSecurityTerminalLogBoxNode.scrollTop = elementSecurityTerminalLogBoxNode.scrollHeight;
+        }
     </script>
 </body>
 </html>
