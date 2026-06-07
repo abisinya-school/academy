@@ -3,15 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abisinya School | Secure Multi-Tier System Workspace</title>
+    <title>Abisinya School Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div class="auth-gate-wrapper" id="globalAuthenticationGateScreen">
+        <div class="auth-card-chassis">
+            <div class="auth-brand-badge">
+                <i data-lucide="graduation-cap"></i>
+                <h2>Abisinya School</h2>
+                <p>Secure Enterprise Portal Access</p>
+            </div>
+            
+            <div class="auth-form-cluster">
+                <div class="form-group">
+                    <label>Workspace Target Environment</label>
+                    <select id="inputAuthTargetRole" class="input-box">
+                        <option value="Student">Student Dashboard Space</option>
+                        <option value="Teacher">Faculty Instructor Engine</option>
+                        <option value="Admin">Security Root Master Control</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Identity Username / Email</label>
+                    <input type="text" id="inputAuthUsername" class="input-box" placeholder="e.g., abisinya_user">
+                </div>
+                <div class="form-group">
+                    <label>Security Password Vector</label>
+                    <input type="password" id="inputAuthPassword" class="input-box" placeholder="••••••••">
+                </div>
+                <button class="panel-action-btn" id="btnExecuteSecureLoginAction">
+                    <i data-lucide="shield-check"></i> Authenticate Access
+                </button>
+            </div>
+            <div class="auth-footer-note">
+                🔒 System authorization tracking protocols are actively running.
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-modal-curtain" id="modalSkillAssessmentOnboardingOverlay">
+        <div class="assessment-modal-chassis">
+            <div class="assessment-modal-header">
+                <h3><i data-lucide="sparkles"></i> Vocational Path Strategy Diagnostic</h3>
+                <span class="assessment-progress-indicator" id="labelAssessmentProgressTracker">Question 1 of 5</span>
+            </div>
+            <div class="assessment-modal-body" id="containerDynamicSurveyQuestionBox">
+                </div>
+            <div class="assessment-modal-footer">
+                <button class="role-pill-btn" id="btnSubmitAssessmentSurveyAction" disabled>Next Trajectory Parameter <i data-lucide="arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
     <div class="sidebar-curtain-overlay" id="sidebarCurtainLayer"></div>
 
-    <div class="app-shell">
+    <div class="app-shell" id="mainProtectedApplicationShellChassis" style="display: none;">
         
         <aside class="sidebar" id="appNavigationSidebar">
             <div class="sidebar-header">
@@ -23,43 +72,44 @@
             
             <div class="sidebar-scroll-area">
                 <ul class="menu-list">
-                    <li class="menu-item active" data-pane="paneHomeView"><div class="menu-item-left"><i data-lucide="home"></i> Home Gateway</div></li>
+                    <li class="menu-item active" data-pane="paneHomeView"><div class="menu-item-left"><i data-lucide="layout-dashboard"></i> Dashboard Main</div></li>
                     
                     <li>
                         <div class="menu-item" id="accordionCoursesToggle">
                             <div class="menu-item-left"><i data-lucide="book-open"></i> Academic Courses</div>
-                            <i data-lucide="chevron-down" style="width: 14px; height: 14px;"></i>
+                            <i data-lucide="chevron-down" class="dropdown-chevron-marker"></i>
                         </div>
                         <ul class="accordion-content" id="accordionCoursesDropdownTree">
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Tech')">1. Technology & IT</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Business')">2. Business & Finance</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Creative')">3. Creative Skills</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Academic')">4. Education & Academic</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Language')">5. Language & Comm</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Personal')">6. Personal Development</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Health')">7. Health & Fitness</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Life')">8. Practical & Life Skills</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Advanced')">9. Advanced Science</li>
-                            <li class="nested-sub-item" onclick="triggerDepartmentFilter('Earning')">10. Online Earning Skills</li>
+                            <li class="nested-sub-item" data-dept="Tech">💻 1. Technology & IT</li>
+                            <li class="nested-sub-item" data-dept="Business">📈 2. Business & Finance</li>
+                            <li class="nested-sub-item" data-dept="Creative">🎨 3. Creative Skills</li>
+                            <li class="nested-sub-item" data-dept="Academic">📚 4. Education & Academic</li>
+                            <li class="nested-sub-item" data-dept="Language">🗣️ 5. Language & Comm</li>
+                            <li class="nested-sub-item" data-dept="Personal">🌱 6. Personal Development</li>
+                            <li class="nested-sub-item" data-dept="Health">🏋️ 7. Health & Fitness</li>
+                            <li class="nested-sub-item" data-dept="Life">🛠️ 8. Practical & Life Skills</li>
+                            <li class="nested-sub-item" data-dept="Advanced">🔬 9. Advanced Science</li>
+                            <li class="nested-sub-item" data-dept="Earning">💰 10. Online Earning Skills</li>
                         </ul>
                     </li>
 
-                    <li class="menu-item" data-pane="paneTrackerView"><div class="menu-item-left"><i data-lucide="timer"></i> Study Live Monitor</div></li>
-                    <li class="menu-item" data-pane="paneAiTutorView"><div class="menu-item-left"><i data-lucide="bot"></i> Abisinya AI Tutor</div></li>
-                    <li class="menu-item" data-pane="paneVirtualClassView"><div class="menu-item-left"><i data-lucide="video"></i> Virtual Class Interaction</div></li>
-                    <li class="menu-item" data-pane="paneSocialFeedView"><div class="menu-item-left"><i data-lucide="clapperboard"></i> Content Media Feed</div></li>
-                    <li class="menu-item" data-pane="paneLeaderboardView"><div class="menu-item-left"><i data-lucide="trophy"></i> Top Leaderboard</div></li>
+                    <li class="menu-item" data-pane="paneTrackerView"><div class="menu-item-left"><i data-lucide="clock"></i> Focus & Timers</div></li>
+                    <li class="menu-item" data-pane="paneAiTutorView"><div class="menu-item-left"><i data-lucide="bot"></i> Diagnostic AI Tutor</div></li>
+                    <li class="menu-item" data-pane="paneVirtualClassView"><div class="menu-item-left"><i data-lucide="video"></i> Virtual Live Interaction</div></li>
                     
-                    <li class="menu-item" data-pane="paneAdminControlView" id="sidebarAdminMenuAnchor" style="display: none; background: rgba(239,68,68,0.1); color: var(--danger);"><div class="menu-item-left"><i data-lucide="lock"></i> Admin Master Control</div></li>
+                    <li class="menu-item" data-pane="paneAdminControlView" id="sidebarAdminMenuAnchor" style="display: none; background: rgba(239,68,68,0.08); color: var(--danger);"><div class="menu-item-left"><i data-lucide="shield-alert"></i> Admin Operations</div></li>
                 </ul>
             </div>
 
             <div class="role-dock-panel">
-                <div class="role-badge-status">Access Level Layer</div>
-                <button class="role-pill-btn active-role" id="btnRoleSetVisitor"><i data-lucide="eye"></i> Unregistered Visitor</button>
-                <button class="role-pill-btn" id="btnRoleSetStudent"><i data-lucide="user"></i> Registered Student</button>
-                <button class="role-pill-btn" id="btnRoleSetTeacher"><i data-lucide="award"></i> Faculty Teacher</button>
-                <button class="role-pill-btn" id="btnRoleSetAdmin" style="border-color: rgba(239,68,68,0.3);"><i data-lucide="shield"></i> Security Admin Gate</button>
+                <div class="user-profile-summary-card">
+                    <div class="avatar-ring" id="labelDashboardUserInitialBadge">U</div>
+                    <div class="user-meta-data-stack">
+                        <span class="user-meta-name" id="labelDashboardUserDisplayName">Authorized User</span>
+                        <span class="user-meta-clearance" id="labelDashboardClearanceTag">Student View</span>
+                    </div>
+                    <button class="settings-gear-trigger-btn" id="btnTriggerSettingsPaneNavigation" title="Configuration Settings Panels"><i data-lucide="settings"></i></button>
+                </div>
             </div>
         </aside>
 
@@ -67,79 +117,129 @@
             
             <div class="top-navigation-bar">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <button class="hamburger-toggle-trigger" id="btnHamburgerSidebarOpen"><i data-lucide="menu" style="width: 22px; height: 22px;"></i></button>
-                    <h1 id="workspaceViewHeaderLabel" style="font-size: 18px; font-weight: bold; color: var(--tg-blue);">Home Gateway</h1>
+                    <button class="hamburger-toggle-trigger" id="btnHamburgerSidebarOpen"><i data-lucide="menu"></i></button>
+                    <h1 id="workspaceViewHeaderLabel" style="font-size: 16px; font-weight: 700; color: var(--tg-blue);">Dashboard Main</h1>
                 </div>
-                <button class="action-theme-btn" id="btnPaletteThemeSwitcher">
-                    <i data-lucide="moon" id="themeIconNode"></i> <span id="themeLabelText">Dark Mode</span>
-                </button>
+                
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="only-icon-theme-btn" id="btnPaletteThemeSwitcher" title="Toggle Theme Environment">
+                        <i data-lucide="moon" id="themeIconNode"></i>
+                    </button>
+                    
+                    <button class="security-logout-action-btn" id="btnGlobalSecurityExitAction" title="Terminate Authentication Session Space">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="active-alarm-toast-banner" id="widgetSystemActiveAlarmStatusBanner" style="display: none;">
+                <div class="alarm-toast-left-content">
+                    <span class="blinking-indicator-pulse"></span>
+                    <p id="labelActiveAlarmFeedbackMessageText">Operational parameters: Monitor system live rules tracks...</p>
+                </div>
+                <button class="close-toast-action-btn" onclick="dismissActiveAlarmStatusWidgetBanner()"><i data-lucide="x"></i></button>
             </div>
 
             <section class="portal-pane-view active-pane" id="paneHomeView">
-                <div class="content-card" style="background: linear-gradient(135deg, var(--tg-blue) 0%, var(--tg-blue-hover) 100%); color: white;">
-                    <h2 style="color: white; font-size: 20px;"><i data-lucide="sparkles"></i> Welcome to Abisinya School</h2>
-                    <p style="opacity: 0.9; line-height: 1.5; font-size: 13px; max-width: 700px; margin-top: 5px;">
-                        A professional multi-tier platform built to scale knowledge. Track academic hours with secure tracking parameters, consult the AI diagnostic tutor, or launch direct virtual video sessions.
-                    </p>
-                </div>
-
-                <div class="content-card">
-                    <h2><i data-lucide="help-circle"></i> Personal Skill Profile Discovery Survey</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 12px;">Help us optimize your feed. What core discipline matches your active vocational project trajectory?</p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('Programming & Web Architecture')">💻 Coding & Software</button>
-                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('Forex & Asset Management')">📈 Trade Risk Markets</button>
-                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('UI/UX Layouts & Media Design')">🎨 Graphic & Digital Art</button>
-                        <button class="role-pill-btn" onclick="saveUserSurveyInterest('E-Commerce Operations')">🛒 Digital Business</button>
-                    </div>
-                </div>
-
-                <div id="courseCatalogDisplayWrapper">
-                    <div class="department-headline-title" id="catalogDepartmentHeadline">Active Department: Technology & IT</div>
-                    <div class="badge-grid-list" id="badgesDisplayGridRow">
+                <div class="dashboard-double-chassis-layout">
+                    
+                    <div class="primary-feed-column">
+                        <div class="content-card analytics-summary-header-card">
+                            <h2>🏆 Main Workspace Gateway</h2>
+                            <p>Select academic filters via dropdown directory tracks to customize target learning materials.</p>
                         </div>
+
+                        <div id="courseCatalogDisplayWrapper">
+                            <div class="department-headline-title" id="catalogDepartmentHeadline">Active Department: Technology & IT</div>
+                            <div class="badge-grid-list" id="badgesDisplayGridRow">
+                                </div>
+                        </div>
+
+                        <div class="social-stream-header-label">🎬 Interactive Media Learning Feed</div>
+                        <div class="media-stream-container" id="socialStreamDynamicWrapper">
+                            </div>
+                    </div>
+
+                    <div class="secondary-metrics-sidebar-column">
+                        
+                        <div class="content-card mini-compact-card">
+                            <h3><i data-lucide="calendar"></i> Chronology Coordinates</h3>
+                            <div class="calendar-dual-readout-box">
+                                <div class="calendar-segment gregorian">
+                                    <span class="cal-system-label">Gregorian Calendar</span>
+                                    <div class="cal-date-value" id="displayGregorianDateValueField">-- / -- / ----</div>
+                                </div>
+                                <div class="calendar-segment ethiopian">
+                                    <span class="cal-system-label">Ethiopian Calendar (ዘመነ ማቴዎስ)</span>
+                                    <div class="cal-date-value" id="displayEthiopianDateValueField">-- / -- / ----</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-card mini-compact-card">
+                            <h3>📊 Focus Standings</h3>
+                            <div class="streamlined-leaderboard-list">
+                                <div class="leaderboard-row-node placement-1">
+                                    <span class="badge-rank-icon">🥇</span>
+                                    <div class="rank-user-info"><span class="user-name">Emmanuel T.</span><span class="track-focus-lbl">Tech Platform</span></div>
+                                    <div class="rank-score-time">48h 12m</div>
+                                </div>
+                                <div class="leaderboard-row-node placement-2">
+                                    <span class="badge-rank-icon">🥈</span>
+                                    <div class="rank-user-info"><span class="user-name">Fatima B.</span><span class="track-focus-lbl">Risk Forex</span></div>
+                                    <div class="rank-score-time">41h 05m</div>
+                                </div>
+                                <div class="leaderboard-row-node placement-3">
+                                    <span class="badge-rank-icon">🥉</span>
+                                    <div class="rank-user-info"><span class="user-name">Sami K.</span><span class="track-focus-lbl">UI Layouts</span></div>
+                                    <div class="rank-score-time">36h 42m</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </section>
 
             <section class="portal-pane-view" id="paneTrackerView">
                 <div class="layout-grid">
                     <div class="content-card">
-                        <h2><i data-lucide="clock"></i> Attendance Anti-Cheat System</h2>
+                        <h2><i data-lucide="shield-alert"></i> Attendance Anti-Cheat System</h2>
                         <div class="clock-digit-wrapper" id="displayAttendanceClock">00:00:00</div>
-                        <p style="color: var(--text-muted); font-size: 11px; text-align: center; margin-top: 8px;">⚠️ Focus Barrier Active: Leaving this tab logs an immediate tracking violation summary.</p>
+                        <p style="color: var(--text-muted); font-size: 11px; text-align: center; margin-top: 8px;">⚠️ Leaving this active window tracking terminal records dynamic audit path failures.</p>
                     </div>
                     <div class="content-card">
-                        <h2><i data-lucide="hourglass"></i> Custom Pomodoro Focus Countdown</h2>
-                        <div class="clock-digit-wrapper alert-mode" id="displayPomodoroClock" style="color: var(--warning); border-color: var(--warning);">25:00</div>
+                        <h2><i data-lucide="hourglass"></i> Pomodoro Sprint Counter</h2>
+                        <div class="clock-digit-wrapper alert-mode" id="displayPomodoroClock">25:00</div>
                         <div class="utility-btn-group">
-                            <button class="role-pill-btn" id="btnPomodoroStart" style="flex: 1; background: var(--success); color: white;"><i data-lucide="play"></i> Start</button>
-                            <button class="role-pill-btn" id="btnPomodoroPause" style="flex: 1;"><i data-lucide="pause"></i> Pause</button>
+                            <button class="role-pill-btn" id="btnPomodoroStart" style="flex: 1; background: var(--success); color: white;"><i data-lucide="play"></i> Run</button>
+                            <button class="role-pill-btn" id="btnPomodoroPause" style="flex: 1;"><i data-lucide="pause"></i> Hold</button>
                         </div>
                     </div>
                     <div class="content-card">
-                        <h2><i data-lucide="alarm-clock"></i> School Alarm Scheduler</h2>
+                        <h2><i data-lucide="alarm-clock"></i> Session Alarm Dispatcher</h2>
                         <div class="form-group">
                             <input type="time" id="inputAlarmTimeTarget" class="input-box">
                         </div>
-                        <button class="panel-action-btn" id="btnRegisterAlarmRule"><i data-lucide="bell-ring"></i> Set Active Alarm Target</button>
+                        <button class="panel-action-btn" id="btnRegisterAlarmRule"><i data-lucide="bell-ring"></i> Map Active Alarm Target</button>
                     </div>
                 </div>
             </section>
 
             <section class="portal-pane-view" id="paneAiTutorView">
                 <div class="content-card" style="max-width: 800px; margin: 0 auto;">
-                    <h2><i data-lucide="bot"></i> Abisinya Expert AI Diagnostic Tutor Suite</h2>
+                    <h2><i data-lucide="bot"></i> Expert Diagnostics AI Tutor Core</h2>
                     <div class="ai-shell-container">
                         <div class="ai-message-scroll" id="aiTutorMessageScrollHistoryBox">
-                            <div class="msg-bubble assistant">Hi there! How are you? What are we learning today? Ask me about chart tracking, code parameters, or design systems!</div>
+                            <div class="msg-bubble assistant">Authentication successful. I am your diagnostic tutor node. Present data queries relative to code vectors, design frameworks, or forex asset paths.</div>
                         </div>
                         <div class="ai-control-footer">
-                            <label class="file-attach-label" title="Attach visual layout references to AI context">
-                                <i data-lucide="image" style="width: 20px; height: 20px;"></i>
+                            <label class="file-attach-label" title="Attach design asset files parameters context">
+                                <i data-lucide="image"></i>
                                 <input type="file" id="inputAiImageContextSelector" accept="image/*">
                             </label>
-                            <input type="text" id="inputAiUserQueryField" class="input-box" style="flex: 1;" placeholder="Inquire regarding risk margins, market structural frames, or programming patterns...">
-                            <button class="action-theme-btn" id="btnSubmitAiQuery" style="border-radius: 8px; padding: 10px 15px;"><i data-lucide="send"></i></button>
+                            <input type="text" id="inputAiUserQueryField" class="input-box" style="flex: 1;" placeholder="Inquire parameters tracking rules setup...">
+                            <button class="action-theme-btn" id="btnSubmitAiQuery" style="border-radius: 8px;"><i data-lucide="send"></i></button>
                         </div>
                     </div>
                 </div>
@@ -147,123 +247,76 @@
 
             <section class="portal-pane-view" id="paneVirtualClassView">
                 <div class="layout-grid">
-                    <div class="content-card" style="grid-column: span 1;">
-                        <h2><i data-lucide="video"></i> Secure Live Stream Screen Classroom</h2>
+                    <div class="content-card">
+                        <h2><i data-lucide="video"></i> Secure Native Video Core Connection Workspace</h2>
                         <div class="meet-stage-canvas" id="elementVirtualMeetStage">
+                            <video id="hardwareLiveCameraVideoTrackNode" autoplay playsinline muted class="native-hardware-video-stream-track"></video>
+                            
                             <div class="meet-profile-ring" id="elementMeetProfileNode">🎓</div>
+                            
                             <div class="meet-control-tray">
-                                <button class="meet-tray-btn" id="btnMeetToggleMic" title="Toggle Mic"><i data-lucide="mic"></i></button>
-                                <button class="meet-tray-btn" id="btnMeetToggleCam" title="Toggle Cam"><i data-lucide="video"></i></button>
-                                <button class="meet-tray-btn" id="btnMeetToggleShare" title="Share Screen"><i data-lucide="monitor"></i></button>
-                                <button class="meet-tray-btn disabled-state" title="Leave Class" onclick="alert('Session connections closed safely.')"><i data-lucide="phone-off"></i></button>
+                                <button class="meet-tray-btn" id="btnMeetToggleMic" title="Mute Audio Feeds"><i data-lucide="mic"></i></button>
+                                <button class="meet-tray-btn" id="btnMeetToggleCam" title="Freeze Optical Frame Captures"><i data-lucide="video"></i></button>
+                                <button class="meet-tray-btn" id="btnMeetToggleShare" title="Initiate Workspace Window Projections"><i data-lucide="monitor"></i></button>
                             </div>
                         </div>
-                        <div class="role-badge-status" style="margin-top: 15px;">Choose Virtual Privacy Screen Backdrop:</div>
                         <div class="meet-backdrop-strip">
-                            <div class="backdrop-thumb" style="background: #0b0f19; border-color: var(--tg-blue);" onclick="switchVirtualBackground('#0b0f19', false)"></div>
-                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80', true)"></div>
-                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80', true)"></div>
-                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?auto=format&fit=crop&w=600&q=80', true)"></div>
-                            <div class="backdrop-thumb" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=120&q=80')" onclick="switchVirtualBackground('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', true)"></div>
+                            <div class="backdrop-thumb active-thumb" style="background: #0b0f19;" onclick="switchVirtualBackground('#0b0f19', false, this)"></div>
+                            <div class="backdrop-thumb" style="background: #112233;" onclick="switchVirtualBackground('#112233', false, this)"></div>
+                            <div class="backdrop-thumb" style="background: #1c1d22;" onclick="switchVirtualBackground('#1c1d22', false, this)"></div>
                         </div>
                     </div>
+                    
                     <div class="content-card">
-                        <h2><i data-lucide="messages-square"></i> Live Room Audio Sync Room Chat</h2>
+                        <h2><i data-lucide="messages-square"></i> Synchronized Media Interaction Chat</h2>
                         <div class="ai-shell-container" style="height: 250px;">
                             <div class="ai-message-scroll" id="liveRoomChatScrollBox" style="background:transparent;">
-                                <div class="log-line"><strong>Instructor_Admin:</strong> Class dashboard execution handshake confirmed. Drop your questions.</div>
+                                <div class="log-line"><strong>System Monitor:</strong> Live encryption workspace pipelines opened safely.</div>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 6px; margin-top: 10px;">
-                            <input type="text" id="inputLiveRoomChatField" class="input-box" placeholder="Type lecture space prompt reply...">
+                        
+                        <div class="chat-media-sharing-extension-tray">
+                            <label class="chat-media-share-pill" title="Share Document Assets">
+                                <i data-lucide="paperclip"></i> File Link
+                                <input type="file" id="inputChatMediaFileSharingNode" style="display: none;">
+                            </label>
+                            <button class="chat-media-share-pill" onclick="injectSystemCodeSnippetMarkerIntoChatBox()"><i data-lucide="code"></i> Share Code Snippet</button>
+                        </div>
+
+                        <div style="display: flex; gap: 6px; margin-top: 8px;">
+                            <input type="text" id="inputLiveRoomChatField" class="input-box" placeholder="Enter conversation prompt lines...">
                             <button class="action-theme-btn" id="btnSendLiveRoomChatMsg" style="border-radius: 8px;"><i data-lucide="send"></i></button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="portal-pane-view" id="paneSocialFeedView">
-                <div style="max-width: 550px; margin: 0 auto;">
-                    <div class="media-stream-container" id="socialStreamDynamicWrapper">
-                        <div class="media-stream-post">
-                            <div class="post-header">
-                                <div class="post-avatar">📈</div>
-                                <div>
-                                    <div style="font-weight:700;">Alex_Forex_Instructor</div>
-                                    <div style="font-size:10px; color:var(--text-muted);">Uploaded 2 hours ago</div>
-                                </div>
-                            </div>
-                            <div class="post-video-simulation" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=500&q=80'); background-size:cover; background-position:center;">
-                                <i data-lucide="play-circle" style="width:50px; height:50px; opacity:0.8; cursor:pointer;"></i>
-                            </div>
-                            <div style="padding:12px; font-weight:500; line-height:1.4;">
-                                Quick baseline layout for verifying liquidity points prior to standard session breaks. Save this track asset!
-                            </div>
-                            <div class="post-actions-row">
-                                <div class="post-action-node"><i data-lucide="heart" style="width:16px; height:16px;"></i> <span>142</span></div>
-                                <div class="post-action-node"><i data-lucide="message-circle" style="width:16px; height:16px;"></i> <span>29</span></div>
-                                <div class="post-action-node"><i data-lucide="share-2" style="width:16px; height:16px;"></i></div>
-                            </div>
-                        </div>
+            <section class="portal-pane-view" id="paneSettingsControlView">
+                <div class="content-card" style="max-width: 600px; margin: 0 auto;">
+                    <h2><i data-lucide="settings"></i> Account Clearance Configurations Panel Hub</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Alter runtime account variables mock configurations rules below to test dashboard clearances patterns views.</p>
+                    
+                    <div class="form-group">
+                        <label>Simulate Platform Clearances Profile Tiers</label>
+                        <select id="selectSettingsTierLevelSelector" class="input-box" onchange="processSettingsAccountClearanceDowngradeUpgradeOverride()">
+                            <option value="Student">Registered Student Role Clearance</option>
+                            <option value="Teacher">Faculty Instructor Account Authorization Profile</option>
+                            <option value="Admin">Security Root System Master Administrative Clearance</option>
+                        </select>
                     </div>
                     
-                    <div class="content-card" id="socialUploadWidgetContainer" style="margin-top: 20px; display: none;">
-                        <h2><i data-lucide="upload-cloud"></i> Faculty Learning Stream Publisher</h2>
-                        <div class="form-group">
-                            <label>Lesson Summary Caption Text</label>
-                            <input type="text" id="inputPostCaptionText" class="input-box" placeholder="Write a short explanatory note...">
-                        </div>
-                        <div class="form-group">
-                            <label>Attach Media Lesson</label>
-                            <input type="file" id="inputPostFileAttachment" class="input-box" accept="video/*,image/*">
-                        </div>
-                        <button class="panel-action-btn" id="btnPublishSocialPost" style="background-color: var(--success);"><i data-lucide="send"></i> Deploy to School Stream</button>
+                    <div class="settings-dynamic-info-chassis" id="panelSettingsClearanceMetaDescriptionBox">
+                        <strong>Active Access Clearance:</strong> Student Account View.
                     </div>
-                </div>
-            </section>
-
-            <section class="portal-pane-view" id="paneLeaderboardView">
-                <div class="content-card" style="max-width: 750px; margin: 0 auto;">
-                    <h2><i data-lucide="trophy"></i> Elite Active Attendance Verification Leaderboard</h2>
-                    <table class="leaderboard-table">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>User Profile</th>
-                                <th>Track Focus</th>
-                                <th>Verified Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><div class="rank-circle" style="background:#ffd700; color:#000;">1</div></td>
-                                <td>Emmanuel T. (Student)</td>
-                                <td><span style="color:var(--tg-blue);">Web Architecture</span></td>
-                                <td>48 Hrs 12 Mins</td>
-                            </tr>
-                            <tr>
-                                <td><div class="rank-circle" style="background:#c0c0c0; color:#000;">2</div></td>
-                                <td>Fatima B. (Student)</td>
-                                <td><span style="color:var(--tg-blue);">Forex Risk Analysis</span></td>
-                                <td>41 Hrs 05 Mins</td>
-                            </tr>
-                            <tr>
-                                <td><div class="rank-circle" style="background:#cd7f32; color:#000;">3</div></td>
-                                <td>Sami K. (Student)</td>
-                                <td><span style="color:var(--tg-blue);">Digital UI Layouts</span></td>
-                                <td>36 Hrs 42 Mins</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </section>
 
             <section class="portal-pane-view" id="paneAdminControlView">
                 <div class="layout-grid">
                     <div class="content-card">
-                        <h2><i data-lucide="plus-circle"></i> Create New Department Badge Layout Matrix</h2>
+                        <h2><i data-lucide="plus-circle"></i> Inject Dynamic Course Certification Matrix Cards</h2>
                         <div class="form-group">
-                            <label>Course Group Target Area Anchor</label>
+                            <label>Course Group Target Area Directory Anchor</label>
                             <select id="selectAdminTargetGroup" class="input-box">
                                 <option value="Tech">Technology & IT</option>
                                 <option value="Business">Business & Finance</option>
@@ -273,37 +326,21 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Academy Category Department Title Text</label>
-                            <input type="text" id="inputAdminDeptName" class="input-box" placeholder="e.g., Python AI Analytics">
+                            <label>Academy Category Department Title</label>
+                            <input type="text" id="inputAdminDeptName" class="input-box" placeholder="e.g., Python AI Diagnostics">
                         </div>
                         <div class="form-group">
-                            <label>Primary Specific Lesson Focus Specifications Label</label>
-                            <input type="text" id="inputAdminSubjectFocus" class="input-box" placeholder="e.g., Machine Learning Modules">
+                            <label>Primary Specific Lesson Focus Bounding Metric</label>
+                            <input type="text" id="inputAdminSubjectFocus" class="input-box" placeholder="e.g., Structural Market Frames">
                         </div>
-                        <button class="panel-action-btn" id="btnAdminDeployBadgeCard" style="background-color: var(--success);"><i data-lucide="plus"></i> Inject Badge Structure into Portal</button>
+                        <button class="panel-action-btn" id="btnAdminDeployBadgeCard" style="background-color: var(--success);"><i data-lucide="plus"></i> Inject Structural Card Matrix</button>
                     </div>
 
                     <div class="content-card">
-                        <h2><i data-lucide="shield-check"></i> Multi-Tier System Hierarchy Administration Configuration</h2>
-                        <div class="form-group">
-                            <label>Active Admin Authority Target Profile</label>
-                            <select id="selectAdminTierLevelSelector" class="input-box" onchange="switchAdminHierarchyControlCapabilities()">
-                                <option value="Standard">Standard Admin (Tier 1)</option>
-                                <option value="SuperStandard">Super Standard Admin (Tier 2)</option>
-                                <option value="Super">Super Admin (Tier 3 Master Override)</option>
-                            </select>
+                        <h2><i data-lucide="terminal"></i> Live Security Operational System Audit Tracker</h2>
+                        <div class="security-console-terminal" id="elementSecurityTerminalLogBox">
+                            [SECURITY GATE HANDSHAKE ACTIVE] Initialize root tracing modules execution arrays...
                         </div>
-                        <div style="background: var(--box-label); padding: 12px; border-radius: 8px; font-size: 11px; margin-bottom: 12px; border-left: 3px solid var(--warning);">
-                            <strong>Active Profile Capabilities:</strong> <span id="labelAdminCapabilitiesTextDescription">Can generate badges, cannot overwrite security records.</span>
-                        </div>
-                        <button class="panel-action-btn" id="btnAdminDestructiveDeleteAction" style="background-color: var(--danger);" disabled><i data-lucide="trash-2"></i> Master Destructive Delete & Override</button>
-                    </div>
-                </div>
-
-                <div class="content-card" style="margin-top: 20px;">
-                    <h2><i data-lucide="terminal"></i> Dynamic Real-time Audit Log Track Verification Feed</h2>
-                    <div class="security-console-terminal" id="elementSecurityTerminalLogBox">
-                        [01:21:45 SECURE ROOT HANDSHAKE ACTIVE] Initializing background authorization tracking structures...
                     </div>
                 </div>
             </section>
