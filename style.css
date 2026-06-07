@@ -1,756 +1,1120 @@
-/* ==========================================
-   COLOR PALETTES & LIGHT/DARK THEMES
-========================================== */
+/* ==========================================================================
+   1. GLOBAL ARCHITECTURE CORE VARIABLES
+   ========================================================================== */
 :root {
-    --bg-body: #f4f5f7;
-    --bg-card: #ffffff;
-    --text-main: #0e1621;
-    --text-muted: #6d7885;
-    --tg-blue: #2481cc;
-    --tg-blue-hover: #1a6fa3;
-    --border-color: #e1e4e8;
-    --box-label: #f0f2f5;
-    --input-bg: #ffffff;
-    --sidebar-bg: #ffffff;
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --app-shell-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --tg-blue: #0284c7;
+    --tg-blue-hover: #0369a1;
+    --border-color: #e2e8f0;
+    --box-label: #f1f5f9;
     --success: #10b981;
-    --danger: #ef4444;
     --warning: #f59e0b;
+    --danger: #ef4444;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
 }
 
+/* Secure Dark Mode Variant Configuration Rules */
 [data-theme="dark"] {
-    --bg-body: #0e1621;
-    --bg-card: #182533;
-    --text-main: #ffffff;
-    --text-muted: #7e8b9a;
-    --tg-blue: #2b71b1;
-    --tg-blue-hover: #3b88c3;
-    --border-color: #101924;
-    --box-label: #101924;
-    --input-bg: #243141;
-    --sidebar-bg: #182533;
-}
-
-/* ==========================================
-   CORE PLATFORM RESETS & APP SHELL
-========================================== */
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-}
-
-body { 
-    background-color: var(--bg-body); 
-    color: var(--text-main); 
-    font-size: 13px; 
-    min-height: 100vh; 
-    overflow-x: hidden; 
-    transition: background 0.2s; 
-}
-
-.app-shell { 
-    display: flex; 
-    min-height: 100vh; 
-    position: relative; 
-    width: 100%; 
-}
-
-/* ==========================================
-   SIDEBAR & ACCORDION SYSTEM
-========================================== */
-.sidebar { 
-    width: 280px; 
-    background-color: var(--sidebar-bg); 
-    border-right: 1px solid var(--border-color); 
-    display: flex; 
-    flex-direction: column; 
-    position: fixed; 
-    top: 0; 
-    bottom: 0; 
-    left: 0; 
-    z-index: 1010; 
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-}
-
-.sidebar-header { 
-    padding: 20px; 
-    border-bottom: 1px solid var(--border-color); 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-}
-
-.sidebar-brand { 
-    font-size: 18px; 
-    font-weight: bold; 
-    color: var(--tg-blue); 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-}
-
-.sidebar-scroll-area { 
-    flex: 1; 
-    overflow-y: auto; 
-    padding: 15px 10px; 
-}
-
-.menu-list { 
-    list-style: none; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 5px; 
-}
-
-.menu-item { 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 12px; 
-    border-radius: 8px; 
-    color: var(--text-main); 
-    font-weight: 500; 
-    text-decoration: none; 
-    cursor: pointer; 
-    transition: background 0.2s; 
-}
-
-.menu-item:hover, .menu-item.active { 
-    background-color: var(--box-label); 
-    color: var(--tg-blue); 
-}
-
-.menu-item-left { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    pointer-events: none; 
-}
-
-/* Dropdown Accordion Content Tree */
-.accordion-content { 
-    display: none; 
-    list-style: none; 
-    padding-left: 25px; 
-    margin-top: 4px; 
-    margin-bottom: 4px; 
-    flex-direction: column; 
-    gap: 3px; 
-}
-
-.accordion-content.open { 
-    display: flex; 
-}
-
-.nested-sub-item { 
-    padding: 10px; 
-    font-size: 12px; 
-    color: var(--text-muted); 
-    border-radius: 6px; 
-    cursor: pointer; 
-    transition: all 0.2s; 
-}
-
-.nested-sub-item:hover { 
-    background-color: var(--box-label); 
-    color: var(--tg-blue); 
-}
-
-/* Multi-Tier Role Control Deck */
-.role-dock-panel { 
-    padding: 15px; 
-    border-top: 1px solid var(--border-color); 
-    display: flex; 
-    flex-direction: column; 
-    gap: 6px; 
-}
-
-.role-badge-status { 
-    font-size: 10px; 
-    font-weight: 800; 
-    color: var(--text-muted); 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px; 
-    margin-bottom: 2px; 
-}
-
-.role-pill-btn { 
-    border: 1px solid var(--border-color); 
-    background: var(--input-bg); 
-    color: var(--text-main); 
-    padding: 10px; 
-    border-radius: 6px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 6px; 
-}
-
-.role-pill-btn.active-role { 
-    background-color: var(--tg-blue); 
-    color: white; 
-    border-color: var(--tg-blue); 
-}
-
-/* ==========================================
-   WORKSPACE ARCHITECTURE LAYOUTS
-========================================= */
-.main-workspace { 
-    flex: 1; 
-    margin-left: 280px; 
-    padding: 20px; 
-    transition: margin-left 0.3s ease; 
-    width: calc(100% - 280px); 
-    position: relative; 
-    min-width: 0; 
-}
-
-.top-navigation-bar { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding-bottom: 15px; 
-    border-bottom: 1px solid var(--border-color); 
-    margin-bottom: 25px; 
-    gap: 10px; 
-}
-
-.hamburger-toggle-trigger { 
-    background: none; 
-    border: none; 
-    color: var(--text-main); 
-    cursor: pointer; 
-    display: none; 
-    padding: 8px; 
-    z-index: 1020; 
-}
-
-.action-theme-btn { 
-    background-color: var(--tg-blue); 
-    color: white; 
-    border: none; 
-    padding: 8px 14px; 
-    border-radius: 20px; 
-    cursor: pointer; 
-    font-weight: 600; 
-    display: flex; 
-    align-items: center; 
-    gap: 6px; 
-    white-space: nowrap; 
-}
-
-/* Screen Panel Navigation Routing System Rules */
-.portal-pane-view { 
-    display: none; 
-    animation: viewLoad 0.25s ease-in-out forwards; 
-}
-
-.portal-pane-view.active-pane { 
-    display: block; 
-}
-
-@keyframes viewLoad { 
-    from { opacity: 0; transform: translateY(4px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
-
-/* Grids and Cards Layout Framework */
-.layout-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); 
-    gap: 20px; 
-}
-
-.badge-grid-list { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 15px; 
-}
-
-.content-card { 
-    background-color: var(--bg-card); 
-    border: 1px solid var(--border-color); 
-    border-radius: 12px; 
-    padding: 20px; 
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02); 
-    margin-bottom: 20px; 
-    position: relative; 
-}
-
-.content-card h2 { 
-    font-size: 15px; 
-    margin-bottom: 15px; 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    color: var(--text-main); 
-}
-
-/* ==========================================
-   ACADEMIC PROGRAM DEPARTMENTS AND BADGES
-========================================== */
-.department-headline-title { 
-    font-size: 18px; 
-    font-weight: 700; 
-    color: var(--tg-blue); 
-    margin-bottom: 15px; 
-    border-left: 4px solid var(--tg-blue); 
-    padding-left: 8px; 
-}
-
-.premium-subject-badge { 
-    background: var(--tg-blue); 
-    border-radius: 12px; 
-    padding: 15px; 
-    box-shadow: 0 4px 12px rgba(36,129,204,0.15); 
-    border: 1px solid rgba(255,255,255,0.1); 
-    color: white; 
-    margin-bottom: 15px; 
-}
-
-.badge-card-header { 
-    font-size: 16px; 
-    font-weight: 700; 
-    margin-bottom: 10px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-}
-
-.badge-data-field { 
-    margin-top: 8px; 
-}
-
-.badge-data-field .field-tag { 
-    font-size: 9px; 
-    font-weight: 800; 
-    text-transform: uppercase; 
-    color: rgba(255,255,255,0.85); 
-    margin-bottom: 2px; 
-    display: block; 
-}
-
-.badge-data-field .field-response-box { 
-    background-color: var(--box-label); 
-    color: var(--text-main); 
-    font-weight: 600; 
-    padding: 8px 12px; 
-    border-radius: 6px; 
-    font-size: 12px; 
-    min-height: 34px; 
-    display: flex; 
-    align-items: center; 
-}
-
-/* ==========================================
-   TIME MANAGEMENT TIMERS & CLOCKS
-========================================== */
-.clock-digit-wrapper { 
-    font-size: 34px; 
-    font-weight: 800; 
-    color: var(--success); 
-    text-align: center; 
-    background: var(--box-label); 
-    padding: 15px; 
-    border-radius: 8px; 
-    border: 2px solid var(--success); 
-    font-variant-numeric: tabular-nums; 
-}
-
-.clock-digit-wrapper.alert-mode { 
-    color: var(--danger); 
-    border-color: var(--danger); 
-    background: rgba(239, 68, 68, 0.05); 
-}
-
-.utility-btn-group { 
-    display: flex; 
-    gap: 8px; 
-    margin-top: 10px; 
-}
-
-/* ==========================================
-   DIAGNOSTIC AI TUTOR SUITE CONSOLE INTERFACES
-========================================== */
-.ai-shell-container { 
-    display: flex; 
-    flex-direction: column; 
-    height: 380px; 
-    border: 1px solid var(--border-color); 
-    border-radius: 8px; 
-    background: var(--box-label); 
-    overflow: hidden; 
-}
-
-.ai-message-scroll { 
-    flex: 1; 
-    padding: 15px; 
-    overflow-y: auto; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
-}
-
-.msg-bubble { 
-    max-width: 80%; 
-    padding: 10px 14px; 
-    border-radius: 12px; 
-    line-height: 1.4; 
-    font-size: 12.5px; 
-}
-
-.msg-bubble.user { 
-    background-color: var(--tg-blue); 
-    color: white; 
-    align-self: flex-end; 
-    border-bottom-right-radius: 2px; 
-}
-
-.msg-bubble.assistant { 
-    background-color: var(--bg-card); 
-    color: var(--text-main); 
-    align-self: flex-start; 
-    border-bottom-left-radius: 2px; 
-    border: 1px solid var(--border-color); 
-}
-
-.msg-bubble img { 
-    max-width: 100%; 
-    border-radius: 6px; 
-    margin-top: 8px; 
-    display: block; 
-}
-
-.ai-control-footer { 
-    display: flex; 
-    padding: 10px; 
-    background: var(--bg-card); 
-    border-top: 1px solid var(--border-color); 
-    gap: 6px; 
-    align-items: center; 
-}
-
-.file-attach-label { 
-    cursor: pointer; 
-    color: var(--text-muted); 
-    padding: 8px; 
-    border-radius: 6px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    transition: background 0.2s; 
-}
-
-.file-attach-label:hover { 
-    background: var(--box-label); 
-    color: var(--tg-blue); 
-}
-
-.file-attach-label input { 
-    display: none; 
-}
-
-/* ==========================================
-   VIRTUAL CLASSROOM & STREAMING INTERFACES
-========================================== */
-.meet-stage-canvas { 
-    width: 100%; 
-    height: 260px; 
-    background-color: #0b0f19; 
-    border-radius: 12px; 
-    position: relative; 
-    overflow: hidden; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    color: white; 
-    background-size: cover; 
-    background-position: center; 
-    transition: background 0.3s ease; 
-}
-
-.meet-profile-ring { 
-    width: 80px; 
-    height: 80px; 
-    background: var(--tg-blue); 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 28px; 
-    font-weight: bold; 
-    box-shadow: 0 0 0 8px rgba(36,129,204,0.2); 
-}
-
-.meet-control-tray { 
-    display: flex; 
-    gap: 10px; 
-    background: rgba(0,0,0,0.75); 
-    padding: 8px 15px; 
-    border-radius: 30px; 
-    position: absolute; 
-    bottom: 15px; 
-    backdrop-filter: blur(5px); 
-    z-index: 10; 
-}
-
-.meet-tray-btn { 
-    background: rgba(255,255,255,0.15); 
-    border: none; 
-    color: white; 
-    width: 36px; 
-    height: 36px; 
-    border-radius: 50%; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    transition: background 0.2s; 
-}
-
-.meet-tray-btn:hover { 
-    background: rgba(255,255,255,0.3); 
-}
-
-.meet-tray-btn.disabled-state { 
-    background: var(--danger); 
-}
-
-.meet-backdrop-strip { 
-    display: flex; 
-    gap: 6px; 
-    padding: 10px; 
-    background: var(--box-label); 
-    border-radius: 8px; 
-    overflow-x: auto; 
-    margin-top: 10px; 
-    border: 1px dashed var(--border-color); 
-}
-
-.backdrop-thumb { 
-    width: 55px; 
-    height: 40px; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    background-size: cover; 
-    background-position: center; 
-    border: 2px solid transparent; 
-    flex-shrink: 0; 
-    transition: border 0.2s; 
-}
-
-.backdrop-thumb:hover { 
-    border-color: var(--tg-blue); 
-}
-
-/* ==========================================
-   MEDIA CONTENT STREAM STREAM (TIKTOK STYLE)
-========================================== */
-.media-stream-container { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 15px; 
-}
-
-.media-stream-post { 
-    background: var(--bg-card); 
-    border: 1px solid var(--border-color); 
-    border-radius: 12px; 
-    overflow: hidden; 
-}
-
-.post-header { 
-    padding: 12px; 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    border-bottom: 1px solid var(--border-color); 
-}
-
-.post-avatar { 
-    width: 35px; 
-    height: 35px; 
-    background: var(--box-label); 
-    color: var(--tg-blue); 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-weight: 700; 
-}
-
-.post-video-simulation { 
-    width: 100%; 
-    height: 240px; 
-    background: #111; 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: white; 
-}
-
-.post-actions-row { 
-    padding: 10px 12px; 
-    display: flex; 
-    gap: 15px; 
-    border-top: 1px solid var(--border-color); 
-    color: var(--text-muted); 
-    font-size: 12px; 
-}
-
-.post-action-node { 
-    display: flex; 
-    align-items: center; 
-    gap: 4px; 
-    cursor: pointer; 
-}
-
-.post-action-node:hover { 
-    color: var(--tg-blue); 
-}
-
-/* ==========================================
-   LEADERBOARDS & TABULAR SYSTEM DATA ROWS
-========================================== */
-.leaderboard-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    text-align: left; 
-    margin-top: 10px; 
-}
-
-.leaderboard-table th { 
-    padding: 10px; 
-    border-bottom: 2px solid var(--border-color); 
-    color: var(--text-muted); 
-    font-size: 11px; 
-    text-transform: uppercase; 
-}
-
-.leaderboard-table td { 
-    padding: 12px 10px; 
-    border-bottom: 1px solid var(--border-color); 
-    font-weight: 500; 
-}
-
-.leaderboard-table tr:hover { 
-    background-color: var(--box-label); 
-}
-
-.rank-circle { 
-    width: 22px; 
-    height: 22px; 
-    border-radius: 50%; 
-    background: var(--box-label); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 11px; 
-    font-weight: bold; 
-}
-
-/* ==========================================
-   SYSTEM CONTROL ACTIONS & INPUT BLOCKS
-========================================== */
-.form-group { 
-    margin-bottom: 15px; 
-}
-
-.form-group label { 
-    font-size: 11px; 
-    font-weight: 700; 
-    margin-bottom: 4px; 
-    display: block; 
-    color: var(--text-muted); 
-    text-transform: uppercase; 
-}
-
-.input-box { 
-    width: 100%; 
-    background: var(--input-bg); 
-    border: 1px solid var(--border-color); 
-    color: var(--text-main); 
-    padding: 10px; 
-    border-radius: 8px; 
-    font-size: 13px; 
-    outline: none; 
-    transition: border 0.2s; 
-}
-
-.input-box:focus { 
-    border-color: var(--tg-blue); 
-}
-
-.panel-action-btn { 
-    background-color: var(--tg-blue); 
-    color: white; 
-    border: none; 
-    padding: 10px 16px; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    font-weight: 700; 
-    width: 100%; 
-    font-size: 13px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 8px; 
-    transition: background 0.2s; 
-}
-
-.panel-action-btn:hover { 
-    background-color: var(--tg-blue-hover); 
-}
-
-/* Secure Admin Shell Console Box Terminal */
-.security-console-terminal { 
-    background: #070b12; 
-    color: #39ff14; 
-    font-family: monospace; 
-    padding: 12px; 
-    border-radius: 8px; 
-    height: 160px; 
-    overflow-y: auto; 
-    font-size: 11px; 
-    line-height: 1.5; 
-    border: 1px solid #1f3d0c; 
-}
-
-/* Responsive Overlays and Curtain Layers */
-.sidebar-curtain-overlay { 
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    bottom: 0; 
-    background: rgba(0,0,0,0.5); 
-    z-index: 1000; 
-}
-
-/* ==========================================
-   MOBILE MEDIA QUERY LAYOUT OVERRIDES
-========================================== */
-@media (max-width: 992px) {
-    .sidebar { 
-        transform: translateX(-100%); 
+    --bg-primary: #0b0f19;
+    --bg-secondary: #111827;
+    --app-shell-bg: #1f2937;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #374151;
+    --box-label: #111827;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   2. LAYER A: SECURE LOGIN WALL CONTAINER STYLES
+   ========================================================================== */
+.auth-gate-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    padding: 20px;
+}
+
+.auth-card-chassis {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    box-shadow: var(--shadow-md);
+}
+
+.auth-brand-badge {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.auth-brand-badge i {
+    width: 48px;
+    height: 48px;
+    color: var(--tg-blue);
+    margin-bottom: 12px;
+}
+
+.auth-brand-badge h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.auth-brand-badge p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.auth-form-cluster .form-group {
+    margin-bottom: 16px;
+}
+
+.auth-form-cluster label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.input-box {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-box:focus {
+    border-color: var(--tg-blue);
+}
+
+.panel-action-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--tg-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.panel-action-btn:hover {
+    background: var(--tg-blue-hover);
+}
+
+.auth-footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   3. LAYER B: VOCATIONAL TRAJECTORY DIAGNOSTIC SURVEY MODAL
+   ========================================================================== */
+.custom-modal-curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99998;
+    padding: 20px;
+}
+
+.assessment-modal-chassis {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.assessment-modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.assessment-modal-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.assessment-progress-indicator {
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--box-label);
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: var(--tg-blue);
+}
+
+.assessment-modal-body {
+    padding: 24px 20px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.survey-question-prompt {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.survey-options-vertical-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.survey-option-row-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    text-align: left;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.survey-option-row-btn:hover {
+    border-color: var(--tg-blue);
+    background: var(--box-label);
+}
+
+.survey-option-row-btn.selected-option {
+    border-color: var(--tg-blue);
+    background: rgba(2, 132, 199, 0.1);
+    font-weight: 600;
+}
+
+.assessment-modal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ==========================================================================
+   4. PROTECTED APPLICATION SHELL CORE INFRASTRUCTURE Layout
+   ========================================================================== */
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* LEFT DRAW NAVIGATION PANEL SIDEBAR */
+.sidebar {
+    width: 260px;
+    background-color: var(--app-shell-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-brand {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--tg-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hamburger-toggle-trigger {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    display: none;
+}
+
+.hamburger-toggle-trigger i {
+    width: 22px;
+    height: 22px;
+}
+
+.sidebar-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 8px;
+}
+
+.menu-list {
+    list-style: none;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background-color: var(--bg-primary);
+}
+
+.menu-item.active {
+    background-color: rgba(2, 132, 199, 0.08);
+    color: var(--tg-blue);
+    font-weight: 600;
+}
+
+.menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-item i, .nested-sub-item i {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdown-chevron-marker {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s;
+}
+
+/* Sub-tree Course Accordion Mechanics styling */
+.accordion-content {
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 12px;
+    transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-content.open {
+    max-height: 400px;
+    margin-bottom: 8px;
+}
+
+.nested-sub-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.nested-sub-item:hover {
+    background-color: var(--bg-primary);
+    color: var(--tg-blue);
+}
+
+/* User identity dock panel settings bottom anchor */
+.role-dock-panel {
+    padding: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.user-profile-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-primary);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.avatar-ring {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--tg-blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.user-meta-data-stack {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.user-meta-name {
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-meta-clearance {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.settings-gear-trigger-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.settings-gear-trigger-btn i {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.settings-gear-trigger-btn:hover i {
+    transform: rotate(45deg);
+    color: var(--text-main);
+}
+
+/* ==========================================================================
+   5. WORKSPACE ARCHITECTURE HEADER & WORK AREAS VIEW PANELS
+   ========================================================================== */
+.main-workspace {
+    flex: 1;
+    margin-left: 260px;
+    padding: 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-navigation-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.only-icon-theme-btn, .security-logout-action-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.only-icon-theme-btn i, .security-logout-action-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.security-logout-action-btn {
+    color: var(--danger);
+}
+
+/* Dynamic Live Alarm Status Banner Bar CSS styling */
+.active-alarm-toast-banner {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid var(--warning);
+    border-left: 4px solid var(--warning);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.alarm-toast-left-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.blinking-indicator-pulse {
+    width: 8px;
+    height: 8px;
+    background-color: var(--warning);
+    border-radius: 50%;
+    animation: alarmBlink 1s infinite alternate;
+}
+
+@keyframes alarmBlink {
+    from { opacity: 0.3; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1.1); }
+}
+
+.alarm-toast-left-content p {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.close-toast-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.close-toast-action-btn i {
+    width: 14px;
+    height: 14px;
+}
+
+/* ==========================================================================
+   6. PORTAL VIEW PAGES LAYOUT CORES
+   ========================================================================== */
+.portal-pane-view {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.portal-pane-view.active-pane {
+    display: flex;
+}
+
+.content-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.content-card h2, .content-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Responsive Double Columns Layout Grid configuration */
+.dashboard-double-chassis-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
+}
+
+.primary-feed-column, .secondary-metrics-sidebar-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ==========================================================================
+   7. CHRONOLOGY DUAL SYSTEM EXTENSION MODULES
+   ========================================================================== */
+.calendar-dual-readout-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calendar-segment {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+
+.cal-system-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.cal-date-value {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: monospace;
+    color: var(--tg-blue);
+}
+
+/* ==========================================================================
+   8. COMPRESSED MINIMALIST STREAMLINED LEADERBOARD
+   ========================================================================== */
+.streamlined-leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.leaderboard-row-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+}
+
+.badge-rank-icon {
+    font-size: 16px;
+}
+
+.rank-user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.rank-user-info .user-name {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rank-user-info .track-focus-lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.rank-score-time {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+/* ==========================================================================
+   9. INTERACTIVE TIKTOK/YOUTUBE INSTAGRAM SHORTS MEDIA STREAM FEED
+   ========================================================================== */
+.social-stream-header-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.media-stream-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.media-stream-post {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+}
+
+.post-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--box-label);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.post-video-simulation {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.post-video-simulation img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Interactive Action Control Toolbar Layout Row elements styling */
+.post-actions-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+}
+
+.post-action-node {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.post-action-node i {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s;
+}
+
+.post-action-node:hover i {
+    transform: scale(1.1);
+}
+
+.post-action-node.liked i {
+    color: var(--danger);
+    fill: var(--danger);
+}
+
+.post-action-node.saved i {
+    color: var(--warning);
+    fill: var(--warning);
+}
+
+/* ==========================================================================
+   10. UPGRADED HARDWARE VIRTUAL LIVE CLASSROOM SCREEN VIEW DOCK
+   ========================================================================== */
+.meet-stage-canvas {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0b0f19;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.native-hardware-video-stream-track {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none; /* Controlled programmatically via hardware camera connection triggers */
+}
+
+.meet-profile-ring {
+    width: 64px;
+    height: 64px;
+    background: var(--tg-blue);
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.meet-control-tray {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(15, 23, 42, 0.75);
+    padding: 6px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    z-index: 5;
+}
+
+.meet-tray-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.meet-tray-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.meet-tray-btn.disabled-state {
+    background: var(--danger);
+}
+
+.meet-backdrop-strip {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.backdrop-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.backdrop-thumb.active-thumb {
+    border-color: var(--tg-blue);
+}
+
+/* Chat synchronized sharing trays components */
+.chat-media-sharing-extension-tray {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    padding-bottom: 4px;
+}
+
+.chat-media-share-pill {
+    background: var(--box-label);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.chat-media-share-pill i {
+    width: 12px;
+    height: 12px;
+}
+
+/* ==========================================================================
+   11. DYNAMIC SYSTEM REUSABLE CARD ELEMENTS CLASSES
+   ========================================================================== */
+.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.clock-digit-wrapper {
+    font-family: monospace;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px;
+    background: var(--box-label);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--tg-blue);
+}
+
+.clock-digit-wrapper.alert-mode {
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+.utility-btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.role-pill-btn {
+    padding: 8px 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Subject Catalog Cards styling elements maps */
+.badge-grid-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.premium-subject-badge {
+    background: linear-gradient(135deg, var(--tg-blue) 0%, var(--tg-blue-hover) 100%);
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+}
+
+.badge-card-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.badge-data-field {
+    margin-top: 6px;
+}
+
+.field-tag {
+    font-size: 9px;
+    opacity: 0.75;
+    text-transform: uppercase;
+    display: block;
+}
+
+.field-response-box {
+    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 6px;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+
+/* AI Chat Layout modules box components styles definitions */
+.ai-shell-container {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    background: var(--box-label);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ai-message-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.msg-bubble {
+    max-width: 80%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.msg-bubble.assistant {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+    align-self: flex-start;
+    border: 1px solid var(--border-color);
+}
+
+.msg-bubble.user {
+    background: var(--tg-blue);
+    color: #ffffff;
+    align-self: flex-end;
+}
+
+.msg-bubble img {
+    width: 100%;
+    border-radius: 6px;
+    margin-top: 6px;
+}
+
+.ai-control-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+}
+
+.file-attach-label {
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.file-attach-label i {
+    width: 20px;
+    height: 20px;
+}
+
+.file-attach-label input {
+    display: none;
+}
+
+.log-line {
+    font-size: 11px;
+    margin-bottom: 4px;
+    font-family: monospace;
+}
+
+/* Settings dynamic description banners template */
+.settings-dynamic-info-chassis {
+    margin-top: 14px;
+    padding: 12px;
+    background: var(--box-label);
+    border-left: 3px solid var(--tg-blue);
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Administrative black systems logs console structures fields */
+.security-console-terminal {
+    background: #020617;
+    color: #22c55e;
+    font-family: monospace;
+    font-size: 11px;
+    padding: 12px;
+    border-radius: 8px;
+    height: 160px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.department-headline-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-muted);
+}
+
+/* Background overlay drawer layers backgrounds curtains block masks */
+.sidebar-curtain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+    display: none;
+}
+
+/* ==========================================================================
+   12. MOBILE VIEWPORT MEDIA LAYOUT BREAKPOINTS INTERFACES RULES
+   ========================================================================== */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
     }
-    .sidebar.mobile-open { 
-        transform: translateX(0); 
+    .sidebar.mobile-open {
+        transform: translateX(0);
     }
-    .sidebar-curtain-overlay.mobile-open { 
-        display: block; 
+    .sidebar-curtain-overlay.mobile-open {
+        display: block;
     }
-    .main-workspace { 
-        margin-left: 0; 
-        width: 100%; 
+    .main-workspace {
+        margin-left: 0;
+        padding: 16px;
     }
-    .hamburger-toggle-trigger { 
-        display: block; 
+    .hamburger-toggle-trigger {
+        display: block;
+    }
+    .dashboard-double-chassis-layout {
+        grid-template-columns: 1fr;
     }
 }
