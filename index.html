@@ -6,74 +6,150 @@
     <title>Abisinya School | Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: #0b0f19; color: #f3f4f6; padding: 20px; }
-        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #1f2937; }
-        h1 { color: #f59e0b; font-size: 24px; display: flex; align-items: center; gap: 10px; }
-        .premium-badge { background: linear-gradient(135deg, #b45309, #d97706); padding: 4px 10px; border-radius: 12px; font-size: 12px; color: white; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card { background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        h2 { font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: #e5e7eb; }
-        .subject-item { background: #1f2937; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #d97706; }
-        .btn { background-color: #d97706; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .btn:hover { background-color: #b45309; }
-        .status { font-size: 14px; color: #9ca3af; display: flex; align-items: center; gap: 5px; margin-bottom: 8px; }
-        .time-counter { font-size: 24px; font-weight: bold; color: #10b981; margin: 10px 0; text-align: center; background: #0b0f19; padding: 10px; border-radius: 8px; border: 1px dashed #10b981; }
-        .chat-box { height: 150px; background: #0b0f19; border-radius: 8px; padding: 10px; overflow-y: auto; font-size: 14px; color: #d1d5db; border: 1px solid #1f2937; }
-        .chat-msg { margin-bottom: 8px; }
-        .chat-admin { color: #f59e0b; font-weight: bold; }
+        /* Telegram-Style Default Theme (Light Blue & White) */
+        :root {
+            --bg-body: #ef4f4f4; /* Subtle off-white */
+            --bg-body-real: #f4f5f7;
+            --bg-card: #ffffff;
+            --text-main: #000000;
+            --text-muted: #6d7885;
+            --tg-blue: #2481cc; /* Classic Telegram Blue */
+            --tg-blue-hover: #1a6fa3;
+            --border-color: #e1e4e8;
+            --box-label: #f0f2f5;
+        }
+
+        /* Pure Dark Mode Theme (Triggered by JavaScript) */
+        [data-theme="dark"] {
+            --bg-body-real: #0e1621; /* Telegram Dark Bg */
+            --bg-card: #182533;      /* Telegram Dark Card Bg */
+            --text-main: #ffffff;
+            --text-muted: #7e8b9a;
+            --tg-blue: #2b71b1;
+            --tg-blue-hover: #3b88c3;
+            --border-color: #101924;
+            --box-label: #101924;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg-body-real); color: var(--text-main); padding: 20px; transition: background-color 0.3s, color 0.3s; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        h1 { color: var(--tg-blue); font-size: 24px; display: flex; align-items: center; gap: 10px; }
+        
+        /* Theme Toggle Button Style */
+        .theme-toggle-btn { background-color: var(--tg-blue); color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .theme-toggle-btn:hover { background-color: var(--tg-blue-hover); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background-color 0.3s; }
+        h2 { font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+        
+        /* Premium Subject Badges Inspired by your image */
+        .badge-container { display: flex; flex-direction: column; gap: 15px; }
+        .subject-badge { background: var(--tg-blue); border-radius: 12px; padding: 15px; position: relative; box-shadow: 0 4px 10px rgba(36,129,204,0.2); border: 1px solid rgba(255,255,255,0.1); }
+        .badge-name { font-size: 20px; font-weight: bold; color: white; margin-bottom: 10px; }
+        .badge-field { margin-top: 8px; }
+        .field-label { font-size: 10px; font-weight: bold; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-bottom: 3px; display: block; }
+        .field-box { background-color: var(--box-label); color: var(--text-main); font-weight: 600; padding: 8px 12px; border-radius: 6px; font-size: 14px; min-height: 35px; display: flex; align-items: center; }
+        
+        .btn { background-color: var(--tg-blue); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; font-size: 14px; }
+        .btn:hover { background-color: var(--tg-blue-hover); }
+        .status { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; margin-bottom: 8px; }
+        
+        .time-counter { font-size: 26px; font-weight: bold; color: #10b981; margin: 10px 0; text-align: center; background: var(--box-label); padding: 12px; border-radius: 8px; border: 1px dashed #10b981; }
+        .chat-box { height: 160px; background: var(--box-label); border-radius: 8px; padding: 12px; overflow-y: auto; font-size: 14px; color: var(--text-main); border: 1px solid var(--border-color); }
+        .chat-msg { margin-bottom: 8px; line-height: 1.4; }
+        .chat-admin { color: var(--tg-blue); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🏛️ Abisinya School <span class="premium-badge">Premium Admin</span></h1>
-        <div>📊 Active Status</div>
+        <h1>🏛️ Abisinya School</h1>
+        <button class="theme-toggle-btn" id="themeToggleBtn">
+            <i data-lucide="moon" id="themeIcon"></i> <span id="themeText">Dark Mode</span>
+        </button>
     </header>
 
     <div class="grid">
-        <!-- Accountability Tracker Card -->
         <div class="card">
             <h2><i data-lucide="clock"></i> Live Time Monitor</h2>
             <p class="status">🎯 Current Active Unit: Forex Market Structure</p>
             <div class="time-counter">⏳ 01:42:18</div>
-            <p style="font-size: 12px; color: #ef4444; text-align: center;">⚠️ Anti-Cheat Active: Timer stops if you switch tabs!</p>
+            <p style="font-size: 12px; color: #ef4444; text-align: center; font-weight: 500;">⚠️ Anti-Cheat Active: Timer stops if you switch tabs!</p>
             <button class="btn">View Teacher Logs</button>
         </div>
 
-        <!-- Subjects Grid Card -->
         <div class="card">
             <h2><i data-lucide="book-open"></i> Academy Departments</h2>
-            <div class="subject-item">
-                <span>📈 Forex Trading</span>
-                <span style="color: #10b981; font-size: 12px;">Active Logs</span>
-            </div>
-            <div class="subject-item">
-                <span>🎨 Graphic Design</span>
-                <span style="color: #10b981; font-size: 12px;">Active Logs</span>
-            </div>
-            <div class="subject-item" style="border-left-color: #6b7280; opacity: 0.6;">
-                <span>🌐 Languages / Arts</span>
-                <span style="color: #9ca3af; font-size: 12px;">Expanding</span>
+            <div class="badge-container">
+                
+                <div class="subject-badge">
+                    <div class="badge-name">Forex Trading</div>
+                    <div class="badge-field">
+                        <span class="field-label">SUBJECT</span>
+                        <div class="field-box">📈 Technical & Risk Analysis</div>
+                    </div>
+                    <div class="badge-field">
+                        <span class="field-label">CLASS STATUS</span>
+                        <div class="field-box">🟢 Live Tracking System Online</div>
+                    </div>
+                </div>
+
+                <div class="subject-badge">
+                    <div class="badge-name">Graphic Design</div>
+                    <div class="badge-field">
+                        <span class="field-label">SUBJECT</span>
+                        <div class="field-box">🎨 UI Layouts & Visual Branding</div>
+                    </div>
+                    <div class="badge-field">
+                        <span class="field-label">CLASS STATUS</span>
+                        <div class="field-box">🟢 Live Tracking System Online</div>
+                    </div>
+                </div>
+
             </div>
             <button class="btn">+ Add New Department</button>
         </div>
 
-        <!-- Community Live Feed Card -->
         <div class="card">
             <h2><i data-lucide="messages-square"></i> Community Classroom</h2>
             <div class="chat-box">
-                <div class="chat-msg"><span class="chat-admin">[Admin]:</span> Welcome to the live workspace! Remember to log your hours.</div>
-                <div class="chat-msg"><strong>Student_A:</strong> Just uploaded my new graphic design asset to the media locker.</div>
-                <div class="chat-msg"><strong>Student_B:</strong> Analyzing the EUR/USD trend line right now.</div>
+                <div class="chat-msg"><span class="chat-admin">[Admin]:</span> Welcome to the blue-theme workspace! Toggle dark mode at the top anytime.</div>
+                <div class="chat-msg"><strong>Student_A:</strong> The design looks so fresh now. Much easier to read!</div>
+                <div class="chat-msg"><strong>Student_B:</strong> Checking out the live monitoring logs.</div>
             </div>
-            <button class="btn" style="background-color: #2563eb;">🚀 Launch Live Video Class</button>
+            <button class="btn" style="background-color: #10b981;">🚀 Launch Live Video Class</button>
         </div>
     </div>
 
     <script>
-        // Initialize Premium Icons
+        // Initialize Icons
         lucide.createIcons();
+
+        // Theme Toggle Engine
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                // Switch to Light Mode (Blue & White)
+                document.documentElement.removeAttribute('data-theme');
+                themeText.innerText = "Dark Mode";
+                themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                // Switch to Dark Mode (Dark Charcoal/Blue & Black)
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeText.innerText = "Light Mode";
+                themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            // Re-render the icons smoothly
+            lucide.createIcons();
+        });
     </script>
 </body>
 </html>
