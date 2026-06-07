@@ -41,39 +41,51 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: var(--bg-body); color: var(--text-main); font-size: 13px; min-height: 100vh; overflow-x: hidden; transition: background 0.2s; }
         
-        .app-shell { display: flex; min-height: 100vh; position: relative; }
+        .app-shell { display: flex; min-height: 100vh; position: relative; width: 100%; }
 
         /* ==========================================
            ADVANCED SIDEBAR & ACCORDION SYSTEM
         ========================================== */
-        .sidebar { width: 280px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1000; transition: transform 0.3s ease; }
+        .sidebar { 
+            width: 280px; 
+            background-color: var(--sidebar-bg); 
+            border-right: 1px solid var(--border-color); 
+            display: flex; 
+            flex-direction: column; 
+            position: fixed; 
+            top: 0; 
+            bottom: 0; 
+            left: 0; 
+            z-index: 1010; 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
         .sidebar-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
         .sidebar-brand { font-size: 18px; font-weight: bold; color: var(--tg-blue); display: flex; align-items: center; gap: 8px; }
         .sidebar-scroll-area { flex: 1; overflow-y: auto; padding: 15px 10px; }
         
         .menu-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
-        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 8px; color: var(--text-main); font-weight: 500; text-decoration: none; cursor: pointer; transition: background 0.2s; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 8px; color: var(--text-main); font-weight: 500; text-decoration: none; cursor: pointer; transition: background 0.2s; }
         .menu-item:hover, .menu-item.active { background-color: var(--box-label); color: var(--tg-blue); }
-        .menu-item-left { display: flex; align-items: center; gap: 10px; }
+        .menu-item-left { display: flex; align-items: center; gap: 10px; pointer-events: none; }
 
         /* Dropdown Nested Options Tree Layout */
         .accordion-content { display: none; list-style: none; padding-left: 25px; margin-top: 4px; margin-bottom: 4px; flex-direction: column; gap: 3px; }
         .accordion-content.open { display: flex; }
-        .nested-sub-item { padding: 8px 10px; font-size: 12px; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .nested-sub-item { padding: 10px; font-size: 12px; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
         .nested-sub-item:hover { background-color: var(--box-label); color: var(--tg-blue); }
 
         /* Multi-Tier Profile Controls Container */
         .role-dock-panel { padding: 15px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 6px; }
         .role-badge-status { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .role-pill-btn { border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); padding: 8px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .role-pill-btn { border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .role-pill-btn.active-role { background-color: var(--tg-blue); color: white; border-color: var(--tg-blue); }
 
         /* Main Shell Content Dock Spaces */
-        .main-workspace { flex: 1; margin-left: 280px; padding: 20px; transition: margin-left 0.3s; width: calc(100% - 280px); }
-        .top-navigation-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 25px; }
+        .main-workspace { flex: 1; margin-left: 280px; padding: 20px; transition: margin-left 0.3s ease; width: calc(100% - 280px); position: relative; min-width: 0; }
+        .top-navigation-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 25px; gap: 10px; }
         
-        .hamburger-toggle-trigger { background: none; border: none; color: var(--text-main); cursor: pointer; display: none; padding: 5px; }
-        .action-theme-btn { background-color: var(--tg-blue); color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .hamburger-toggle-trigger { background: none; border: none; color: var(--text-main); cursor: pointer; display: none; padding: 8px; z-index: 1020; }
+        .action-theme-btn { background-color: var(--tg-blue); color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
 
         /* Screen Routing Architecture rules */
         .portal-pane-view { display: none; animation: viewLoad 0.25s ease-in-out forwards; }
@@ -81,13 +93,14 @@
         @keyframes viewLoad { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Shared Dashboard Layout Architecture */
-        .layout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .layout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+        .badge-grid-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
         .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); margin-bottom: 20px; position: relative; }
         .content-card h2 { font-size: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
 
         /* Premium Course Badges Structural Columns */
         .department-headline-title { font-size: 18px; font-weight: 700; color: var(--tg-blue); margin-bottom: 15px; border-left: 4px solid var(--tg-blue); padding-left: 8px; }
-        .premium-badge-card { background: var(--tg-blue); border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(36,129,204,0.15); border: 1px solid rgba(255,255,255,0.1); color: white; margin-bottom: 15px; }
+        .premium-badge-card, .premium-subject-badge { background: var(--tg-blue); border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(36,129,204,0.15); border: 1px solid rgba(255,255,255,0.1); color: white; margin-bottom: 15px; }
         .badge-card-header { font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
         .badge-data-field { margin-top: 8px; }
         .badge-data-field .field-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 2px; display: block; }
@@ -152,9 +165,11 @@
         .security-console-terminal { background: #070b12; color: #39ff14; font-family: monospace; padding: 12px; border-radius: 8px; height: 160px; overflow-y: auto; font-size: 11px; line-height: 1.5; border: 1px solid #1f3d0c; }
 
         /* Curtain Drawer Layer for Mobile UI overlays */
-        .sidebar-curtain-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 999; }
+        .sidebar-curtain-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
 
-        /* Responsive Screen Media Queries adjustments */
+        /* ==========================================
+           COMPREHENSIVE RESPONSIVENESS REPAIRS
+        ========================================== */
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.mobile-open { transform: translateX(0); }
@@ -371,7 +386,7 @@
                             <input type="text" id="inputPostCaptionText" class="input-box" placeholder="Write a short explanatory note...">
                         </div>
                         <div class="form-group">
-                            <label>Attach Media Lesson (Video Track / Document Block Reference)</label>
+                            <label>Attach Media Lesson</label>
                             <input type="file" id="inputPostFileAttachment" class="input-box" accept="video/*,image/*">
                         </div>
                         <button class="panel-action-btn" id="btnPublishSocialPost" style="background-color: var(--success);"><i data-lucide="send"></i> Deploy to School Stream</button>
@@ -382,14 +397,13 @@
             <section class="portal-pane-view" id="paneLeaderboardView">
                 <div class="content-card" style="max-width: 750px; margin: 0 auto;">
                     <h2><i data-lucide="trophy"></i> Elite Active Attendance Verification Leaderboard</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 15px;">Rankings update dynamically based on verified system runtime focus, session logs, and skill points.</p>
                     <table class="leaderboard-table">
                         <thead>
                             <tr>
                                 <th>Rank</th>
-                                <th>User Identification Profile</th>
-                                <th>Verified Track Focus</th>
-                                <th>Verified Time Logs</th>
+                                <th>User Profile</th>
+                                <th>Track Focus</th>
+                                <th>Verified Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -486,6 +500,29 @@
         ];
 
         // ==========================================
+        // MOBILE HAMBURGER UI INTERFACES ENGINE (REPAIRED)
+        // ==========================================
+        const sidebarWrapperNode = document.getElementById('appNavigationSidebar');
+        const sidebarCurtainLayerNode = document.getElementById('sidebarCurtainLayer');
+        const btnHamburgerOpen = document.getElementById('btnHamburgerSidebarOpen');
+        const btnHamburgerClose = document.getElementById('actionHideSidebarBtn');
+        
+        function openSidebarDrawerMenu(e) {
+            if(e) e.stopPropagation();
+            sidebarWrapperNode.classList.add('mobile-open');
+            sidebarCurtainLayerNode.classList.add('mobile-open');
+        }
+        function closeSidebarDrawerMenu(e) {
+            if(e) e.stopPropagation();
+            sidebarWrapperNode.classList.remove('mobile-open');
+            sidebarCurtainLayerNode.classList.remove('mobile-open');
+        }
+
+        btnHamburgerOpen.addEventListener('click', openSidebarDrawerMenu);
+        btnHamburgerClose.addEventListener('click', closeSidebarDrawerMenu);
+        sidebarCurtainLayerNode.addEventListener('click', closeSidebarDrawerMenu);
+
+        // ==========================================
         // STATE ARCHITECTURE METRIC MEMORY RUN TIME (THEMING)
         // ==========================================
         function loadSystemPaletteThemeStateOnLaunch() {
@@ -525,27 +562,7 @@
             logSecurityMovementActivityTrack("User color configuration layout flipped manually.");
         });
 
-        // Initialize persistent memory on load
         loadSystemPaletteThemeStateOnLaunch();
-
-        // ==========================================
-        // MOBILE HAMBURGER UI INTERFACES ENGINE
-        // ==========================================
-        const sidebarWrapperNode = document.getElementById('appNavigationSidebar');
-        const sidebarCurtainLayerNode = document.getElementById('sidebarCurtainLayer');
-        
-        function openSidebarDrawerMenu() {
-            sidebarWrapperNode.classList.add('mobile-open');
-            sidebarCurtainLayerNode.classList.add('mobile-open');
-        }
-        function closeSidebarDrawerMenu() {
-            sidebarWrapperNode.classList.remove('mobile-open');
-            sidebarCurtainLayerNode.classList.remove('mobile-open');
-        }
-
-        document.getElementById('btnHamburgerSidebarOpen').addEventListener('click', openSidebarDrawerMenu);
-        document.getElementById('actionHideSidebarBtn').addEventListener('click', closeSidebarDrawerMenu);
-        sidebarCurtainLayerNode.addEventListener('click', closeSidebarDrawerMenu);
 
         // ==========================================
         // SIDEBAR TREE ACCORDION DROPDOWN ENGINE
@@ -555,12 +572,7 @@
 
         accordionCoursesToggleNode.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isOpenNow = accordionCoursesDropdownTreeNode.classList.contains('open');
-            if (isOpenNow) {
-                accordionCoursesDropdownTreeNode.classList.remove('open');
-            } else {
-                accordionCoursesDropdownTreeNode.classList.add('open');
-            }
+            accordionCoursesDropdownTreeNode.classList.toggle('open');
         });
 
         // ==========================================
@@ -571,24 +583,23 @@
         const workspaceViewHeaderLabelNode = document.getElementById('workspaceViewHeaderLabel');
 
         menuNavigationItemNodes.forEach(paneTrigger => {
-            paneTrigger.addEventListener('click', () => {
+            paneTrigger.addEventListener('click', (e) => {
                 menuNavigationItemNodes.forEach(n => n.classList.remove('active'));
                 viewPortalPanes.forEach(v => v.classList.remove('active-pane'));
 
                 paneTrigger.classList.add('active');
                 const targetPaneIdentifier = paneTrigger.getAttribute('data-pane');
                 document.getElementById(targetPaneIdentifier).classList.add('active-pane');
-                workspaceViewHeaderLabelNode.innerText = paneTrigger.innerText.trim();
+                workspaceViewHeaderLabelNode.innerText = paneTrigger.textContent.trim();
                 
                 closeSidebarDrawerMenu();
-                logSecurityMovementActivityTrack(`Mapsd workspace pipeline views toward target segment: ${paneTrigger.innerText.trim()}`);
+                logSecurityMovementActivityTrack(`Mapsd workspace pipeline views toward target segment: ${paneTrigger.textContent.trim()}`);
             });
         });
 
         function triggerDepartmentFilter(departmentKeyString) {
             activeSelectedDepartmentCatalogGroup = departmentKeyString;
             
-            // Re-route user back to primary landing frame view panel programmatically
             document.querySelector('[data-pane="paneHomeView"]').click();
             
             const titlesTranslationMap = {
@@ -600,6 +611,7 @@
             
             document.getElementById('catalogDepartmentHeadline').innerText = `Active Department: ${titlesTranslationMap[departmentKeyString]}`;
             renderGlobalDepartmentCatalogBadges();
+            closeSidebarDrawerMenu();
         }
 
         // ==========================================
@@ -610,20 +622,20 @@
         const socialUploadWidgetContainerNode = document.getElementById('socialUploadWidgetContainer');
 
         rolePills.forEach(pill => {
-            pill.addEventListener('click', () => {
+            pill.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const triggerId = pill.id;
                 
                 if (triggerId === "btnRoleSetAdmin") {
-                    // Inject structural secure password gate verification routines
-                    const adminAccessKeyAttempt = prompt("🔒 Access Verification Gate: Please input your high-priority administrative structural unlock password key token:");
+                    const adminAccessKeyAttempt = prompt("🔒 Access Verification Gate: Input administrative password key:");
                     if (adminAccessKeyAttempt !== "admin123") {
-                        alert("❌ Authorization Security Breach Detected: Invalid configuration token provided. Tracking activity sequence logs.");
+                        alert("❌ Authorization Security Breach Detected: Invalid configuration token.");
                         logSecurityMovementActivityTrack("CRITICAL WARNING: Unauthorized deployment attempt on Security Gate.", "#ef4444");
                         return;
                     }
                     currentActiveUserRole = "Admin";
                     sidebarAdminMenuAnchorNode.style.display = "flex";
-                    alert("🔑 Elevation Matrix Authorized: Master administrative system workspace view tab initialized.");
+                    alert("🔑 Elevation Matrix Authorized: Master administrative views loaded.");
                 } else {
                     sidebarAdminMenuAnchorNode.style.display = "none";
                     if (triggerId === "btnRoleSetVisitor") currentActiveUserRole = "Visitor";
@@ -631,7 +643,6 @@
                     if (triggerId === "btnRoleSetTeacher") currentActiveUserRole = "Teacher";
                 }
 
-                // Control social content stream view access layer constraints based on security levels
                 if (currentActiveUserRole === "Teacher" || currentActiveUserRole === "Admin") {
                     socialUploadWidgetContainerNode.style.display = "block";
                 } else {
@@ -641,7 +652,7 @@
                 rolePills.forEach(p => p.classList.remove('active-role'));
                 pill.classList.add('active-role');
                 
-                logSecurityMovementActivityTrack(`System user adjusted authentication tier clearance parameters to: [${currentActiveUserRole}]`);
+                logSecurityMovementActivityTrack(`System user adjusted clearance tier to: [${currentActiveUserRole}]`);
                 renderGlobalDepartmentCatalogBadges();
             });
         });
@@ -676,26 +687,24 @@
                    (seconds < 10 ? "0" : "") + seconds;
         }
 
-        // Initialize background validation clock instantly
         startAttendanceClockEngineSequence();
 
-        // Register core screen event focus handlers (The Anti-Cheat Logic Framework)
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) {
                 freezeAttendanceClockEngineSequence();
                 displayAttendanceClockNode.classList.add('alert-mode');
-                logSecurityMovementActivityTrack("⚠️ SECURITY LOG ALERT: Active user tab focus shifted away from portal frame window. Tracking system safely frozen.", "var(--danger)");
+                logSecurityMovementActivityTrack("⚠️ SECURITY LOG ALERT: Focus shifted away from portal. Matrix frozen.", "var(--danger)");
             } else {
                 startAttendanceClockEngineSequence();
                 displayAttendanceClockNode.classList.remove('alert-mode');
-                logSecurityMovementActivityTrack("🟢 SECURITY HANDSHAKE: User returned focus to main workspace panel area logs. Resuming verification metrics.", "var(--success)");
+                logSecurityMovementActivityTrack("🟢 SECURITY HANDSHAKE: Focus returned. Resuming validation trackers.", "var(--success)");
             }
         });
 
         // ==========================================
         // TIME-SUITE EXTENSION UTILITIES (POMODORO & ALARM)
         // ==========================================
-        let pomodoroRemainingSeconds = 1500; // 25 minutes default config
+        let pomodoroRemainingSeconds = 1500;
         let pomodoroTimerIntervalInstance = null;
         const displayPomodoroClockNode = document.getElementById('displayPomodoroClock');
 
@@ -714,7 +723,7 @@
                     } else {
                         clearInterval(pomodoroTimerIntervalInstance);
                         pomodoroTimerIntervalInstance = null;
-                        alert("⏰ Focus Period Complete! Time for a short workspace rest block interval layout.");
+                        alert("⏰ Focus Period Complete! Time for a rest break rest step.");
                     }
                 }, 1000);
                 logSecurityMovementActivityTrack("Pomodoro countdown framework initialized.");
@@ -727,29 +736,24 @@
             logSecurityMovementActivityTrack("Pomodoro workflow track countdown paused manually.");
         });
 
-        // Alarm configuration scheduling algorithms
         let configurationScheduledAlarmTimeRawValue = null;
         setInterval(() => {
             if (configurationScheduledAlarmTimeRawValue) {
                 const rightNowDateInstance = new Date();
                 const cleanCurrentDigitalTimeHoursMinutes = (rightNowDateInstance.getHours() < 10 ? "0" : "") + rightNowDateInstance.getHours() + ":" + (rightNowDateInstance.getMinutes() < 10 ? "0" : "") + rightNowDateInstance.getMinutes();
                 if (cleanCurrentDigitalTimeHoursMinutes === configurationScheduledAlarmTimeRawValue) {
-                    alert("🚨 ABISINYA CLASS ALARM WARNING: Scheduled system class log block timeframe reached! Return immediately.");
+                    alert("🚨 ABISINYA CLASS ALARM: Scheduled class timeframe milestone reached!");
                     configurationScheduledAlarmTimeRawValue = null; 
-                    logSecurityMovementActivityTrack("System alarm configuration criteria fulfilled and fired successfully.");
+                    logSecurityMovementActivityTrack("System alarm criteria fulfilled.");
                 }
             }
         }, 1000);
 
         document.getElementById('btnRegisterAlarmRule').addEventListener('click', () => {
             const rawTargetValue = document.getElementById('inputAlarmTimeTarget').value;
-            if (!rawTargetValue) {
-                alert("Please select a valid time configuration sequence.");
-                return;
-            }
+            if (!rawTargetValue) return;
             configurationScheduledAlarmTimeRawValue = rawTargetValue;
-            alert(`🎉 Alarm rule registered safely for time execution milestone context point: [${rawTargetValue}]`);
-            logSecurityMovementActivityTrack(`User registered a core workspace schedule time check notification rule event trigger at: ${rawTargetValue}`);
+            alert(`🎉 Alarm rule registered for target timeline checkpoint: [${rawTargetValue}]`);
         });
 
         // ==========================================
@@ -759,18 +763,15 @@
 
         function renderGlobalDepartmentCatalogBadges() {
             badgesDisplayGridRowNode.innerHTML = "";
-            
-            // Security Constraint Filtration algorithm rule logic
-            let dataScopeCollection = systemInitialCatalogBadgesStoreData.filter(badgeObjectItem => badgeObjectItem.group === activeSelectedDepartmentCatalogGroup);
+            let dataScopeCollection = systemInitialCatalogBadgesStoreData.filter(b => b.group === activeSelectedDepartmentCatalogGroup);
             
             if (currentActiveUserRole === "Visitor") {
-                // Visitors receive a constrained layout paradigm sequence
-                badgesDisplayGridRowNode.innerHTML = `<div style='grid-column: 1/-1; padding: 15px; color: var(--text-muted); background: var(--box-label); border-radius: 8px;'>🔒 <strong>Registration Shield Active:</strong> Course module badge structures are locked for unauthenticated visitor profiles. Elevate clear profile role indicators below to access full systems.</div>`;
+                badgesDisplayGridRowNode.innerHTML = `<div style='grid-column: 1/-1; padding: 15px; color: var(--text-muted); background: var(--box-label); border-radius: 8px;'>🔒 <strong>Registration Shield Active:</strong> Course module badges are locked for visitors. Elevate clearance roles down below to test out full systems.</div>`;
                 return;
             }
 
             if (dataScopeCollection.length === 0) {
-                badgesDisplayGridRowNode.innerHTML = `<div style='grid-column: 1/-1; padding: 15px; color: var(--text-muted); text-align:center;'>No dynamic badge assets deployed inside this category track index yet.</div>`;
+                badgesDisplayGridRowNode.innerHTML = `<div style='grid-column: 1/-1; padding: 15px; color: var(--text-muted); text-align:center;'>No dynamic badge assets inside this category tracking block index.</div>`;
                 return;
             }
 
@@ -783,17 +784,12 @@
                         <span class="field-tag">SUBJECT SPECIFICATION CORE</span>
                         <div class="field-response-box">${badge.detail}</div>
                     </div>
-                    <div class="badge-data-field">
-                        <span class="field-tag">SECURITY ENFORCEMENT ENGINE</span>
-                        <div class="field-response-box">🟢 Live Verification Stream Active</div>
-                    </div>
                 `;
                 badgesDisplayGridRowNode.appendChild(elementCardContainerWrapperNode);
             });
             lucide.createIcons();
         }
 
-        // Run catalog loading instantly on initial frame boot sequence
         renderGlobalDepartmentCatalogBadges();
 
         // ==========================================
@@ -805,18 +801,13 @@
 
         function switchAdminHierarchyControlCapabilities() {
             userAssignedAdminTier = selectAdminTierLevelSelectorNode.value;
-            
             if (userAssignedAdminTier === "Super") {
-                labelAdminCapabilitiesTextDescriptionNode.innerText = "MASTER privilege scope authorized. Full destructive deletion and ledger adjustments active.";
+                labelAdminCapabilitiesTextDescriptionNode.innerText = "MASTER override scope authorized. Destructive master triggers enabled.";
                 btnAdminDestructiveDeleteActionNode.disabled = false;
-            } else if (userAssignedAdminTier === "SuperStandard") {
-                labelAdminCapabilitiesTextDescriptionNode.innerText = "Tier 2 intermediate authorization access clearance level. Audit logs printable.";
-                btnAdminDestructiveDeleteActionNode.disabled = true;
             } else {
-                labelAdminCapabilitiesTextDescriptionNode.innerText = "Standard badge model generation authorized. Destructive master triggers disabled.";
+                labelAdminCapabilitiesTextDescriptionNode.innerText = "Standard badge generation authorized. Destructive override channels disabled.";
                 btnAdminDestructiveDeleteActionNode.disabled = true;
             }
-            logSecurityMovementActivityTrack(`Admin security deployment profile parameters shifted clearance indexing values to: [${userAssignedAdminTier}]`);
         }
 
         document.getElementById('btnAdminDeployBadgeCard').addEventListener('click', () => {
@@ -824,14 +815,10 @@
             const inputNameStringText = document.getElementById('inputAdminDeptName').value.trim();
             const inputDetailStringText = document.getElementById('inputAdminSubjectFocus').value.trim();
 
-            if (inputNameStringText === "" || inputDetailStringText === "") {
-                alert("Verification parameters incomplete. Ensure forms are filled before deployment.");
-                return;
-            }
+            if (inputNameStringText === "" || inputDetailStringText === "") return;
 
-            const customGeneratedIdIndex = systemInitialCatalogBadgesStoreData.length + 1;
             systemInitialCatalogBadgesStoreData.push({
-                id: customGeneratedIdIndex,
+                id: systemInitialCatalogBadgesStoreData.length + 1,
                 group: chosenTargetCatalogGroupKeyString,
                 name: inputNameStringText,
                 detail: inputDetailStringText
@@ -840,20 +827,8 @@
             document.getElementById('inputAdminDeptName').value = "";
             document.getElementById('inputAdminSubjectFocus').value = "";
 
-            alert("🎉 Verification Success: New functional course badge structure deployed into global core catalogs.");
-            logSecurityMovementActivityTrack(`Admin deployed new dynamic project asset layout: Category [${chosenTargetCatalogGroupKeyString}] - Title: "${inputNameStringText}"`);
+            alert("🎉 Dynamic course badge asset injected successfully into core catalogs!");
             renderGlobalDepartmentCatalogBadges();
-        });
-
-        btnAdminDestructiveDeleteActionNode.addEventListener('click', () => {
-            if (userAssignedAdminTier === "Super") {
-                if (confirm("CRITICAL INTERFACE CALL: Are you sure you want to flush all dynamic catalog system logs entirely?")) {
-                    systemInitialCatalogBadgesStoreData.length = 0;
-                    renderGlobalDepartmentCatalogBadges();
-                    logSecurityMovementActivityTrack("🛑 SYSTEM FLUSH: Complete application asset arrays cleared out via Master Override protocol.", "#ef4444");
-                    alert("System logs flushed.");
-                }
-            }
         });
 
         // ==========================================
@@ -866,7 +841,6 @@
 
         let transientStagedBase64ImageStringDataBuffer = null;
 
-        // Process file attachment loading placements
         inputAiImageContextSelectorNode.addEventListener('change', (e) => {
             const trackingFileReference = e.target.files[0];
             if (!trackingFileReference) return;
@@ -874,8 +848,7 @@
             const arrayReader = new FileReader();
             arrayReader.onload = function(eventResult) {
                 transientStagedBase64ImageStringDataBuffer = eventResult.target.result;
-                alert("📸 Visual Asset context successfully uploaded and locked in AI workspace query channel buffers!");
-                logSecurityMovementActivityTrack("User appended a image reference file structure directly into conversational context scopes.");
+                alert("📸 Visual context locked in conversational asset stream buffers!");
             };
             arrayReader.readAsDataURL(trackingFileReference);
         });
@@ -902,21 +875,18 @@
 
             inputAiUserQueryFieldNode.value = "";
             const currentQueryCopy = rawUserQueryPromptStringTextValue.toLowerCase();
-            const persistentImageSnapshotReferenceCopy = transientStagedBase64ImageStringDataBuffer;
-            transientStagedBase64ImageStringDataBuffer = null; // Flush single execution buffer slot safely
+            transientStagedBase64ImageStringDataBuffer = null;
 
             setTimeout(() => {
                 const aiBubbleResponseWrapperNode = document.createElement('div');
                 aiBubbleResponseWrapperNode.className = 'msg-bubble assistant';
 
-                let executionResultText = "🧠 **Abisinya AI System Engine Diagnostics:** I processed your request data. To connect this live, integrate a backend API framework. Let's study: frame your query around technical analysis indicators, trade risk matrices, or design layouts!";
+                let executionResultText = "🧠 **Abisinya AI System Engine Diagnostics:** I processed your request data fields. Connect this setup with cloud schemas to log database queries live.";
 
-                if (persistentImageSnapshotReferenceCopy) {
-                    executionResultText = "📸 **Abisinya AI Visual Assessment Suite:** I scanned your uploaded visual asset placement. The layout is balanced. If this is a chart reference, monitor liquidity sweep confirmation zones closely.";
-                } else if (currentQueryCopy.includes("forex") || currentQueryCopy.includes("trade") || currentQueryCopy.includes("market")) {
-                    executionResultText = "📈 **Forex Academic Assistant Insights:** In Technical Analysis, structural flow changes rely on breaks of structure ($BOS$). Always identify liquidity sweep points below retail support zones before entry parameters. Never exceed a 1-2% trade risk margin.";
+                if (currentQueryCopy.includes("forex") || currentQueryCopy.includes("trade") || currentQueryCopy.includes("market")) {
+                    executionResultText = "📈 **Forex Academic Assistant Insights:** In Technical Analysis, structural shifts depend on key breaks of structure ($BOS$). Always watch for clear liquidity sweep zones before establishing entry variables.";
                 } else if (currentQueryCopy.includes("design") || currentQueryCopy.includes("graphic") || currentQueryCopy.includes("color")) {
-                    executionResultText = "🎨 **Design Studio Insights:** High-contrast text layers on dark fields (like our Telegram-inspired layout) optimize visual hierarchy across multi-device configurations. Try structuring layout blocks on an atomic grid.";
+                    executionResultText = "🎨 **Design Studio Insights:** High-contrast text layers against dark fields optimize user visibility across portable layout parameters.";
                 } else if (currentQueryCopy.includes("hello") || currentQueryCopy.includes("hi") || currentQueryCopy.includes("hey")) {
                     executionResultText = "Hi there! How can I assist you with your learning goals today?";
                 }
@@ -931,7 +901,7 @@
         inputAiUserQueryFieldNode.addEventListener('keypress', (e) => { if(e.key === 'Enter') fireUserConversationalQuerySubmissionToAiEngine(); });
 
         // ==========================================
-        // GOOGLE MEET VIRTUAL CLASS CLASSROOM INTERFACE CONTROLS
+        // GOOGLE MEET VIRTUAL CLASS CLASSROOM CONTROLS
         // ==========================================
         let virtualMeetingAudioIsMuted = false;
         let virtualMeetingCameraIsDeactivated = false;
@@ -948,7 +918,6 @@
             btnMeetToggleMicNode.classList.toggle('disabled-state', virtualMeetingAudioIsMuted);
             btnMeetToggleMicNode.innerHTML = virtualMeetingAudioIsMuted ? '<i data-lucide="mic-off"></i>' : '<i data-lucide="mic"></i>';
             lucide.createIcons();
-            logSecurityMovementActivityTrack(`Virtual Classroom Microphone state modified: Muted=[${virtualMeetingAudioIsMuted}]`);
         });
 
         btnMeetToggleCamNode.addEventListener('click', () => {
@@ -957,14 +926,12 @@
             btnMeetToggleCamNode.innerHTML = virtualMeetingCameraIsDeactivated ? '<i data-lucide="video-off"></i>' : '<i data-lucide="video"></i>';
             elementMeetProfileNode.style.display = virtualMeetingCameraIsDeactivated ? "none" : "flex";
             lucide.createIcons();
-            logSecurityMovementActivityTrack(`Virtual Classroom Camera feed state modified: Closed=[${virtualMeetingCameraIsDeactivated}]`);
         });
 
         btnMeetToggleShareNode.addEventListener('click', () => {
             virtualMeetingScreenShareIsActive = !virtualMeetingScreenShareIsActive;
             btnMeetToggleShareNode.classList.toggle('disabled-state', virtualMeetingScreenShareIsActive);
-            alert(virtualMeetingScreenShareIsActive ? "🖥️ Screen sharing simulation parameters locked on. Window broadcasting live." : "Screen share session stopped.");
-            logSecurityMovementActivityTrack(`Virtual Classroom Screen share pipeline toggled: Active=[${virtualMeetingScreenShareIsActive}]`);
+            alert(virtualMeetingScreenShareIsActive ? "🖥️ Broadcast simulation initiated. Window asset sharing active." : "Screen share stopped.");
         });
 
         function switchVirtualBackground(backgroundValueString, isImageUrlBoolean) {
@@ -975,7 +942,6 @@
                 elementVirtualMeetStageNode.style.backgroundImage = "none";
                 elementVirtualMeetStageNode.style.backgroundColor = backgroundValueString;
             }
-            logSecurityMovementActivityTrack("User adjusted interactive virtual classroom privacy background canvas pattern.");
         }
 
         // ==========================================
@@ -987,10 +953,7 @@
 
         document.getElementById('btnPublishSocialPost').addEventListener('click', () => {
             const captionText = document.getElementById('inputPostCaptionText').value.trim();
-            if (captionText === "") {
-                alert("Please append an descriptive contextual note prior to deployment.");
-                return;
-            }
+            if (captionText === "") return;
 
             const postCardNode = document.createElement('div');
             postCardNode.className = 'media-stream-post';
@@ -1002,22 +965,12 @@
                         <div style="font-size:10px; color:var(--text-muted);">Published just now</div>
                     </div>
                 </div>
-                <div class="post-video-simulation" style="background:#243141; height:120px;">
-                    <div style="font-weight:600; font-size:12px; color:rgba(255,255,255,0.7);"><i data-lucide="file-text" style="margin:0 auto 6px; display:block; width:30px; height:30px;"></i> Document Track Module Attached</div>
-                </div>
                 <div style="padding:12px; font-weight:500; line-height:1.4;">${captionText}</div>
-                <div class="post-actions-row">
-                    <div class="post-action-node"><i data-lucide="heart" style="width:16px; height:16px;"></i> <span>0</span></div>
-                    <div class="post-action-node"><i data-lucide="message-circle" style="width:16px; height:16px;"></i> <span>0</span></div>
-                </div>
             `;
             
             socialStreamDynamicWrapperNode.insertBefore(postCardNode, socialStreamDynamicWrapperNode.firstChild);
-            lucide.createIcons();
-
             document.getElementById('inputPostCaptionText').value = "";
-            alert("🎉 Asset broadcasted live across the collective school stream space feed network!");
-            logSecurityMovementActivityTrack(`User deployed dynamic item to shared stream asset grid lists: "${captionText}"`);
+            alert("🎉 Post deployed to shared school learning stream!");
         });
 
         function transmitLiveRoomChatMessage() {
@@ -1031,31 +984,22 @@
             
             inputLiveRoomChatFieldNode.value = "";
             liveRoomChatScrollBoxNode.scrollTop = liveRoomChatScrollBoxNode.scrollHeight;
-            
-            // Native soundless notification trigger simulation engine handshake setup
-            logSecurityMovementActivityTrack(`Message dispatched across unified room audio stream channels: "${textContent}"`);
         }
 
         document.getElementById('btnSendLiveRoomChatMsg').addEventListener('click', transmitLiveRoomChatMessage);
         inputLiveRoomChatFieldNode.addEventListener('keypress', (e) => { if(e.key === 'Enter') transmitLiveRoomChatMessage(); });
 
         function saveUserSurveyInterest(selectedInterestAreaString) {
-            alert(`🎯 Specialized track profile updated! Your learning feeds will prioritize: [${selectedInterestAreaString}]`);
-            logSecurityMovementActivityTrack(`User updated vocational preference matrix parameter selections toward: ${selectedInterestAreaString}`);
+            alert(`🎯 Specialized track profile registered: [${selectedInterestAreaString}]`);
         }
 
-        // ==========================================
-        // AUDIT FEED CONSOLE WRITER LOGIC
-        // ==========================================
         const elementSecurityTerminalLogBoxNode = document.getElementById('elementSecurityTerminalLogBox');
-
         function logSecurityMovementActivityTrack(messageStringText, formattingHexColor) {
             const currentTimestampStringValue = new Date().toLocaleTimeString();
             const logLineElementNode = document.createElement('div');
             logLineElementNode.className = 'log-line';
             logLineElementNode.style.color = formattingHexColor || '#39ff14';
             logLineElementNode.innerHTML = `<span style="color: #888;">[${currentTimestampStringValue}]:</span> <span>${messageStringText}</span>`;
-            
             elementSecurityTerminalLogBoxNode.appendChild(logLineElementNode);
             elementSecurityTerminalLogBoxNode.scrollTop = elementSecurityTerminalLogBoxNode.scrollHeight;
         }
