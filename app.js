@@ -1,31 +1,265 @@
 /* ==========================================================================
    1. GLOBAL ARCHITECTURE DEPLOYMENT INITIALIZATION
    ========================================================================== */
+let systemActiveUserSessionRole = null;
+let systemActiveUserDisplayName = "";
+let currentLiveCameraMediaStream = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Render and process vector graphic icon markers
     if (window.lucide) {
         lucide.createIcons();
     }
     
-    // Default system boot operations
-    initializeViewPaneRouterRoutingSystem();
-    initializePlatformThemeEngineManager();
+    // Check and apply cached dark/light preferences instantly
+    initializePersistentThemeEngine();
+    
+    // Core structural event listeners
+    initializeAuthGateValidationTriggers();
     initializeNavigationDrawerInteractions();
-    initializeMultiTierAccessRoleSecurityController();
-    initializeSecurityAuditLoggingTerminal();
-    initializeAntiCheatAttendanceMonitorEngine();
-    initializePomodoroTimeCountdownFramework();
-    initializeSchoolAlarmSchedulerScheduler();
-    initializeDiagnosticAiTutorSuiteEngine();
-    initializeVirtualClassroomStreamingDashboard();
-    initializeFacultySocialMediaStreamStream();
+    initializeViewPaneRouterRoutingSystem();
+    
+    // Background Chronology Coordinate Loops
+    startSynchronizedChronologyEngine();
     
     // Inject preliminary system mock records
     triggerCourseCatalogBadgeCardRenderer('Tech');
 });
 
 /* ==========================================================================
-   2. SCREEN PANEL VIEW ROUTER (ROUTING HANDSHAKE SYSTEM)
+   2. PERSISTENT CORES: THEME & PERSISTENCE
+   ========================================================================== */
+function initializePersistentThemeEngine() {
+    const cachedSavedTheme = localStorage.getItem('abisinya-preferred-theme');
+    const dynamicIconDisplayNode = document.getElementById('themeIconNode');
+    const actionThemeButtonTrigger = document.getElementById('btnPaletteThemeSwitcher');
+
+    if (cachedSavedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (dynamicIconDisplayNode) dynamicIconDisplayNode.setAttribute('data-lucide', 'sun');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        if (dynamicIconDisplayNode) dynamicIconDisplayNode.setAttribute('data-lucide', 'moon');
+    }
+    if (window.lucide) lucide.createIcons();
+
+    if (actionThemeButtonTrigger) {
+        actionThemeButtonTrigger.addEventListener('click', () => {
+            const stringCurrentActiveThemeAttribute = document.documentElement.getAttribute('data-theme');
+            if (stringCurrentActiveThemeAttribute === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('abisinya-preferred-theme', 'light');
+                dynamicIconDisplayNode.setAttribute('data-lucide', 'moon');
+                writeLineToSecurityConsoleTerminal('[THEME ENGINE] Persistent theme context modified to: LIGHT.');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('abisinya-preferred-theme', 'dark');
+                dynamicIconDisplayNode.setAttribute('data-lucide', 'sun');
+                writeLineToSecurityConsoleTerminal('[THEME ENGINE] Persistent theme context modified to: DARK.');
+            }
+            if (window.lucide) lucide.createIcons();
+        });
+    }
+}
+
+/* ==========================================================================
+   3. AIRTIGHT SECURITY WALL: SECURITY AUTH GATEWAY CONSOLE
+   ========================================================================== */
+function initializeAuthGateValidationTriggers() {
+    const triggerLoginBtnAction = document.getElementById('btnExecuteSecureLoginAction');
+    
+    if (triggerLoginBtnAction) {
+        triggerLoginBtnAction.addEventListener('click', () => {
+            const selectedTargetProfileRole = document.getElementById('inputAuthTargetRole').value;
+            const inputEnteredUsernameString = document.getElementById('inputAuthUsername').value.trim();
+            const inputEnteredPasswordString = document.getElementById('inputAuthPassword').value;
+
+            if (!inputEnteredUsernameString || !inputEnteredPasswordString) {
+                displayToastBannerIndicator('⚠️ Identity validation error: Input credentials prior to authentication handshake.');
+                return;
+            }
+
+            // High priority security validation checkpoint mapping rules
+            if (selectedTargetProfileRole === 'Admin' && inputEnteredPasswordString !== 'admin123') {
+                displayToastBannerIndicator('❌ Authorization Denied: Invalid Security Token Credentials for Admin Clearance Strata.');
+                return;
+            }
+
+            // Transition out security gate mask block
+            systemActiveUserSessionRole = selectedTargetProfileRole;
+            systemActiveUserDisplayName = inputEnteredUsernameString;
+            
+            document.getElementById('globalAuthenticationGateScreen').style.display = 'none';
+            document.getElementById('mainProtectedApplicationShellChassis').style.display = 'flex';
+            
+            // Sync up user meta summary UI nodes elements
+            document.getElementById('labelDashboardUserDisplayName').textContent = systemActiveUserDisplayName;
+            document.getElementById('labelDashboardClearanceTag').textContent = `${systemActiveUserSessionRole} Profile`;
+            document.getElementById('labelDashboardUserInitialBadge').textContent = systemActiveUserDisplayName.charAt(0).toUpperCase();
+            
+            // Sync settings panel selector context drop parameters
+            document.getElementById('selectSettingsTierLevelSelector').value = systemActiveUserSessionRole;
+            processSettingsAccountClearanceDowngradeUpgradeOverride();
+
+            writeLineToSecurityConsoleTerminal(`[SECURITY SEED] Safe authentication handshake resolved for profile context: ${systemActiveUserSessionRole}`);
+            
+            // Trigger 5-Question Diagnostic Modal Onboarding
+            triggerVocationalDiagnosticAssessmentSurveyModalFlow();
+        });
+    }
+
+    // Global Secure Session Termination Exit click handler mechanics
+    const globalLogoutActionBtn = document.getElementById('btnGlobalSecurityExitAction');
+    if (globalLogoutActionBtn) {
+        globalLogoutActionBtn.addEventListener('click', () => {
+            terminateLiveCameraHardwareFeedsStream();
+            systemActiveUserSessionRole = null;
+            systemActiveUserDisplayName = "";
+            
+            document.getElementById('inputAuthUsername').value = "";
+            document.getElementById('inputAuthPassword').value = "";
+            
+            document.getElementById('mainProtectedApplicationShellChassis').style.display = 'none';
+            document.getElementById('globalAuthenticationGateScreen').style.display = 'flex';
+            
+            writeLineToSecurityConsoleTerminal('[SECURITY LOGOUT] Session tokens purged. Terminal interface routed back to main entry auth login wall.');
+        });
+    }
+}
+
+/* ==========================================================================
+   4. MULTI-QUESTION DIAGNOSTIC SURVEY MATRIX (5 TRAJECTORIES)
+   ========================================================================== */
+const arrayDiagnosticSurveyQuestionnaireDatabase = [
+    { q: "What is your primary technological or target business execution focus path?", options: ["Cloud Software Development", "Forex Margin Liquidity Risk Analysis", "Creative Visual Art / UI UX Design", "Advanced Quantum & Synthetic Physics Mechanics"] },
+    { q: "Rate your previous functional deployment knowledge relative to this discipline architecture:", options: ["Absolute Novice Foundations Level", "Intermediate Applied Practical Exposure", "Advanced Architecture Optimization Capability"] },
+    { q: "What is your target weekly learning allocation commitment structure metric?", options: ["Accelerated Sprint Focus (20+ Hours per week)", "Balanced Moderate Track (10-20 Hours per week)", "Flexible Variable Path Configuration"] },
+    { q: "Which framework layout design parameter matches your study focus targets?", options: ["Interactive Live Video Classrooms Lectures", "Solo Modular Badge Project Compilations", "Deep System Analysis Audit Tracking Logs"] },
+    { q: "What is the primary production deployment goal model for this credential?", options: ["Online Vocational Agency / Career Pivot", "Corporate Infrastructure Deployment Elevation", "Personal Research Competence Strategy Mastery"] }
+];
+
+let integerActiveSurveyIndexTrackerPosition = 0;
+const arrayCapturedSurveySelectionsResponseVectors = [];
+
+function triggerVocationalDiagnosticAssessmentSurveyModalFlow() {
+    integerActiveSurveyIndexTrackerPosition = 0;
+    arrayCapturedSurveySelectionsResponseVectors.length = 0;
+    
+    document.getElementById('modalSkillAssessmentOnboardingOverlay').style.display = 'flex';
+    renderTargetOnboardingSurveyQuestionItemCardNode();
+}
+
+function renderTargetOnboardingSurveyQuestionItemCardNode() {
+    const targetBodyWrapperBox = document.getElementById('containerDynamicSurveyQuestionBox');
+    const labelProgressIndicator = document.getElementById('labelAssessmentProgressTracker');
+    const buttonNextStepTriggerAction = document.getElementById('btnSubmitAssessmentSurveyAction');
+    
+    buttonNextStepTriggerAction.disabled = true;
+    
+    const currentQuestionItemObjectDataValue = arrayDiagnosticSurveyQuestionnaireDatabase[integerActiveSurveyIndexTrackerPosition];
+    labelProgressIndicator.textContent = `Question ${integerActiveSurveyIndexTrackerPosition + 1} of ${arrayDiagnosticSurveyQuestionnaireDatabase.length}`;
+    
+    targetBodyWrapperBox.innerHTML = `
+        <div class="survey-question-prompt">${currentQuestionItemObjectDataValue.q}</div>
+        <div class="survey-options-vertical-stack" id="surveyOptionsChassisTargetRow"></div>
+    `;
+    
+    const contextOptionsContainerRowBlock = document.getElementById('surveyOptionsChassisTargetRow');
+    currentQuestionItemObjectDataValue.options.forEach((optionTextString, indexValue) => {
+        const optionBtnRow = document.createElement('button');
+        optionBtnRow.className = 'survey-option-row-btn';
+        optionBtnRow.textContent = optionTextString;
+        optionBtnRow.addEventListener('click', () => {
+            document.querySelectorAll('.survey-option-row-btn').forEach(btn => btn.classList.remove('selected-option'));
+            optionBtnRow.classList.add('selected-option');
+            
+            arrayCapturedSurveySelectionsResponseVectors[integerActiveSurveyIndexTrackerPosition] = optionTextString;
+            buttonNextStepTriggerAction.disabled = false;
+        });
+        contextOptionsContainerRowBlock.appendChild(optionBtnRow);
+    });
+}
+
+// Hook up diagnostic button steps sequence controller logic
+const actionSurveyStepProgressBtnTrigger = document.getElementById('btnSubmitAssessmentSurveyAction');
+if (actionSurveyStepProgressBtnTrigger) {
+    actionSurveyStepProgressBtnTrigger.addEventListener('click', () => {
+        if (integerActiveSurveyIndexTrackerPosition < arrayDiagnosticSurveyQuestionnaireDatabase.length - 1) {
+            integerActiveSurveyIndexTrackerPosition++;
+            renderTargetOnboardingSurveyQuestionItemCardNode();
+        } else {
+            document.getElementById('modalSkillAssessmentOnboardingOverlay').style.display = 'none';
+            displayToastBannerIndicator(`🎯 Diagnostic processed! Custom priority path locked onto your chosen trajectory: ${arrayCapturedSurveySelectionsResponseVectors[0]}.`);
+            writeLineToSecurityConsoleTerminal(`[DIAGNOSTICS FINALIZED] Track vector parameter values cached: ${JSON.stringify(arrayCapturedSurveySelectionsResponseVectors)}`);
+            
+            // Customize target content cards automatically based on question responses
+            if (arrayCapturedSurveySelectionsResponseVectors[0].includes('Forex')) {
+                triggerDepartmentFilter('Business');
+            } else if (arrayCapturedSurveySelectionsResponseVectors[0].includes('Creative')) {
+                triggerDepartmentFilter('Creative');
+            } else {
+                triggerDepartmentFilter('Tech');
+            }
+        }
+    });
+}
+
+/* ==========================================================================
+   5. CHRONOLOGY DECK SYSTEM: INTEGRATED DUAL CALENDARS ENGINE
+   ========================================================================== */
+function startSynchronizedChronologyEngine() {
+    refreshDualCalendarReadoutDisplaysFields();
+    setInterval(refreshDualCalendarReadoutDisplaysFields, 60000); // Check and re-align every 60 seconds
+}
+
+function refreshDualCalendarReadoutDisplaysFields() {
+    const internalDateObjInstance = new Date();
+    
+    // 1. Gregorian Formatting Readouts Mapping Layouts
+    const optionsGregorianStringFormatConfig = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+    const stringFormattedGregorianOutputValue = internalDateObjInstance.toLocaleDateString('en-US', optionsGregorianStringFormatConfig);
+    const elementGregorianFieldNode = document.getElementById('displayGregorianDateValueField');
+    if (elementGregorianFieldNode) elementGregorianFieldNode.textContent = stringFormattedGregorianOutputValue;
+
+    // 2. Ethiopian Calendar Algorithmic Chronology Mapping Calculation Models
+    const elementEthiopianFieldNode = document.getElementById('displayEthiopianDateValueField');
+    if (elementEthiopianFieldNode) {
+        elementEthiopianFieldNode.textContent = calculateMockEthiopianChronologyCoordinateValueString(internalDateObjInstance);
+    }
+}
+
+function calculateMockEthiopianChronologyCoordinateValueString(gregorianDateInstance) {
+    let gregYear = gregorianDateInstance.getFullYear();
+    let gregMonth = gregorianDateInstance.getMonth() + 1;
+    let gregDay = gregorianDateInstance.getDate();
+
+    // Standard baseline conversion logic offset calculations metrics
+    let ethYear = gregYear - 8;
+    if (gregMonth < 9 || (gregMonth === 9 && gregDay < 11)) {
+        ethYear = gregYear - 9;
+    }
+
+    const arrayEthiopianMonthsReferenceTagsList = [
+        "Meskerem", "Tikimt", "Hidar", "Tahsas", "Ter", "Yakatit", 
+        "Megabit", "Miyazia", "Genbot", "Sene", "Hamle", "Nehase", "Pagume"
+    ];
+
+    // Simple robust operational approximation values calculations coordinates for dashboard viewports
+    let calculatedEthMonthIndex = (gregMonth + 3) % 12;
+    if (calculatedEthMonthIndex === 0) calculatedEthMonthIndex = 12;
+    
+    let calculatedEthDay = (gregDay + 10) % 30;
+    if (calculatedEthDay === 0) calculatedEthDay = 30;
+
+    if (gregMonth === 9 && gregDay >= 6 && gregDay <= 10) {
+        return `Pagume ${gregDay - 5}, ${ethYear} ዓ.ም.`;
+    }
+
+    const stringReadableMonthName = arrayEthiopianMonthsReferenceTagsList[calculatedEthMonthIndex - 1] || "Meskerem";
+    return `${stringReadableMonthName} ${calculatedEthDay}, ${ethYear} ዓ.ም.`;
+}
+
+/* ==========================================================================
+   6. AUTOMATED DROP ROUTING HANDSHAKE NAVIGATION
    ========================================================================== */
 function initializeViewPaneRouterRoutingSystem() {
     const listNavigationNodes = document.querySelectorAll('.sidebar .menu-list .menu-item');
@@ -34,13 +268,11 @@ function initializeViewPaneRouterRoutingSystem() {
     listNavigationNodes.forEach(buttonNode => {
         buttonNode.addEventListener('click', () => {
             const stringTargetPaneViewId = buttonNode.getAttribute('data-pane');
-            if (!stringTargetPaneViewId) return; // Avoid handling static anchors like accordion triggers
+            if (!stringTargetPaneViewId) return;
 
-            // Update active state across navigation menus
             listNavigationNodes.forEach(item => item.classList.remove('active'));
             buttonNode.classList.add('active');
 
-            // Toggle view visibility states
             const arrayAllPortalPaneViews = document.querySelectorAll('.portal-pane-view');
             arrayAllPortalPaneViews.forEach(pane => pane.classList.remove('active-pane'));
 
@@ -48,253 +280,288 @@ function initializeViewPaneRouterRoutingSystem() {
             if (targetElementDomViewPane) {
                 targetElementDomViewPane.classList.add('active-pane');
                 
-                // Track update context onto workspace title block banner
                 const elementTextLabelNode = buttonNode.querySelector('.menu-item-left');
                 if (elementTextLabelNode) {
                     labelHeaderTitleText.textContent = elementTextLabelNode.textContent.trim();
                 }
-                
-                // Clear out mobile drawer slide animations immediately on redirection
                 closeMobileNavigationSidebarDrawerCurtain();
+            }
+        });
+    });
+
+    // Upgraded Academic Accordion Automatic Routing Trigger Engine Nodes Hooks
+    const nestedCourseSubItemNodes = document.querySelectorAll('.nested-sub-item');
+    nestedCourseSubItemNodes.forEach(subItemNode => {
+        subItemNode.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const targetDepartmentTokenStringKeyId = subItemNode.getAttribute('data-dept');
+            
+            // Route seamlessly back to Home view where catalog components are displayed
+            const dashboardMainListItemNode = document.querySelector('[data-pane="paneHomeView"]');
+            if (dashboardMainListItemNode) dashboardMainListItemNode.click();
+            
+            triggerDepartmentFilter(targetDepartmentTokenStringKeyId);
+            closeMobileNavigationSidebarDrawerCurtain();
+        });
+    });
+}
+
+/* ==========================================================================
+   7. SECURITY CONFIGURATIONS: GEAR ICON UTILITY MODULE PANE CONTROLLERS
+   ========================================================================== */
+const gearSettingsTriggerBtnNode = document.getElementById('btnTriggerSettingsPaneNavigation');
+if (gearSettingsTriggerBtnNode) {
+    gearSettingsTriggerBtnNode.addEventListener('click', () => {
+        const targetSettingsPaneViewNode = document.getElementById('paneSettingsControlView');
+        if (!targetSettingsPaneViewNode) return;
+
+        document.querySelectorAll('.portal-pane-view').forEach(pane => pane.classList.remove('active-pane'));
+        document.querySelectorAll('.sidebar .menu-list .menu-item').forEach(item => item.classList.remove('active'));
+        
+        targetSettingsPaneViewNode.classList.add('active-pane');
+        document.getElementById('workspaceViewHeaderLabel').textContent = "Clearance Hub";
+        closeMobileNavigationSidebarDrawerCurtain();
+    });
+}
+
+function processSettingsAccountClearanceDowngradeUpgradeOverride() {
+    const selectedClearanceValue = document.getElementById('selectSettingsTierLevelSelector').value;
+    const feedbackTextBoxLabelNode = document.getElementById('panelSettingsClearanceMetaDescriptionBox');
+    const adminMenuAnchorListItem = document.getElementById('sidebarAdminMenuAnchor');
+    
+    if (selectedClearanceValue === 'Admin') {
+        adminMenuAnchorListItem.style.display = 'flex';
+        feedbackTextBoxLabelNode.innerHTML = `<strong>⚠️ ROOT CLEARANCE ACTIVE:</strong> Master administrative structures, system injection modules, and terminal logs unlocked.`;
+        writeLineToSecurityConsoleTerminal('[CLEARANCE CONFIG] Account authorization variables updated context to ROOT SYSTEM MASTER ADMINISTRATIVE.');
+    } else if (selectedClearanceValue === 'Teacher') {
+        adminMenuAnchorListItem.style.display = 'none';
+        feedbackTextBoxLabelNode.innerHTML = `<strong>🎓 FACULTY CLEARANCE CONTEXT:</strong> Authorized execution patterns allowed for student trajectory reviews and lecture projections.`;
+        writeLineToSecurityConsoleTerminal('[CLEARANCE CONFIG] Account authorization variables updated context to INSTRUCTOR LEVEL FACULTY.');
+    } else {
+        adminMenuAnchorListItem.style.display = 'none';
+        feedbackTextBoxLabelNode.innerHTML = `<strong>👤 STUDENT ACCOUNT CLEARANCE:</strong> Active monitoring clocks running. Restrictive gateway access rules enforced.`;
+        writeLineToSecurityConsoleTerminal('[CLEARANCE CONFIG] Account authorization variables returned parameters state to STUDENT ACCOUNT VIEW.');
+    }
+}
+
+/* ==========================================================================
+   8. REAL-TIME NATIVE ENVIRONMENT: CAMERA FLOWS AND CORE CONNECTION
+   ========================================================================== */
+const micButtonTriggerNode = document.getElementById('btnMeetToggleMic');
+const camButtonTriggerNode = document.getElementById('btnMeetToggleCam');
+const screenShareButtonTriggerNode = document.getElementById('btnMeetToggleShare');
+const centerProfileNodeRingElement = document.getElementById('elementMeetProfileNode');
+const htmlHardwareVideoTrackElementNode = document.getElementById('hardwareLiveCameraVideoTrackNode');
+
+let booleanMicStateActive = false;
+let booleanCamStateActive = false;
+
+if (camButtonTriggerNode) {
+    camButtonTriggerNode.addEventListener('click', async () => {
+        booleanCamStateActive = !booleanCamStateActive;
+        
+        if (booleanCamStateActive) {
+            try {
+                // Request live hardware system camera permissions natively from user device media lines
+                currentLiveCameraMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                 
-                writeLineToSecurityConsoleTerminal(`[NAVIGATION CORE] User routing request resolved safely into perspective pane viewport: ${stringTargetPaneViewId}`);
+                if (htmlHardwareVideoTrackElementNode) {
+                    htmlHardwareVideoTrackElementNode.srcObject = currentLiveCameraMediaStream;
+                    htmlHardwareVideoTrackElementNode.style.display = 'block';
+                }
+                if (centerProfileNodeRingElement) centerProfileNodeRingElement.style.display = 'none';
+                
+                camButtonTriggerNode.classList.add('disabled-state');
+                writeLineToSecurityConsoleTerminal('[NATIVE HARDWARE OPN] Live device webcam stream links locked onto stream viewport target channels.');
+            } catch (err) {
+                console.warn("Hardware camera allocation error:", err);
+                booleanCamStateActive = false;
+                displayToastBannerIndicator("⚠️ Local camera peripheral link failed. Ensure secure connection context protocols (HTTPS) are active.");
             }
-        });
+        } else {
+            terminateLiveCameraHardwareFeedsStream();
+        }
+    });
+}
+
+if (micButtonTriggerNode) {
+    micButtonTriggerNode.addEventListener('click', () => {
+        booleanMicStateActive = !booleanMicStateActive;
+        micButtonTriggerNode.classList.toggle('disabled-state', booleanMicStateActive);
+        writeLineToSecurityConsoleTerminal(`[STREAM METRICS] Audio input trace status converted parameters matching: ${booleanMicStateActive}`);
+    });
+}
+
+if (screenShareButtonTriggerNode) {
+    screenShareButtonTriggerNode.addEventListener('click', () => {
+        displayToastBannerIndicator("🖥️ Interactive system projection logic running. Local device layout matrices hooked to class stage channel.");
+    });
+}
+
+function terminateLiveCameraHardwareFeedsStream() {
+    if (currentLiveCameraMediaStream) {
+        currentLiveCameraMediaStream.getTracks().forEach(trackItem => trackItem.stop());
+        currentLiveCameraMediaStream = null;
+    }
+    if (htmlHardwareVideoTrackElementNode) {
+        htmlHardwareVideoTrackElementNode.srcObject = null;
+        htmlHardwareVideoTrackElementNode.style.display = 'none';
+    }
+    if (centerProfileNodeRingElement) centerProfileNodeRingElement.style.display = 'flex';
+    if (camButtonTriggerNode) camButtonTriggerNode.classList.remove('disabled-state');
+    
+    booleanCamStateActive = false;
+    writeLineToSecurityConsoleTerminal('[NATIVE HARDWARE CLS] Optical sensors safely disconnected from live application matrices.');
+}
+
+function switchVirtualBackground(stringTargetAssetUrlOrHexColor, booleanIsImageResourceFlag, thumbnailElementReference) {
+    const elementStageCanvasWindow = document.getElementById('elementVirtualMeetStage');
+    if (!elementStageCanvasWindow) return;
+
+    document.querySelectorAll('.meet-backdrop-strip .backdrop-thumb').forEach(thumb => thumb.classList.remove('active-thumb'));
+    if (thumbnailElementReference) thumbnailElementReference.classList.add('active-thumb');
+
+    elementStageCanvasWindow.style.backgroundImage = 'none';
+    elementStageCanvasWindow.style.backgroundColor = stringTargetAssetUrlOrHexColor;
+    writeLineToSecurityConsoleTerminal('[VIRTUAL VIEWPORT] Core scenery background parameters altered safely.');
+}
+
+/* ==========================================================================
+   9. SYNCHRONIZED CHAT FILE SHARING EXTENSIONS CORES
+   ========================================================================== */
+const inputLiveRoomChatFieldElement = document.getElementById('inputLiveRoomChatField');
+const triggerSendChatActionBtnNode = document.getElementById('btnSendLiveRoomChatMsg');
+const historyChatDisplayScrollAreaBox = document.getElementById('liveRoomChatScrollBox');
+
+if (triggerSendChatActionBtnNode) {
+    triggerSendChatActionBtnNode.addEventListener('click', processLiveRoomChatSubmissionPipeline);
+}
+if (inputLiveRoomChatFieldElement) {
+    inputLiveRoomChatFieldElement.addEventListener('keydown', (e) => { if (e.key === 'Enter') processLiveRoomChatSubmissionPipeline(); });
+}
+
+function processLiveRoomChatSubmissionPipeline() {
+    const stringRawMessageText = inputLiveRoomChatFieldElement.value.trim();
+    if (!stringRawMessageText) return;
+
+    appendRowItemLineIntoSynchronizedClassroomChatBox(`<strong>You:</strong> ${stringRawMessageText}`, false);
+    inputLiveRoomChatFieldElement.value = '';
+
+    setTimeout(() => {
+        appendRowItemLineIntoSynchronizedClassroomChatBox(`<strong>System_Peer:</strong> Synchronization handshake tracked. Workspace parameters compiled.`, true);
+    }, 1000);
+}
+
+function appendRowItemLineIntoSynchronizedClassroomChatBox(htmlContentStringMarkup, booleanIsSystemFlag) {
+    const elementChatRowLineNode = document.createElement('div');
+    elementChatRowLineNode.className = 'log-line';
+    if (booleanIsSystemFlag) elementChatRowLineNode.style.color = 'var(--tg-blue)';
+    elementChatRowLineNode.innerHTML = htmlContentStringMarkup;
+    
+    historyChatDisplayScrollAreaBox.appendChild(elementChatRowLineNode);
+    historyChatDisplayScrollAreaBox.scrollTop = historyChatDisplayScrollAreaBox.scrollHeight;
+}
+
+// Media Sharing Tray Interactivity Handlers Logic
+const chatMediaFileSharingSelectorInputNode = document.getElementById('inputChatMediaFileSharingNode');
+if (chatMediaFileSharingSelectorInputNode) {
+    chatMediaFileSharingSelectorInputNode.addEventListener('change', (e) => {
+        const referenceTargetSharedFileItem = e.target.files[0];
+        if (!referenceTargetSharedFileItem) return;
+        
+        appendRowItemLineIntoSynchronizedClassroomChatBox(`📁 <strong>Shared Asset File Document:</strong> <span style="text-decoration:underline; cursor:pointer; color:var(--success);">${referenceTargetSharedFileItem.name}</span> (Verified Link)`, false);
+        writeLineToSecurityConsoleTerminal(`[MEDIA SHARE] Broadcasted file binary model tracking trace point parameter reference: ${referenceTargetSharedFileItem.name}`);
+    });
+}
+
+function injectSystemCodeSnippetMarkerIntoChatBox() {
+    appendRowItemLineIntoSynchronizedClassroomChatBox(`💻 <strong>Shared Executable Script Code Block:</strong> <pre style="background:rgba(0,0,0,0.05); padding:4px; border-radius:4px; font-size:10px; margin-top:2px;">document.addEventListener('DOMContentLoaded', () => { initializeViewPaneRouterRoutingSystem(); });</pre>`, false);
+}
+
+/* ==========================================================================
+   10. TOAST INDICATORS: BANISH SYSTEM ALERTS PROMPTS
+   ========================================================================== */
+let referenceAlarmTimeoutSchedulerCheckLoop = null;
+let targetSystemAlarmTimeStringMatchString = "";
+
+function displayToastBannerIndicator(stringMessageContentTextPayload) {
+    const widgetBannerBoxNode = document.getElementById('widgetSystemActiveAlarmStatusBanner');
+    const labelFeedbackFieldText = document.getElementById('labelActiveAlarmFeedbackMessageText');
+    
+    if (widgetBannerBoxNode && labelFeedbackFieldText) {
+        labelFeedbackFieldText.textContent = stringMessageContentTextPayload;
+        widgetBannerBoxNode.style.display = 'flex';
+    }
+}
+
+function dismissActiveAlarmStatusWidgetBanner() {
+    const widgetBannerBoxNode = document.getElementById('widgetSystemActiveAlarmStatusBanner');
+    if (widgetBannerBoxNode) widgetBannerBoxNode.style.display = 'none';
+}
+
+// Alarm Target Registration Core Engine
+const triggerBtnRegisterAlarmNode = document.getElementById('btnRegisterAlarmRule');
+if (triggerBtnRegisterAlarmNode) {
+    triggerBtnRegisterAlarmNode.addEventListener('click', () => {
+        const inputElementTargetTimeField = document.getElementById('inputAlarmTimeTarget');
+        const stringSelectedValue = inputElementTargetTimeField.value;
+        
+        if (!stringSelectedValue) {
+            displayToastBannerIndicator('⚠️ Operation error: Please declare hours setup parameter properties.');
+            return;
+        }
+        
+        targetSystemAlarmTimeStringMatchString = stringSelectedValue;
+        displayToastBannerIndicator(`⏰ Active alarm rule registered tracking target frame position: [ ${targetSystemAlarmTimeStringMatchString} ] — Monitor running background loops.`);
+        writeLineToSecurityConsoleTerminal(`[ALARM LOGGED] Target matching string criteria saved: ${targetSystemAlarmTimeStringMatchString}`);
+
+        if (referenceAlarmTimeoutSchedulerCheckLoop) clearInterval(referenceAlarmTimeoutSchedulerCheckLoop);
+        
+        referenceAlarmTimeoutSchedulerCheckLoop = setInterval(() => {
+            if (!targetSystemAlarmTimeStringMatchString) return;
+            const dateInstance = new Date();
+            const currentFormattedCompactTimeString = `${String(dateInstance.getHours()).padStart(2, '0')}:${String(dateInstance.getMinutes()).padStart(2, '0')}`;
+            
+            if (currentFormattedCompactTimeString === targetSystemAlarmTimeStringMatchString) {
+                displayToastBannerIndicator(`⏰ TIME MATCH HIT VERIFIED! Target configuration threshold [ ${targetSystemAlarmTimeStringMatchString} ] reached.`);
+                writeLineToSecurityConsoleTerminal(`[ALARM FIRED] Purging active constraint tracking vectors criteria index rules for matching item.`);
+                targetSystemAlarmTimeStringMatchString = "";
+                clearInterval(referenceAlarmTimeoutSchedulerCheckLoop);
+            }
+        }, 5000);
     });
 }
 
 /* ==========================================================================
-   3. HAMBURGER RESPONSIVE MENU DRAWER (MOBILE SLIDE CHASSIS)
-   ========================================================================== */
-function initializeNavigationDrawerInteractions() {
-    const triggerHamburgerOpenBtn = document.getElementById('btnHamburgerSidebarOpen');
-    const triggerHamburgerCloseBtn = document.getElementById('actionHideSidebarBtn');
-    const containerDomSidebarChassis = document.getElementById('appNavigationSidebar');
-    const layerCurtainBackgroundOverlay = document.getElementById('sidebarCurtainLayer');
-    const toggleAccordionMenuNode = document.getElementById('accordionCoursesToggle');
-    const listDropdownContentTreeWrapper = document.getElementById('accordionCoursesDropdownTree');
-
-    // Drawer opening control trigger mechanics
-    if (triggerHamburgerOpenBtn) {
-        triggerHamburgerOpenBtn.addEventListener('click', (event) => {
-            event.stopPropagation();
-            containerDomSidebarChassis.classList.add('mobile-open');
-            layerCurtainBackgroundOverlay.classList.add('mobile-open');
-            writeLineToSecurityConsoleTerminal('[DRAWER INFRASTRUCTURE] Responsive viewport navigation chassis canvas initialized to mobile open layout status.');
-        });
-    }
-
-    // Drawer closing control trigger mechanics
-    if (triggerHamburgerCloseBtn) {
-        triggerHamburgerCloseBtn.addEventListener('click', () => {
-            closeMobileNavigationSidebarDrawerCurtain();
-        });
-    }
-
-    if (layerCurtainBackgroundOverlay) {
-        layerCurtainBackgroundOverlay.addEventListener('click', () => {
-            closeMobileNavigationSidebarDrawerCurtain();
-        });
-    }
-
-    // Course Catalogue Sub-tree Expand/Collapse Mechanics
-    if (toggleAccordionMenuNode && listDropdownContentTreeWrapper) {
-        toggleAccordionMenuNode.addEventListener('click', (event) => {
-            event.stopPropagation();
-            const booleanIsCurrentlyRevealed = listDropdownContentTreeWrapper.classList.contains('open');
-            const iconElementChevrons = toggleAccordionMenuNode.querySelector('[data-lucide="chevron-down"], [data-lucide="chevron-up"]');
-            
-            if (booleanIsCurrentlyRevealed) {
-                listDropdownContentTreeWrapper.classList.remove('open');
-                if (iconElementChevrons) {
-                    iconElementChevrons.setAttribute('data-lucide', 'chevron-down');
-                }
-            } else {
-                listDropdownContentTreeWrapper.classList.add('open');
-                if (iconElementChevrons) {
-                    iconElementChevrons.setAttribute('data-lucide', 'chevron-up');
-                }
-            }
-            if (window.lucide) lucide.createIcons();
-        });
-    }
-}
-
-function closeMobileNavigationSidebarDrawerCurtain() {
-    const containerDomSidebarChassis = document.getElementById('appNavigationSidebar');
-    const layerCurtainBackgroundOverlay = document.getElementById('sidebarCurtainLayer');
-    
-    if (containerDomSidebarChassis && layerCurtainBackgroundOverlay) {
-        containerDomSidebarChassis.classList.remove('mobile-open');
-        layerCurtainBackgroundOverlay.classList.remove('mobile-open');
-    }
-}
-
-/* ==========================================================================
-   4. LIGHT & DARK MODE PALETTE CONFIGURATION OVERRIDES
-   ========================================================================== */
-function initializePlatformThemeEngineManager() {
-    const actionThemeButtonTrigger = document.getElementById('btnPaletteThemeSwitcher');
-    const dynamicIconDisplayNode = document.getElementById('themeIconNode');
-    const dynamicLabelDisplayTextText = document.getElementById('themeLabelText');
-
-    if (actionThemeButtonTrigger) {
-        actionThemeButtonTrigger.addEventListener('click', () => {
-            const stringCurrentActiveThemeAttribute = document.documentElement.getAttribute('data-theme');
-            
-            if (stringCurrentActiveThemeAttribute === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                dynamicIconDisplayNode.setAttribute('data-lucide', 'moon');
-                dynamicLabelDisplayTextText.textContent = 'Dark Mode';
-                writeLineToSecurityConsoleTerminal('[PALETTE MANAGER] Core document node variable parameters swapped into global light environment execution configuration context.');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                dynamicIconDisplayNode.setAttribute('data-lucide', 'sun');
-                dynamicLabelDisplayTextText.textContent = 'Light Mode';
-                writeLineToSecurityConsoleTerminal('[PALETTE MANAGER] Core document node variable parameters swapped into secure dark environment execution configuration context.');
-            }
-            if (window.lucide) lucide.createIcons();
-        });
-    }
-}
-
-/* ==========================================================================
-   5. SECURITY MONITOR TERMINAL ENGINE & AUDIT LOGGER
-   ========================================================================== */
-function initializeSecurityAuditLoggingTerminal() {
-    writeLineToSecurityConsoleTerminal('[BOOT SECURITY SUCCESS] Authorization layers verification handshake cycle finalized safely.');
-    writeLineToSecurityConsoleTerminal('[VERSION REPORT] Abisinya Platform Core Systems deployment instance mapped onto branch node context.');
-}
-
-function writeLineToSecurityConsoleTerminal(stringConsoleLogMessageText) {
-    const consoleOutputDisplayBoxTerminal = document.getElementById('elementSecurityTerminalLogBox');
-    if (!consoleOutputDisplayBoxTerminal) return;
-
-    const dateObjectCurrentStamp = new Date();
-    const stringTimeStringFormat = dateObjectCurrentStamp.toTimeString().split(' ')[0];
-    
-    const elementNewLogNodeSpan = document.createElement('div');
-    elementNewLogNodeSpan.textContent = `[${stringTimeStringFormat}] ${stringConsoleLogMessageText}`;
-    
-    consoleOutputDisplayBoxTerminal.appendChild(elementNewLogNodeSpan);
-    consoleOutputDisplayBoxTerminal.scrollTop = consoleOutputDisplayBoxTerminal.scrollHeight;
-}
-
-/* ==========================================================================
-   6. SECURITY ACCESS CONTROL MANAGER (MULTI-TIER LEVELS RENDERER)
-   ========================================================================== */
-function initializeMultiTierAccessRoleSecurityController() {
-    const listRoleSelectionButtons = document.querySelectorAll('.role-dock-panel .role-pill-btn');
-    const anchorAdminMenuLayoutItem = document.getElementById('sidebarAdminMenuAnchor');
-    const containerWidgetUploadSocial = document.getElementById('socialUploadWidgetContainer');
-
-    listRoleSelectionButtons.forEach(buttonNode => {
-        buttonNode.addEventListener('click', () => {
-            listRoleSelectionButtons.forEach(btn => btn.classList.remove('active-role'));
-            buttonNode.classList.add('active-role');
-
-            const stringActiveElementTargetIdentifierId = buttonNode.id;
-            
-            // Hide administrative dashboards default
-            anchorAdminMenuLayoutItem.style.display = 'none';
-            containerWidgetUploadSocial.style.display = 'none';
-
-            if (stringActiveElementTargetIdentifierId === 'btnRoleSetVisitor') {
-                writeLineToSecurityConsoleTerminal('[SECURITY AUTH] System downgrade validation processed. Privilege restrictions set to: UNREGISTERED VISITOR.');
-            } else if (stringActiveElementTargetIdentifierId === 'btnRoleSetStudent') {
-                writeLineToSecurityConsoleTerminal('[SECURITY AUTH] Student identity mapping established safely. Workspace level set to: REGISTERED STUDENT.');
-            } else if (stringActiveElementTargetIdentifierId === 'btnRoleSetTeacher') {
-                containerWidgetUploadSocial.style.display = 'block';
-                writeLineToSecurityConsoleTerminal('[SECURITY AUTH] Faculty elevation validation passed. System features open to: INSTRUCTOR ACCOUNT MAPPING.');
-            } else if (stringActiveElementTargetIdentifierId === 'btnRoleSetAdmin') {
-                // Prompt verification checkpoint
-                const stringCapturedAdminAccessPass = prompt('Enter the Secure Administrative Token Key to open master configuration:');
-                if (stringCapturedAdminAccessPass === 'admin123') {
-                    anchorAdminMenuLayoutItem.style.display = 'flex';
-                    writeLineToSecurityConsoleTerminal('[SECURITY AUTH MASTER ACCESS GRANTED] Administrative identity confirmed. High-level routing options enabled.');
-                } else {
-                    alert('Authorization failure. Secure credentials required to access the Administrative Dashboard Panel Layer.');
-                    document.getElementById('btnRoleSetVisitor').click();
-                }
-            }
-        });
-    });
-}
-
-function switchAdminHierarchyControlCapabilities() {
-    const currentSelectorTierValue = document.getElementById('selectAdminTierLevelSelector').value;
-    const capabilitiesTextLabelNode = document.getElementById('labelAdminCapabilitiesTextDescription');
-    const masterDestructiveBtnNode = document.getElementById('btnAdminDestructiveDeleteAction');
-    
-    if (currentSelectorTierValue === 'Standard') {
-        capabilitiesTextLabelNode.textContent = 'Can generate badges, cannot overwrite security records.';
-        masterDestructiveBtnNode.disabled = true;
-    } else if (currentSelectorTierValue === 'SuperStandard') {
-        capabilitiesTextLabelNode.textContent = 'Can build structures, review logs, and freeze basic classroom parameters.';
-        masterDestructiveBtnNode.disabled = true;
-    } else if (currentSelectorTierValue === 'Super') {
-        capabilitiesTextLabelNode.textContent = 'CRITICAL TIER: Full platform wiping capabilities, logs structural purge allowed, database override execution live.';
-        masterDestructiveBtnNode.disabled = false;
-        writeLineToSecurityConsoleTerminal('[SECURITY SYSTEM OVERRIDE] Super Administrative status initialized. Destructive parameters unlocked.');
-    }
-}
-
-/* ==========================================================================
-   7. CORE COURSE CATALOG SPECIFICATION BADGES DICTIONARY DATABASES
-   ========================================================================== */
+   11. DATA FEEDS: TIKTOK/INSTAGRAM MODEL COMPILATIONS & CATALOGS
+   ========================================================================= */
 const dictionaryAcademicDepartmentBadgesMockDatabase = {
     Tech: [
         { title: 'Python Cloud Web Systems', teacher: 'Prof. Sarah Jenkins', time: '14:00 GMT', duration: '90 Mins', room: 'Virtual Stage Lab Alpha' },
-        { title: 'Solidity Smart Architecture', teacher: 'Eng. David Vance', time: '16:30 GMT', duration: '120 Mins', room: 'Blockchain Sandbox Beta' },
         { title: 'React UI UX Layout Engineering', teacher: 'Instructor Liam Cross', time: '19:00 GMT', duration: '60 Mins', room: 'Design Matrix Space Gamma' }
     ],
     Business: [
-        { title: 'Forex Risk Margin Allocation', teacher: 'Alex Mercer (FX Lead)', time: '08:00 GMT', duration: '45 Mins', room: 'Live Market Liquidity Desk' },
-        { title: 'E-Commerce Infrastructure Scaling', teacher: 'Hassan Al-Sabbah', time: '11:15 GMT', duration: '75 Mins', room: 'Supply Logistics Node Terminal' }
+        { title: 'Forex Risk Margin Allocation', teacher: 'Alex Mercer (FX Lead)', time: '08:00 GMT', duration: '45 Mins', room: 'Live Market Liquidity Desk' }
     ],
     Creative: [
         { title: 'Advanced Scalable Digital Art Vectoring', teacher: 'Elena Rostova', time: '15:00 GMT', duration: '120 Mins', room: 'Creative Arts Canvas View' }
-    ],
-    Academic: [
-        { title: 'Quantum Physics Mechanics Foundations', teacher: 'Dr. Robert Chen', time: '10:00 GMT', duration: '90 Mins', room: 'Advanced Science Auditorium' }
-    ],
-    Language: [
-        { title: 'International Business Communications Level 3', teacher: 'Madame Chloe Dubois', time: '13:00 GMT', duration: '60 Mins', room: 'Global Linguistics Suite' }
-    ],
-    Personal: [
-        { title: 'Strategic Productive Focus Optimization', teacher: 'Coach Marcus Vance', time: '06:00 GMT', duration: '30 Mins', room: 'Mindset Optimization Deck' }
-    ],
-    Health: [
-        { title: 'Human Kinesiology Dynamics & Frameworks', teacher: 'Dr. Angela Rossi', time: '17:00 GMT', duration: '60 Mins', room: 'Bio-Mechanics Performance Space' }
-    ],
-    Life: [
-        { title: 'Personal Resource Allocation Management', teacher: 'Financial Counsel Team', time: '09:00 GMT', duration: '90 Mins', room: 'Practical Wealth Strategy Suite' }
-    ],
-    Advanced: [
-        { title: 'Organic Synthetics Chemistry Diagnostics', teacher: 'Dr. Sarah Jenkins', time: '12:00 GMT', duration: '120 Mins', room: 'Molecular Extraction Lab 4' }
-    ],
-    Earning: [
-        { title: 'High-Ticket Agency Project Acquisition', teacher: 'Instructor Liam Cross', time: '18:00 GMT', duration: '90 Mins', room: 'Scalable Growth Masterclass Room' }
     ]
 };
 
+const arrayInteractiveMediaShortsFeedDataset = [
+    { id: 1, author: "Instructor Liam Cross", text: "Pro tip for architecture optimization layout blocks: Segregate event dependencies completely out of template files to preserve memory pools alignment.", likes: 24, saved: false, liked: false },
+    { id: 2, author: "Alex Mercer (FX Lead)", text: "Always structure capital asset entry waves below preceding structural resistance lines to minimize leverage liquidation trails.", likes: 18, saved: false, liked: false }
+];
+
 function triggerDepartmentFilter(stringTargetDepartmentGroupTokenId) {
     let stringReadableDepartmentGroupHeaderLabel = 'Technology & IT';
-    
     if (stringTargetDepartmentGroupTokenId === 'Business') stringReadableDepartmentGroupHeaderLabel = 'Business & Finance';
     else if (stringTargetDepartmentGroupTokenId === 'Creative') stringReadableDepartmentGroupHeaderLabel = 'Creative Skills';
     else if (stringTargetDepartmentGroupTokenId === 'Academic') stringReadableDepartmentGroupHeaderLabel = 'Education & Academic';
     else if (stringTargetDepartmentGroupTokenId === 'Language') stringReadableDepartmentGroupHeaderLabel = 'Language & Communication';
-    else if (stringTargetDepartmentGroupTokenId === 'Personal') stringReadableDepartmentGroupHeaderLabel = 'Personal Development';
-    else if (stringTargetDepartmentGroupTokenId === 'Health') stringReadableDepartmentGroupHeaderLabel = 'Health & Fitness';
-    else if (stringTargetDepartmentGroupTokenId === 'Life') stringReadableDepartmentGroupHeaderLabel = 'Practical & Life Skills';
-    else if (stringTargetDepartmentGroupTokenId === 'Advanced') stringReadableDepartmentGroupHeaderLabel = 'Advanced Science';
-    else if (stringTargetDepartmentGroupTokenId === 'Earning') stringReadableDepartmentGroupHeaderLabel = 'Online Earning Skills';
 
     const elementHeadlineWidgetLabel = document.getElementById('catalogDepartmentHeadline');
-    if (elementHeadlineWidgetLabel) {
-        elementHeadlineWidgetLabel.textContent = `Active Department: ${stringReadableDepartmentGroupHeaderLabel}`;
-    }
+    if (elementHeadlineWidgetLabel) elementHeadlineWidgetLabel.textContent = `Active Department: ${stringReadableDepartmentGroupHeaderLabel}`;
 
     triggerCourseCatalogBadgeCardRenderer(stringTargetDepartmentGroupTokenId);
 }
@@ -307,7 +574,7 @@ function triggerCourseCatalogBadgeCardRenderer(stringTargetDepartmentTokenId) {
     const arrayTargetDepartmentBadgesDataset = dictionaryAcademicDepartmentBadgesMockDatabase[stringTargetDepartmentTokenId] || [];
 
     if (arrayTargetDepartmentBadgesDataset.length === 0) {
-        containerDomTargetGridRow.innerHTML = '<div style="color:var(--text-muted); font-style:italic; padding:10px;">No course sessions compiled inside this framework directory path yet.</div>';
+        containerDomTargetGridRow.innerHTML = '<div style="color:var(--text-muted); font-style:italic; padding:10px; font-size:12px;">No verified content modules compiled inside this pathway node yet.</div>';
         return;
     }
 
@@ -315,411 +582,128 @@ function triggerCourseCatalogBadgeCardRenderer(stringTargetDepartmentTokenId) {
         const elementBadgeCardStructureBox = document.createElement('div');
         elementBadgeCardStructureBox.className = 'premium-subject-badge';
         elementBadgeCardStructureBox.innerHTML = `
-            <div class="badge-card-header">
-                <span>${badgeObjectItem.title}</span>
-                <i data-lucide="verified" style="width:18px; height:18px; color:rgba(255,255,255,0.95);"></i>
-            </div>
-            <div class="badge-data-field">
-                <span class="field-tag">Lead Instructor Authority</span>
-                <div class="field-response-box">${badgeObjectItem.teacher}</div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;">
-                <div class="badge-data-field">
-                    <span class="field-tag">Start Schedule Time</span>
-                    <div class="field-response-box">${badgeObjectItem.time}</div>
-                </div>
-                <div class="badge-data-field">
-                    <span class="field-tag">Track Session Block</span>
-                    <div class="field-response-box">${badgeObjectItem.duration}</div>
-                </div>
-            </div>
-            <div class="badge-data-field" style="margin-top:8px;">
-                <span class="field-tag">Virtual Execution Space Room</span>
-                <div class="field-response-box" style="background:rgba(0,0,0,0.2); color:white; border:1px dashed rgba(255,255,255,0.15); font-family:monospace;">
-                    ${badgeObjectItem.room}
-                </div>
+            <div class="badge-card-header"><span>${badgeObjectItem.title}</span><i data-lucide="verified" style="width:16px; height:16px;"></i></div>
+            <div class="badge-data-field"><span class="field-tag">Lead Authority</span><div class="field-response-box">${badgeObjectItem.teacher}</div></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px;">
+                <div class="badge-data-field"><span class="field-tag">Schedule</span><div class="field-response-box">${badgeObjectItem.time}</div></div>
+                <div class="badge-data-field"><span class="field-tag">Block</span><div class="field-response-box">${badgeObjectItem.duration}</div></div>
             </div>
         `;
         containerDomTargetGridRow.appendChild(elementBadgeCardStructureBox);
     });
+    
+    if (window.lucide) lucide.createIcons();
+    compileAndRenderInteractiveMediaLearningFeedLayouts();
+}
 
+function compileAndRenderInteractiveMediaLearningFeedLayouts() {
+    const streamTargetBoxWrapper = document.getElementById('socialStreamDynamicWrapper');
+    if (!streamTargetBoxWrapper) return;
+
+    streamTargetBoxWrapper.innerHTML = '';
+    
+    arrayInteractiveMediaShortsFeedDataset.forEach(postItem => {
+        const postCardElement = document.createElement('div');
+        postCardElement.className = 'media-stream-post';
+        postCardElement.innerHTML = `
+            <div class="post-header">
+                <div class="post-avatar">🎓</div>
+                <div>
+                    <div style="font-size:12px; font-weight:700;">${postItem.author}</div>
+                    <div style="font-size:10px; color:var(--text-muted);">Learning Snippet Vector Feed</div>
+                </div>
+            </div>
+            <div class="post-video-simulation">
+                <i data-lucide="clapperboard" style="width:40px; height:40px; color:white; opacity:0.25;"></i>
+            </div>
+            <div style="padding:12px; font-size:12px; font-weight:500; line-height:1.4;">
+                ${postItem.text}
+            </div>
+            <div class="post-actions-row">
+                <button class="post-action-node ${postItem.liked ? 'liked' : ''}" onclick="toggleMediaFeedInteractionActionMetric(${postItem.id}, 'like')">
+                    <i data-lucide="heart"></i> <span id="labelLikeCounterIndex-${postItem.id}">${postItem.likes}</span>
+                </button>
+                <button class="post-action-node" onclick="displayToastBannerIndicator('💬 Synchronization note: Content comments indexing layers are locked inside private study modules.')">
+                    <i data-lucide="message-circle"></i> <span>Review</span>
+                </button>
+                <button class="post-action-node ${postItem.saved ? 'saved' : ''}" onclick="toggleMediaFeedInteractionActionMetric(${postItem.id}, 'save')">
+                    <i data-lucide="bookmark"></i> <span>Save</span>
+                </button>
+                <button class="post-action-node" onclick="displayToastBannerIndicator('⬇️ Local system download block initialized: Asset file references saved cleanly onto device memory cache.')">
+                    <i data-lucide="download"></i>
+                </button>
+            </div>
+        `;
+        streamTargetBoxWrapper.appendChild(postCardElement);
+    });
     if (window.lucide) lucide.createIcons();
 }
 
-function saveUserSurveyInterest(stringCapturedSelectionChoiceStringValue) {
-    alert(`Preferences Saved safely! Your vocational path tracker is now processing: ${stringCapturedSelectionChoiceStringValue}. Your learning streams feed will prioritize items relating to this choice.`);
-    writeLineToSecurityConsoleTerminal(`[SURVEY METRICS LOGGED] Target project focus set to standard parameter: ${stringCapturedSelectionChoiceStringValue}`);
+function toggleMediaFeedInteractionActionMetric(targetPostId, stringActionTypeToken) {
+    const targetPostObjectMatch = arrayInteractiveMediaShortsFeedDataset.find(p => p.id === targetPostId);
+    if (!targetPostObjectMatch) return;
+
+    if (stringActionTypeToken === 'like') {
+        targetPostObjectMatch.liked = !targetPostObjectMatch.liked;
+        targetPostObjectMatch.likes += targetPostObjectMatch.liked ? 1 : -1;
+    } else if (stringActionTypeToken === 'save') {
+        targetPostObjectMatch.saved = !targetPostObjectMatch.saved;
+    }
+    compileAndRenderInteractiveMediaLearningFeedLayouts();
 }
 
 /* ==========================================================================
-   8. ATTENDANCE ANTI-CHEAT ENGINE & LIVE SYSTEM MONITOR CLOCK
+   12. MOBILE VIEWPORT OVERLAY DRAWER MECHANICAL DRIVERS
    ========================================================================== */
-let countTotalAttendanceSecondsTracked = 0;
-let referenceIntervalObjectAttendanceTrackerClock = null;
+function initializeNavigationDrawerInteractions() {
+    const triggerHamburgerOpenBtn = document.getElementById('btnHamburgerSidebarOpen');
+    const triggerHamburgerCloseBtn = document.getElementById('actionHideSidebarBtn');
+    const containerDomSidebarChassis = document.getElementById('appNavigationSidebar');
+    const layerCurtainBackgroundOverlay = document.getElementById('sidebarCurtainLayer');
+    const toggleAccordionMenuNode = document.getElementById('accordionCoursesToggle');
+    const listDropdownContentTreeWrapper = document.getElementById('accordionCoursesDropdownTree');
 
-function initializeAntiCheatAttendanceMonitorEngine() {
-    const displayWidgetElementClockField = document.getElementById('displayAttendanceClock');
-    
-    referenceIntervalObjectAttendanceTrackerClock = setInterval(() => {
-        countTotalAttendanceSecondsTracked++;
-        
-        const integerHoursParsed = Math.floor(countTotalAttendanceSecondsTracked / 3600);
-        const integerMinutesParsed = Math.floor((countTotalAttendanceSecondsTracked % 3600) / 60);
-        const integerSecondsParsed = countTotalAttendanceSecondsTracked % 60;
+    if (triggerHamburgerOpenBtn) {
+        triggerHamburgerOpenBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            containerDomSidebarChassis.classList.add('mobile-open');
+            layerCurtainBackgroundOverlay.classList.add('mobile-open');
+        });
+    }
+    if (triggerHamburgerCloseBtn) {
+        triggerHamburgerCloseBtn.addEventListener('click', closeMobileNavigationSidebarDrawerCurtain);
+    }
+    if (layerCurtainBackgroundOverlay) {
+        layerCurtainBackgroundOverlay.addEventListener('click', closeMobileNavigationSidebarDrawerCurtain);
+    }
+    if (toggleAccordionMenuNode && listDropdownContentTreeWrapper) {
+        toggleAccordionMenuNode.addEventListener('click', (e) => {
+            e.stopPropagation();
+            listDropdownContentTreeWrapper.classList.toggle('open');
+        });
+    }
+}
 
-        const stringPaddedHours = String(integerHoursParsed).padStart(2, '0');
-        const stringPaddedMinutes = String(integerMinutesParsed).padStart(2, '0');
-        const stringPaddedSeconds = String(integerSecondsParsed).padStart(2, '0');
-
-        if (displayWidgetElementClockField) {
-            displayWidgetElementClockField.textContent = `${stringPaddedHours}:${stringPaddedMinutes}:${stringPaddedSeconds}`;
-        }
-    }, 1000);
-
-    // Tab visibility anti-cheat tracking loops
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            writeLineToSecurityConsoleTerminal('[⚠️ SECURITY TRACKING VIOLATION ALERT] Anti-Cheat focus framework recorded tab focus detachment. Leave activities recorded on database audit trails!');
-        } else {
-            writeLineToSecurityConsoleTerminal('[ATTENDANCE STATUS RECOVERY] Focus alignment confirmed. Session track parameters re-established successfully.');
-        }
-    });
+function closeMobileNavigationSidebarDrawerCurtain() {
+    const containerDomSidebarChassis = document.getElementById('appNavigationSidebar');
+    const layerCurtainBackgroundOverlay = document.getElementById('sidebarCurtainLayer');
+    if (containerDomSidebarChassis) containerDomSidebarChassis.classList.remove('mobile-open');
+    if (layerCurtainBackgroundOverlay) layerCurtainBackgroundOverlay.classList.remove('mobile-open');
 }
 
 /* ==========================================================================
-   9. CUSTOM POMODORO TIME COUNTDOWN TIMER INTERFACES
+   13. AUDIT RUNTIME LOG WRITERS
    ========================================================================== */
-let integerPomodoroSecondsRemaining = 1500; // 25 Minutes Default Core
-let referenceIntervalObjectPomodoroCountdown = null;
-let booleanIsPomodoroCurrentlyExecuting = false;
-
-function initializePomodoroTimeCountdownFramework() {
-    const displayWidgetElementTimerField = document.getElementById('displayPomodoroClock');
-    const triggerActionStartBtn = document.getElementById('btnPomodoroStart');
-    const triggerActionPauseBtn = document.getElementById('btnPomodoroPause');
-
-    function refreshPomodoroClockViewInterfaceDisplay() {
-        const integerCalculatedMinutesPart = Math.floor(integerPomodoroSecondsRemaining / 60);
-        const integerCalculatedSecondsPart = integerPomodoroSecondsRemaining % 60;
-        
-        const stringFormattedMinutes = String(integerCalculatedMinutesPart).padStart(2, '0');
-        const stringFormattedSeconds = String(integerCalculatedSecondsPart).padStart(2, '0');
-        
-        if (displayWidgetElementTimerField) {
-            displayWidgetElementTimerField.textContent = `${stringFormattedMinutes}:${stringFormattedSeconds}`;
-        }
-    }
-
-    if (triggerActionStartBtn) {
-        triggerActionStartBtn.addEventListener('click', () => {
-            if (booleanIsPomodoroCurrentlyExecuting) return;
-            
-            booleanIsPomodoroCurrentlyExecuting = true;
-            writeLineToSecurityConsoleTerminal('[POMODORO CORE ENGINE] Count countdown loop processes initialized active.');
-            
-            referenceIntervalObjectPomodoroCountdown = setInterval(() => {
-                if (integerPomodoroSecondsRemaining > 0) {
-                    integerPomodoroSecondsRemaining--;
-                    refreshPomodoroClockViewInterfaceDisplay();
-                } else {
-                    clearInterval(referenceIntervalObjectPomodoroCountdown);
-                    booleanIsPomodoroCurrentlyExecuting = false;
-                    alert('Focus Session Block finalized! Take a short resting interval period.');
-                    writeLineToSecurityConsoleTerminal('[POMODORO TIMER FINISHED] Target period successfully completed.');
-                    integerPomodoroSecondsRemaining = 1500;
-                    refreshPomodoroClockViewInterfaceDisplay();
-                }
-            }, 1000);
-        });
-    }
-
-    if (triggerActionPauseBtn) {
-        triggerActionPauseBtn.addEventListener('click', () => {
-            clearInterval(referenceIntervalObjectPomodoroCountdown);
-            booleanIsPomodoroCurrentlyExecuting = false;
-            writeLineToSecurityConsoleTerminal('[POMODORO CORE ENGINE] Countdown progression loops paused intentionally.');
-        });
-    }
+function writeLineToSecurityConsoleTerminal(stringConsoleLogMessageText) {
+    const consoleOutputDisplayBoxTerminal = document.getElementById('elementSecurityTerminalLogBox');
+    if (!consoleOutputDisplayBoxTerminal) return;
+    const stringTimeStringFormat = new Date().toTimeString().split(' ')[0];
+    consoleOutputDisplayBoxTerminal.appendChild(document.createTextNode(`\n[${stringTimeStringFormat}] ${stringConsoleLogMessageText}`));
+    consoleOutputDisplayBoxTerminal.scrollTop = consoleOutputDisplayBoxTerminal.scrollHeight;
 }
 
 /* ==========================================================================
-   10. SCHOOL AUTOMATED ALARM SCHEDULER & RULES CORE ENGINE
-   ========================================================================== */
-let stringRegisteredAlarmTimeTargetString = '';
-
-function initializeSchoolAlarmSchedulerScheduler() {
-    const triggerBtnRegisterAlarmNode = document.getElementById('btnRegisterAlarmRule');
-    const inputElementTargetTimeField = document.getElementById('inputAlarmTimeTarget');
-
-    if (triggerBtnRegisterAlarmNode) {
-        triggerBtnRegisterAlarmNode.addEventListener('click', () => {
-            const stringSelectedValue = inputElementTargetTimeField.value;
-            if (!stringSelectedValue) {
-                alert('Please input a valid hour parameters matrix setup first.');
-                return;
-            }
-            stringRegisteredAlarmTimeTargetString = stringSelectedValue;
-            alert(`Alarm successfully registered for execution target window matching: ${stringRegisteredAlarmTimeTargetString}`);
-            writeLineToSecurityConsoleTerminal(`[ALARM MONITOR CONTROL] Set systematic tracking alerts pattern mapped onto time string value: ${stringRegisteredAlarmTimeTargetString}`);
-        });
-    }
-
-    // Background validation checker loop for operational targets matching setup
-    setInterval(() => {
-        if (!stringRegisteredAlarmTimeTargetString) return;
-        
-        const dateObjectInternalInstance = new Date();
-        const stringFormattedHoursCurrent = String(dateObjectInternalInstance.getHours()).padStart(2, '0');
-        const stringFormattedMinutesCurrent = String(dateObjectInternalInstance.getMinutes()).padStart(2, '0');
-        const stringCurrentTimeCompactMatchString = `${stringFormattedHoursCurrent}:${stringFormattedMinutesCurrent}`;
-
-        if (stringCurrentTimeCompactMatchString === stringRegisteredAlarmTimeTargetString) {
-            alert(`⏰ SCHOOL ALARM SYSTEM DISPATCH TRIGGER: System time reaches target schedule configuration box matching: ${stringRegisteredAlarmTimeTargetString}! Return immediately to assignment task workspaces.`);
-            writeLineToSecurityConsoleTerminal(`[ALARM EVENT DEPLOYED] Time match hit verified for: ${stringRegisteredAlarmTimeTargetString}. Clearing active rule parameters context.`);
-            stringRegisteredAlarmTimeTargetString = ''; // Clear out to avoid duplicate recurring browser prompts loops
-        }
-    }, 10000);
-}
-
-/* ==========================================================================
-   11. DIAGNOSTIC AI TUTOR SUITE CONSOLE CORE LOGIC ENGAGEMENTS
-   ========================================================================== */
-let stringCapturedUploadedImageBase64DataString = null;
-
-function initializeDiagnosticAiTutorSuiteEngine() {
-    const inputDomImageFileSelectorElement = document.getElementById('inputAiImageContextSelector');
-    const inputDomUserTextFieldElement = document.getElementById('inputAiUserQueryField');
-    const triggerActionSubmitBtnNode = document.getElementById('btnSubmitAiQuery');
-    const historyScrollOutputWrapperBox = document.getElementById('aiTutorMessageScrollHistoryBox');
-
-    if (inputDomImageFileSelectorElement) {
-        inputDomImageFileSelectorElement.addEventListener('change', (event) => {
-            const selectedFileObjectItem = event.target.files[0];
-            if (!selectedFileObjectItem) return;
-
-            const readerObjectFileReaderInstance = new FileReader();
-            readerObjectFileReaderInstance.onload = (fileLoadedEventResult) => {
-                stringCapturedUploadedImageBase64DataString = fileLoadedEventResult.target.result;
-                writeLineToSecurityConsoleTerminal('[AI FILE INTERFACE] Image context binary parameters mapped safely into memory allocation frameworks.');
-                alert('Image loaded into AI workspace context pipeline successfully.');
-            };
-            readerObjectFileReaderInstance.readAsDataURL(selectedFileObjectItem);
-        });
-    }
-
-    if (triggerActionSubmitBtnNode) {
-        triggerActionSubmitBtnNode.addEventListener('click', executeAiTutorResponseGenerationPipeline);
-    }
-
-    if (inputDomUserTextFieldElement) {
-        inputDomUserTextFieldElement.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') executeAiTutorResponseGenerationPipeline();
-        });
-    }
-
-    function executeAiTutorResponseGenerationPipeline() {
-        const stringRawUserPromptString = inputDomUserTextFieldElement.value.trim();
-        if (!stringRawUserPromptString && !stringCapturedUploadedImageBase64DataString) return;
-
-        // Render User dialog chat bubble interface elements
-        const elementUserBubbleCard = document.createElement('div');
-        elementUserBubbleCard.className = 'msg-bubble user';
-        elementUserBubbleCard.textContent = stringRawUserPromptString || 'Review attached project snapshot document elements context:';
-        
-        if (stringCapturedUploadedImageBase64DataString) {
-            const previewImgNodeTag = document.createElement('img');
-            previewImgNodeTag.src = stringCapturedUploadedImageBase64DataString;
-            elementUserBubbleCard.appendChild(previewImgNodeTag);
-        }
-
-        historyScrollOutputWrapperBox.appendChild(elementUserBubbleCard);
-        historyScrollOutputWrapperBox.scrollTop = historyScrollOutputWrapperBox.scrollHeight;
-
-        // Clear workspace fields targets instantly
-        inputDomUserTextFieldElement.value = '';
-        const stringCopiedCachedImageContext = stringCapturedUploadedImageBase64DataString;
-        stringCapturedUploadedImageBase64DataString = null;
-        inputDomImageFileSelectorElement.value = '';
-
-        writeLineToSecurityConsoleTerminal('[AI PIPELINE ACTIVATED] Processing user text inputs parameters contexts with diagnostic neural nodes...');
-
-        // Fake processing response feedback interval sequence loops
-        setTimeout(() => {
-            const elementAssistantResponseBubbleCard = document.createElement('div');
-            elementAssistantResponseBubbleCard.className = 'msg-bubble assistant';
-            
-            let stringGeneratedAssistantFeedbackStringContent = 'Diagnosis completed. Your prompt metrics match expected educational target levels. Double check structural margins before compiling updates onto remote directories.';
-            
-            if (stringCopiedCachedImageContext) {
-                stringGeneratedAssistantFeedbackStringContent = 'Visual context structural blueprint matrices processed safely. The alignment patterns indicate strong composition layouts with standard bounding configurations. Recommended action tracks look correct!';
-            } else if (stringRawUserPromptString.toLowerCase().includes('chart') || stringRawUserPromptString.toLowerCase().includes('forex')) {
-                stringGeneratedAssistantFeedbackStringContent = 'Risk margin parameters analyzed. Ensure stopping exit orders map cleanly below previous operational wave thresholds to protect capital equity buffers.';
-            } else if (stringRawUserPromptString.toLowerCase().includes('code') || stringRawUserPromptString.toLowerCase().includes('hamburger')) {
-                stringGeneratedAssistantFeedbackStringContent = 'Code analysis response: Keep design layout parameters rulesets separated from executable event listener script blocks inside distinct files to maximize browser render execution speeds.';
-            }
-
-            elementAssistantResponseBubbleCard.textContent = stringGeneratedAssistantFeedbackStringContent;
-            historyScrollOutputWrapperBox.appendChild(elementAssistantResponseBubbleCard);
-            historyScrollOutputWrapperBox.scrollTop = historyScrollOutputWrapperBox.scrollHeight;
-            
-            writeLineToSecurityConsoleTerminal('[AI ENGINE PIPELINE COMPLETE] Response string returned and mapped onto view output.');
-        }, 1200);
-    }
-}
-
-/* ==========================================================================
-   12. VIRTUAL CLASSROOM CONVERSATION INTERACTION CHATS & STAGES
-   ========================================================================== */
-function initializeVirtualClassroomStreamingDashboard() {
-    const micButtonTriggerNode = document.getElementById('btnMeetToggleMic');
-    const camButtonTriggerNode = document.getElementById('btnMeetToggleCam');
-    const screenShareButtonTriggerNode = document.getElementById('btnMeetToggleShare');
-    const centerProfileNodeRingElement = document.getElementById('elementMeetProfileNode');
-
-    let booleanMicStateActive = true;
-    let booleanCamStateActive = true;
-    let booleanScreenShareStateActive = false;
-
-    if (micButtonTriggerNode) {
-        micButtonTriggerNode.addEventListener('click', () => {
-            booleanMicStateActive = !booleanMicStateActive;
-            micButtonTriggerNode.classList.toggle('disabled-state', !booleanMicStateActive);
-            micButtonTriggerNode.innerHTML = booleanMicStateActive ? '<i data-lucide="mic"></i>' : '<i data-lucide="mic-off"></i>';
-            if (window.lucide) lucide.createIcons();
-            writeLineToSecurityConsoleTerminal(`[STREAM CORE] Audio input capture lines status flipped to state context: ${booleanMicStateActive}`);
-        });
-    }
-
-    if (camButtonTriggerNode) {
-        camButtonTriggerNode.addEventListener('click', () => {
-            booleanCamStateActive = !booleanCamStateActive;
-            camButtonTriggerNode.classList.toggle('disabled-state', !booleanCamStateActive);
-            camButtonTriggerNode.innerHTML = booleanCamStateActive ? '<i data-lucide="video"></i>' : '<i data-lucide="video-off"></i>';
-            centerProfileNodeRingElement.style.display = booleanCamStateActive ? 'flex' : 'none';
-            if (window.lucide) lucide.createIcons();
-            writeLineToSecurityConsoleTerminal(`[STREAM CORE] Local optical optical sensor streams altered to: ${booleanCamStateActive}`);
-        });
-    }
-
-    if (screenShareButtonTriggerNode) {
-        screenShareButtonTriggerNode.addEventListener('click', () => {
-            booleanScreenShareStateActive = !booleanScreenShareStateActive;
-            screenShareButtonTriggerNode.classList.toggle('disabled-state', booleanScreenShareStateActive);
-            alert(booleanScreenShareStateActive ? 'Virtual display capture pipeline hooked into projection channel.' : 'Display projections safely disconnected.');
-            writeLineToSecurityConsoleTerminal(`[STREAM LAYOUT] Matrix frame screen capture layer parameters altered to focus state: ${booleanScreenShareStateActive}`);
-        });
-    }
-
-    // Chat box interactions inside workspace modules layers setup
-    const inputDomChatFieldElement = document.getElementById('inputLiveRoomChatField');
-    const triggerSendChatActionBtnNode = document.getElementById('btnSendLiveRoomChatMsg');
-    const historyChatDisplayScrollAreaBox = document.getElementById('liveRoomChatScrollBox');
-
-    if (triggerSendChatActionBtnNode) {
-        triggerSendChatActionBtnNode.addEventListener('click', processLiveRoomChatSubmissionPipeline);
-    }
-
-    if (inputDomChatFieldElement) {
-        inputDomChatFieldElement.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') processLiveRoomChatSubmissionPipeline();
-        });
-    }
-
-    function processLiveRoomChatSubmissionPipeline() {
-        const stringRawMessageText = inputDomChatFieldElement.value.trim();
-        if (!stringRawMessageText) return;
-
-        const elementChatRowLineNode = document.createElement('div');
-        elementChatRowLineNode.className = 'log-line';
-        elementChatRowLineNode.innerHTML = `<strong>You (Student):</strong> ${stringRawMessageText}`;
-        
-        historyChatDisplayScrollAreaBox.appendChild(elementChatRowLineNode);
-        historyChatDisplayScrollAreaBox.scrollTop = historyChatDisplayScrollAreaBox.scrollHeight;
-        
-        inputDomChatFieldElement.value = '';
-
-        setTimeout(() => {
-            const elementPeerResponseLineNode = document.createElement('div');
-            elementPeerResponseLineNode.className = 'log-line';
-            elementPeerResponseLineNode.style.color = 'var(--tg-blue)';
-            elementPeerResponseLineNode.innerHTML = `<strong>System_Peer:</strong> Acknowledged. Parameter records synced inside live session workspace loops.`;
-            historyChatDisplayScrollAreaBox.appendChild(elementPeerResponseLineNode);
-            historyChatDisplayScrollAreaBox.scrollTop = historyChatDisplayScrollAreaBox.scrollHeight;
-        }, 1000);
-    }
-}
-
-function switchVirtualBackground(stringTargetAssetUrlOrHexColor, booleanIsImageResourceFlag) {
-    const elementStageCanvasWindow = document.getElementById('elementVirtualMeetStage');
-    if (!elementStageCanvasWindow) return;
-
-    // Clear background styles
-    const listThumbnailsArray = document.querySelectorAll('.meet-backdrop-strip .backdrop-thumb');
-    listThumbnailsArray.forEach(thumb => thumb.style.borderColor = 'transparent');
-
-    if (booleanIsImageResourceFlag) {
-        elementStageCanvasWindow.style.backgroundColor = 'transparent';
-        elementStageCanvasWindow.style.backgroundImage = `url('${stringTargetAssetUrlOrHexColor}')`;
-    } else {
-        elementStageCanvasWindow.style.backgroundImage = 'none';
-        elementStageCanvasWindow.style.backgroundColor = stringTargetAssetUrlOrHexColor;
-    }
-    
-    writeLineToSecurityConsoleTerminal('[VIRTUAL BACKGROUND] Environment space background matrix parameters reconfigured.');
-}
-
-/* ==========================================================================
-   13. FACULTY MEDIA SHORTS FEED SYSTEM (TIKTOK STYLE STREAM FLOWS)
-   ========================================================================== */
-function initializeFacultySocialMediaStreamStream() {
-    const triggerPublishPostBtnNode = document.getElementById('btnPublishSocialPost');
-    const inputDomPostCaptionFieldElement = document.getElementById('inputPostCaptionText');
-    const containerDynamicStreamWrapperBox = document.getElementById('socialStreamDynamicWrapper');
-
-    if (triggerPublishPostBtnNode) {
-        triggerPublishPostBtnNode.addEventListener('click', () => {
-            const stringCaptionTextContent = inputDomPostCaptionFieldElement.value.trim();
-            if (!stringCaptionTextContent) {
-                alert('Please fill out the caption input area prior to publishing.');
-                return;
-            }
-
-            const elementNewPostContainerBox = document.createElement('div');
-            elementNewPostContainerBox.className = 'media-stream-post';
-            elementNewPostContainerBox.innerHTML = `
-                <div class="post-header">
-                    <div class="post-avatar">🎓</div>
-                    <div>
-                        <div style="font-weight:700;">Faculty_Instructor (You)</div>
-                        <div style="font-size:10px; color:var(--text-muted);">Uploaded just now</div>
-                    </div>
-                </div>
-                <div class="post-video-simulation" style="background:#243141;">
-                    <i data-lucide="clapperboard" style="width:50px; height:50px; opacity:0.4;"></i>
-                </div>
-                <div style="padding:12px; font-weight:500; line-height:1.4;">
-                    ${stringCaptionTextContent}
-                </div>
-                <div class="post-actions-row">
-                    <div class="post-action-node"><i data-lucide="heart" style="width:16px; height:16px;"></i> <span>0</span></div>
-                    <div class="post-action-node"><i data-lucide="message-circle" style="width:16px; height:16px;"></i> <span>0</span></div>
-                    <div class="post-action-node"><i data-lucide="share-2" style="width:16px; height:16px;"></i></div>
-                </div>
-            `;
-
-            // Prepend new posts directly onto view layer stack arrays top positions
-            containerDynamicStreamWrapperBox.insertBefore(elementNewPostContainerBox, containerDynamicStreamWrapperBox.firstChild);
-            inputDomPostCaptionFieldElement.value = '';
-            
-            if (window.lucide) lucide.createIcons();
-            alert('Educational content snippet deployed onto learning streams feed framework seamlessly.');
-            writeLineToSecurityConsoleTerminal(`[MEDIA STREAM ENGINE] New asset post recorded with parameters string length: ${stringCaptionTextContent.length}`);
-        });
-    }
-}
-
-/* ==========================================================================
-   14. ADMINISTRATIVE CONSOLE MASTER DEPLOYMENT LOGICS CONTROLLERS
+   14. MASTER ROOT INJECTIONS LOGICS PROCEDURES
    ========================================================================== */
 const elementAdminDeployBtnNode = document.getElementById('btnAdminDeployBadgeCard');
 if (elementAdminDeployBtnNode) {
@@ -729,31 +713,95 @@ if (elementAdminDeployBtnNode) {
         const stringInputSubjectFocusStringValue = document.getElementById('inputAdminSubjectFocus').value.trim();
 
         if (!stringInputDeptNameStringValue || !stringInputSubjectFocusStringValue) {
-            alert('Administrative validation rules mismatch. Ensure structural string properties fields are fully mapped out.');
+            displayToastBannerIndicator('⚠️ Root deployment error: Map descriptive values before injection routines execution loops.');
             return;
         }
 
-        // Generate dynamic asset objects models inside dictionary matrices
         if (!dictionaryAcademicDepartmentBadgesMockDatabase[stringTargetGroupKeyId]) {
             dictionaryAcademicDepartmentBadgesMockDatabase[stringTargetGroupKeyId] = [];
         }
 
         dictionaryAcademicDepartmentBadgesMockDatabase[stringTargetGroupKeyId].push({
             title: stringInputDeptNameStringValue,
-            teacher: 'Authorized Faculty Node (Admin Set)',
-            time: 'Live On Demand',
-            duration: 'Variable Framework Block',
+            teacher: 'Root System Node (Admin Manual Overwrite Mapping)',
+            time: 'Live Instant Trigger Sync',
+            duration: 'Continuous Execution Loop Block',
             room: stringInputSubjectFocusStringValue
         });
 
-        // Clear layout inputs parameters target states
         document.getElementById('inputAdminDeptName').value = '';
         document.getElementById('inputAdminSubjectFocus').value = '';
 
-        alert('New credential badge layout rules structural block pushed successfully into target course list matrix vectors.');
-        writeLineToSecurityConsoleTerminal(`[ADMIN CONTROL STRATA] Injected dynamic programmatic badge matrix mapping inside branch node path key: ${stringTargetGroupKeyId}`);
-        
-        // Force view recalculation models parameters directly
+        displayToastBannerIndicator('✅ Master injection parameter passed. Credentials card entry added to database matrices.');
+        writeLineToSecurityConsoleTerminal(`[ROOT ENGINE STRATA] Processed dynamic credential card injection vector inside branch reference path: ${stringTargetGroupKeyId}`);
         triggerDepartmentFilter(stringTargetGroupKeyId);
+    });
+}
+
+// Focus clocks countdown execution logic blocks triggers trackers
+let countTotalAttendanceSecondsTracked = 0;
+setInterval(() => {
+    countTotalAttendanceSecondsTracked++;
+    const displayWidgetElementClockField = document.getElementById('displayAttendanceClock');
+    if (displayWidgetElementClockField && systemActiveUserSessionRole) {
+        const pad = (num) => String(num).padStart(2, '0');
+        displayWidgetElementClockField.textContent = `${pad(Math.floor(countTotalAttendanceSecondsTracked / 3600))}:${pad(Math.floor((countTotalAttendanceSecondsTracked % 3600) / 60))}:${pad(countTotalAttendanceSecondsTracked % 60)}`;
+    }
+}, 1000);
+
+let integerPomodoroSecondsRemaining = 1500;
+let referenceIntervalObjectPomodoroCountdown = null;
+const displayPomodoroClockNode = document.getElementById('displayPomodoroClock');
+
+if (document.getElementById('btnPomodoroStart')) {
+    document.getElementById('btnPomodoroStart').addEventListener('click', () => {
+        if (referenceIntervalObjectPomodoroCountdown) return;
+        writeLineToSecurityConsoleTerminal('[POMODORO ENGINE] Active study block initialized countdown.');
+        referenceIntervalObjectPomodoroCountdown = setInterval(() => {
+            if (integerPomodoroSecondsRemaining > 0) {
+                integerPomodoroSecondsRemaining--;
+                const pad = (num) => String(num).padStart(2, '0');
+                if (displayPomodoroClockNode) displayPomodoroClockNode.textContent = `${pad(Math.floor(integerPomodoroSecondsRemaining / 60))}:${pad(integerPomodoroSecondsRemaining % 60)}`;
+            } else {
+                clearInterval(referenceIntervalObjectPomodoroCountdown);
+                referenceIntervalObjectPomodoroCountdown = null;
+                integerPomodoroSecondsRemaining = 1500;
+                displayToastBannerIndicator("🏆 Focus Block Interval Completed! Take a short break.");
+            }
+        }, 1000);
+    });
+}
+if (document.getElementById('btnPomodoroPause')) {
+    document.getElementById('btnPomodoroPause').addEventListener('click', () => {
+        if (referenceIntervalObjectPomodoroCountdown) {
+            clearInterval(referenceIntervalObjectPomodoroCountdown);
+            referenceIntervalObjectPomodoroCountdown = null;
+            writeLineToSecurityConsoleTerminal('[POMODORO ENGINE] Countdown processes held explicitly.');
+        }
+    });
+}
+
+// Diagnostic message submission logic blocks triggers trackers
+const triggerActionSubmitBtnNode = document.getElementById('btnSubmitAiQuery');
+if (triggerActionSubmitBtnNode) {
+    triggerActionSubmitBtnNode.addEventListener('click', () => {
+        const queryField = document.getElementById('inputAiUserQueryField');
+        const textVal = queryField.value.trim();
+        if (!textVal) return;
+        
+        const historyBox = document.getElementById('aiTutorMessageScrollHistoryBox');
+        const uBubble = document.createElement('div');
+        uBubble.className = 'msg-bubble user';
+        uBubble.textContent = textVal;
+        historyBox.appendChild(uBubble);
+        queryField.value = '';
+        
+        setTimeout(() => {
+            const aBubble = document.createElement('div');
+            aBubble.className = 'msg-bubble assistant';
+            aBubble.textContent = "Data inquiry verified. Bounding track checks out with zero execution structural flaws. Maintain target risk parameters configurations layers.";
+            historyBox.appendChild(aBubble);
+            historyBox.scrollTop = historyBox.scrollHeight;
+        }, 1000);
     });
 }
